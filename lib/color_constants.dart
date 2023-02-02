@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //drawer Color
 
-Color drawer_back = Colors.deepPurpleAccent.shade700;
+Color drawer_back = Colors.purple.shade900;
 
 Color primaryColor = Colors.white;
 

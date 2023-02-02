@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/models/drawer_model.dart';
+import 'package:tessarus_volunteer/screens/admin_exclusive/system_log_page.dart';
 import 'package:tessarus_volunteer/screens/contact_us.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_construct.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import 'package:tessarus_volunteer/screens/help_page.dart';
+import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -18,6 +21,13 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
   DrawerItem currentItem = DrawerItems.event;
+  checkVolunteerLevel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setInt('userLevel', 2);
+    final int? level = prefs.getInt("Level");
+
+    return level;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +58,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
       case DrawerItems.event:
         return const EventPage();
+
+      case DrawerItems.systemlogs:
+        return const SystemLogsPage();
+
+      case DrawerItems.ticketscan:
+        return const TicketScanMain();
 
       case DrawerItems.contact:
         return const ContactUs();

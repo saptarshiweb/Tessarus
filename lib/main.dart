@@ -8,7 +8,7 @@ void main() {
     title: 'Tessarus Volunteer',
     theme: ThemeData(fontFamily: 'lato'),
     debugShowCheckedModeBanner: false,
-    home: const LoginScreen(),
+    home: const StartScreen(),
     // home: const DrawerScreen(),
   ));
 }
