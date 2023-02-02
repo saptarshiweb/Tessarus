@@ -63,7 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orangeAccent.shade100),
-                          onPressed: () {},
+                          onPressed: () {
+                            LoginRequest(email_controller.text,
+                                password_controller.text);
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(14.0),
                             child: smbold('Confirm'),
