@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/models/drawer_model.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class DrawerItems {
   static const dashboard = DrawerItem('Dashboard', Icons.dashboard);
@@ -145,7 +145,7 @@ class DrawerConstruct extends StatelessWidget {
           ),
           const Spacer(),
           const Icon(
-            Feather.arrow_down_circle,
+            WebSymbols.down_circle,
             color: Colors.white,
             size: 24,
           )
