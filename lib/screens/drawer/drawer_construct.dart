@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
-import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/models/drawer_model.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class DrawerItems {
   static const dashboard = DrawerItem('Dashboard', Icons.dashboard);
@@ -30,7 +30,7 @@ class DrawerConstruct extends StatelessWidget {
   int userlevel = 1;
   String username = '';
   String useremail = '';
-  getDetails() async {
+  Future getDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await prefs.setInt('userLevel', 2);
     final int? level = prefs.getInt("Level");
@@ -47,7 +47,6 @@ class DrawerConstruct extends StatelessWidget {
   DrawerConstruct(
       {Key? key, required this.currentItem, required this.onSelectedItem})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +60,22 @@ class DrawerConstruct extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                smbold(username),
-                ...DrawerItems.all.map(buildMenuItem).toList(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: userLevelWidget(),
+                      ),
+                    ),
+                  ],
+                ),
+
+                screenSelect(),
+                // ...DrawerItems.adminAll.map(buildMenuItem).toList(),
                 const SizedBox(height: 50),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 30),
                   child: ElevatedButton(
                       onPressed: () async {
                         Navigator.push(
@@ -83,6 +93,7 @@ class DrawerConstruct extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
                             Icon(Icons.logout_rounded),
                             SizedBox(width: 8),
@@ -101,6 +112,110 @@ class DrawerConstruct extends StatelessWidget {
             ));
           }),
         ));
+  }
+
+  Widget userLevelWidget() {
+    String t = '';
+    if (userlevel == 4) {
+      t = 'Super Admin';
+    } else if (userlevel == 3) {
+      t = 'Admin';
+    } else if (userlevel == 2) {
+      t = 'Cashier';
+    } else {
+      t = 'Volunteer';
+    }
+    return Padding(
+      padding: const EdgeInsets.only(left: 2, right: 8, top: 10, bottom: 10),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(username,
+                  style: TextStyle(
+                      color: Colors.grey.shade200,
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold)),
+              Text(
+                t,
+                style: TextStyle(color: Colors.grey.shade200, fontSize: 14),
+              ),
+            ],
+          ),
+          const Spacer(),
+          const Icon(
+            Feather.arrow_down_circle,
+            color: Colors.white,
+            size: 24,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget screenSelect() {
+    if (userlevel == 4) {
+      return superadminAll();
+    } else if (userlevel == 3) {
+      return adminAll();
+    } else if (userlevel == 2) {
+      return cashierAll();
+    } else {
+      return volunteerAll();
+    }
+  }
+
+  Widget superadminAll() {
+    return Column(
+      children: [
+        buildMenuItem(DrawerItems.dashboard),
+        buildMenuItem(DrawerItems.event),
+        buildMenuItem(DrawerItems.systemlogs),
+        buildMenuItem(DrawerItems.ticketscan),
+        buildMenuItem(DrawerItems.help),
+        buildMenuItem(DrawerItems.contact),
+      ],
+    );
+  }
+
+  Widget adminAll() {
+    return Column(
+      children: [
+        buildMenuItem(DrawerItems.dashboard),
+        buildMenuItem(DrawerItems.event),
+        buildMenuItem(DrawerItems.systemlogs),
+        buildMenuItem(DrawerItems.ticketscan),
+        buildMenuItem(DrawerItems.help),
+        buildMenuItem(DrawerItems.contact),
+      ],
+    );
+  }
+
+  Widget cashierAll() {
+    return Column(
+      children: [
+        buildMenuItem(DrawerItems.dashboard),
+        buildMenuItem(DrawerItems.event),
+        // buildMenuItem(DrawerItems.systemlogs),
+        buildMenuItem(DrawerItems.ticketscan),
+        buildMenuItem(DrawerItems.help),
+        buildMenuItem(DrawerItems.contact),
+      ],
+    );
+  }
+
+  Widget volunteerAll() {
+    return Column(
+      children: [
+        buildMenuItem(DrawerItems.dashboard),
+        buildMenuItem(DrawerItems.event),
+        // buildMenuItem(DrawerItems.systemlogs),
+        // buildMenuItem(DrawerItems.ticketscan),
+        buildMenuItem(DrawerItems.help),
+        buildMenuItem(DrawerItems.contact),
+      ],
+    );
   }
 
   Widget buildMenuItem(DrawerItem item) => ListTileTheme(

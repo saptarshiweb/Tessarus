@@ -20,35 +20,44 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  DrawerItem currentItem = DrawerItems.event;
-  checkVolunteerLevel() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.setInt('userLevel', 2);
-    final int? level = prefs.getInt("Level");
+  // int userlevel = 1;
+  // String username = '';
+  // String useremail = '';
+  // getDetails() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   // await prefs.setInt('userLevel', 2);
+  //   final int? level = prefs.getInt("Level");
+  //   final String? name = prefs.getString("Name");
+  //   final String? email = prefs.getString("Email");
 
-    return level;
-  }
+  //   userlevel = level!;
+  //   username = name!;
+  //   useremail = email!;
+  // }
+
+  DrawerItem currentItem = DrawerItems.event;
 
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
-        style: DrawerStyle.defaultStyle,
-        borderRadius: 20,
-        showShadow: true,
-        menuBackgroundColor: drawer_back,
-        angle: 0,
-        slideWidth: MediaQuery.of(context).size.width * 0.75,
-        mainScreen: getScreen(),
-        menuScreen: Builder(
-          builder: (context) => DrawerConstruct(
-              currentItem: currentItem,
-              onSelectedItem: (item) {
-                setState(() {
-                  currentItem = item;
-                });
-                ZoomDrawer.of(context)!.close();
-              }),
-        ));
+      style: DrawerStyle.defaultStyle,
+      borderRadius: 20,
+      showShadow: true,
+      menuBackgroundColor: drawer_back,
+      angle: 0,
+      slideWidth: MediaQuery.of(context).size.width * 0.75,
+      mainScreen: getScreen(),
+      menuScreen: Builder(
+        builder: (context) => DrawerConstruct(
+            currentItem: currentItem,
+            onSelectedItem: (item) {
+              setState(() {
+                currentItem = item;
+              });
+              ZoomDrawer.of(context)!.close();
+            }),
+      ),
+    );
   }
 
   Widget getScreen() {
