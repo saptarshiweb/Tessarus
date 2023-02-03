@@ -9,6 +9,7 @@ Color textcol = Colors.black;
 Color bgcolor1 = Colors.white;
 
 Color buttonColor = Colors.orangeAccent.shade700;
+Color buttongreen = Colors.greenAccent.shade700;
 
 Color textcolor2 = Colors.white;
 Color textcolor1 = Colors.black;

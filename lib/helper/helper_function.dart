@@ -20,4 +20,5 @@ deleteVolunteer(String id) async {
       'Authorization': 'Bearer $authVal'
     },
   );
+  print(response.body);
 }

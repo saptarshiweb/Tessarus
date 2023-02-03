@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 
-Widget volunteerDisplay(
-  String name,
-  String email,
-  String phone,
-  String access,
-) {
+Widget volunteerDisplay(BuildContext context, String name, String email,
+    String phone, String access, String id) {
   String vol(String access) {
     if (access == '4') {
       return 'Super Admin';
@@ -88,7 +85,16 @@ Widget volunteerDisplay(
                 ElevatedButton(
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return confirm(id,context);
+                          });
+                    },
                     child: const Text('Delete')),
               ],
             ),

@@ -19,10 +19,6 @@ class VolunteerControl extends StatefulWidget {
 
 class _VolunteerControlState extends State<VolunteerControl> {
   String auth_val = '';
-  List<String> name_list = [];
-  List<String> email_list = [];
-  List<String> phone_list = [];
-  List<String> accessLevel_list = [];
 
   TextEditingController volunteer_name = TextEditingController();
   TextEditingController volunteer_email = TextEditingController();
@@ -58,11 +54,6 @@ class _VolunteerControlState extends State<VolunteerControl> {
       print(i);
       print(responseData[i]['name']);
 
-      // name_list.add(responseData[i]['name']);
-      // email_list.add(responseData[i]['email']);
-      // phone_list.add(responseData[i]['phone']);
-      // accessLevel_list.add(responseData[i]['accessLevel'].toString());
-
       VolunteerDisplayModel volunteer = VolunteerDisplayModel(
           sId: responseData[i]['_id'],
           name: responseData[i]['name'],
@@ -76,24 +67,9 @@ class _VolunteerControlState extends State<VolunteerControl> {
           iV: responseData[i]['__v']);
       volunteer1.add(volunteer);
     }
-    // for (var i in responseData) {
-    //   VolunteerDisplayModel volunteer = VolunteerDisplayModel(
-    //       id: i['_id'],
-    //       name: i['name'],
-    //       email: i['email'],
-    //       phone: i['phone'],
-    //       events: i['events'],
-    //       accessLevel: i['accessLevel'],
-    //       profileImageUrl: i['profileImageUrl'],
-    //       createdAt: i['createdAt'],
-    //       updatedAt: i['updatedAt'],
-    //       v: i['__v']);
-    //   volunteer1.add(volunteer);
-    // }
+
     print(responseData.length);
     return volunteer1;
-
-    // print(name_list.length);
   }
 
   Future volunteer_add() async {
@@ -157,15 +133,14 @@ class _VolunteerControlState extends State<VolunteerControl> {
                                   padding:
                                       const EdgeInsets.only(left: 8, right: 8),
                                   child: volunteerDisplay(
-                                      // name_list[index],
-                                      // email_list[index],
-                                      // phone_list[index],
-                                      // accessLevel_list[index]
+                                      context,
                                       snapshot.data[index].name,
                                       snapshot.data[index].email,
                                       snapshot.data[index].phone,
                                       snapshot.data[index].accessLevel
-                                          .toString()),
+                                          .toString(),
+                                          snapshot.data[index].sId
+                                          ),
                                 ));
                           });
                     }
