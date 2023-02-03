@@ -1,13 +1,19 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print, unused_local_variable
+
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_container.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/volunteer_display_model.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
+import 'package:tessarus_volunteer/screens/super_admin_exclusive/add_new_volunteer.dart';
 
 class VolunteerControl extends StatefulWidget {
   const VolunteerControl({super.key});
@@ -18,11 +24,7 @@ class VolunteerControl extends StatefulWidget {
 
 class _VolunteerControlState extends State<VolunteerControl> {
   String auth_val = '';
-
-  TextEditingController volunteer_name = TextEditingController();
-  TextEditingController volunteer_email = TextEditingController();
-  TextEditingController volunteer_phone = TextEditingController();
-  TextEditingController volunteer_accessLevel = TextEditingController();
+  TextEditingController search_volunteer = TextEditingController();
 
   Future<List<VolunteerDisplayModel>> volunteer_detail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -71,82 +73,70 @@ class _VolunteerControlState extends State<VolunteerControl> {
     return volunteer1;
   }
 
-  Future volunteer_add() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final String? auth = prefs.getString("Auth");
-    auth_val = auth!;
-    final response = await http.post(
-      Uri.parse(volunteer_login),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-        'Authorization': 'Bearer $auth_val'
-      },
-      body: jsonEncode(<String, String>{
-        'name': volunteer_name.text,
-        'email': volunteer_email.text,
-        'phone': volunteer_phone.text,
-        'accessLevel': volunteer_accessLevel.text
-      }),
-    );
+  Future<Future<List<VolunteerDisplayModel>>> _refreshVolunteers(
+      BuildContext context) async {
+    setState(() {});
+    return volunteer_detail();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       appBar: customAppBar('Volunteer Control', Colors.orange),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-        child: Column(
-          children: [
-            //top Widget
-            // topWidget(),
-            Expanded(
-              flex: 1,
-              child: SizedBox(
-                // height: 300,
-                child: FutureBuilder(
-                  future: volunteer_detail(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return Container(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 40),
-                          child: Center(child: loadingwidget()),
-                        ),
-                      );
-                    } else {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data.length,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 10, top: 10),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: volunteerDisplay(
-                                      context,
-                                      snapshot.data[index].name,
-                                      snapshot.data[index].email,
-                                      snapshot.data[index].phone,
-                                      snapshot.data[index].accessLevel
-                                          .toString(),
-                                      snapshot.data[index].sId),
-                                ));
-                          });
-                    }
-                  },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+          child: Column(
+            children: [
+              //top Widget
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: SingleChildScrollView(child: topWidget()),
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: 300,
+                  child: RefreshIndicator(
+                    onRefresh: () => _refreshVolunteers(context),
+                    child: FutureBuilder(
+                      future: volunteer_detail(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.data == null) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 40),
+                            child: Center(child: loadingwidget()),
+                          );
+                        } else {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data.length,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 10, top: 10),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8, right: 8),
+                                      child: volunteerDisplay(
+                                          context,
+                                          snapshot.data[index].name,
+                                          snapshot.data[index].email,
+                                          snapshot.data[index].phone,
+                                          snapshot.data[index].accessLevel
+                                              .toString(),
+                                          snapshot.data[index].sId),
+                                    ));
+                              });
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -155,25 +145,28 @@ class _VolunteerControlState extends State<VolunteerControl> {
   Widget topWidget() {
     return Row(
       children: [
+        Flexible(
+          flex: 6,
+          child: tfield1(controller: search_volunteer, label: 'Volunteer ID'),
+        ),
         const SizedBox(width: 12),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
-            onPressed: () {},
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add',
-                    style: TextStyle(
-                        color: textcolor2,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-            ))
+        Flexible(
+          flex: 2,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => const AddVolunteer()),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Icon(Typicons.user_add_outline,
+                    color: textcolor2, size: 23),
+              )),
+        )
       ],
     );
   }

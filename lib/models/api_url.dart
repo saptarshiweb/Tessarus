@@ -1,9 +1,12 @@
 //Volunteer Requests
+// ignore_for_file: non_constant_identifier_names
+
 String volunteer_login =
     '''https://tessarus.gdsckgec.in/api/volunteers/login'''; //POST
 String all_volunteer =
     '''https://tessarus.gdsckgec.in/api/volunteers/all'''; //GET
-String add_volunteer = '''https://tessarus.gdsckgec.in/api/volunteers/add''';//POST
+String add_volunteer =
+    '''https://tessarus.gdsckgec.in/api/volunteers/add'''; //POST
 String all_user =
     '''https://tessarus.gdsckgec.in/api/volunteers/allusers'''; //GET
 String all_logs =

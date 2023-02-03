@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: non_constant_identifier_names, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
@@ -64,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //   CupertinoPageRoute(builder: (context) => const DrawerScreen()),
       // );
 
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const DrawerScreen()),
           (Route<dynamic> route) => false);
@@ -96,6 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orangeAccent.shade100),
                           onPressed: () {
+                            FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+       currentFocus.focusedChild!.unfocus();
+    }
                             LoginRequest(email_controller.text,
                                 password_controller.text);
                           },

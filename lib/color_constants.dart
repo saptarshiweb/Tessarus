@@ -1,7 +1,10 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 //drawer Color
 
 Color drawer_back = Colors.purple.shade900;
+Color alltemp = Colors.orange;
 
 Color primaryColor = Colors.white;
 

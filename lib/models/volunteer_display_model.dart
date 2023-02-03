@@ -36,17 +36,17 @@ class VolunteerDisplayModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['events'] = this.events;
-    data['accessLevel'] = this.accessLevel;
-    data['profileImageUrl'] = this.profileImageUrl;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['events'] = events;
+    data['accessLevel'] = accessLevel;
+    data['profileImageUrl'] = profileImageUrl;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }

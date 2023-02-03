@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:http/http.dart' as http;
@@ -20,5 +19,7 @@ deleteVolunteer(String id) async {
       'Authorization': 'Bearer $authVal'
     },
   );
+  // ignore: avoid_print
   print(response.body);
+  
 }
