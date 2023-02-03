@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -139,8 +138,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
                                       snapshot.data[index].phone,
                                       snapshot.data[index].accessLevel
                                           .toString(),
-                                          snapshot.data[index].sId
-                                          ),
+                                      snapshot.data[index].sId),
                                 ));
                           });
                     }
@@ -157,7 +155,6 @@ class _VolunteerControlState extends State<VolunteerControl> {
   Widget topWidget() {
     return Row(
       children: [
-        customSearchBar(),
         const SizedBox(width: 12),
         ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
@@ -178,20 +175,6 @@ class _VolunteerControlState extends State<VolunteerControl> {
               ),
             ))
       ],
-    );
-  }
-
-  Widget customSearchBar() {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-      child: TextFormField(
-        decoration: const InputDecoration(
-            icon: Icon(Icons.search),
-            labelText: 'Search Volunteer',
-            hintText: 'Search',
-            enabled: true),
-      ),
     );
   }
 }

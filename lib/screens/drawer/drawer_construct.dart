@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,7 +6,8 @@ import 'package:tessarus_volunteer/models/drawer_model.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
 
 class DrawerItems {
-  static const dashboard = DrawerItem('Dashboard', Icons.dashboard);
+  static const dashboard =
+      DrawerItem('Dashboard', Icons.dashboard_customize_outlined);
   static const event = DrawerItem('Event', Icons.event);
   static const help = DrawerItem('Help', Icons.help);
   static const contact = DrawerItem('Contact', Icons.contact_page);
