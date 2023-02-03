@@ -40,7 +40,7 @@ class Volunteer {
   String? name;
   String? email;
   String? phone;
-  List<void>? events;
+  List<String>? events;
   int? accessLevel;
   String? profileImageUrl;
   String? createdAt;
@@ -70,6 +70,9 @@ class Volunteer {
     //     events!.add(Null.fromJson(v));
     //   });
     // }
+    //events json
+    events = json['events'].cast<String>();
+
     accessLevel = json['accessLevel'];
     profileImageUrl = json['profileImageUrl'];
     createdAt = json['createdAt'];
@@ -86,6 +89,7 @@ class Volunteer {
     // if (this.events != null) {
     //   data['events'] = this.events!.map((v) => v.toJson()).toList();
     // }
+    data['events'] = events;
     data['accessLevel'] = accessLevel;
     data['profileImageUrl'] = profileImageUrl;
     data['createdAt'] = createdAt;

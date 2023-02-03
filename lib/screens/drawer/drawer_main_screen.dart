@@ -5,11 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/models/drawer_model.dart';
 import 'package:tessarus_volunteer/screens/admin_exclusive/system_log_page.dart';
+import 'package:tessarus_volunteer/screens/cashier_exclusive/add_coins.dart';
 import 'package:tessarus_volunteer/screens/contact_us.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_construct.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import 'package:tessarus_volunteer/screens/help_page.dart';
+import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_control.dart';
 import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -79,6 +81,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
       case DrawerItems.help:
         return const HelpPage();
+
+      case DrawerItems.addcoin:
+        return const AddCoins();
+
+      case DrawerItems.volunteerControl:
+        return const VolunteerControl();
 
       default:
         return const DashboardMain();

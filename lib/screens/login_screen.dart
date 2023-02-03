@@ -59,10 +59,14 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('Auth', auth);
 
       // ignore: use_build_context_synchronously
-      Navigator.push(
-        context,
-        CupertinoPageRoute(builder: (context) => const DrawerScreen()),
-      );
+      // Navigator.push(
+      //   context,
+      //   CupertinoPageRoute(builder: (context) => const DrawerScreen()),
+      // );
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const DrawerScreen()),
+          (Route<dynamic> route) => false);
     }
   }
 

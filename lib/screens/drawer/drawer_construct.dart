@@ -16,11 +16,18 @@ class DrawerItems {
   static const ticketscan =
       DrawerItem('Ticket Scan', Icons.qr_code_scanner_rounded);
 
+  static const addcoin =
+      DrawerItem('Add Coins', Icons.add_circle_outline_rounded);
+  static const volunteerControl =
+      DrawerItem('Volunteer Control', Icons.control_point_duplicate_rounded);
+
   static const all = <DrawerItem>[
     dashboard,
     event,
     systemlogs,
     ticketscan,
+    addcoin,
+    volunteerControl,
     help,
     contact
   ];
@@ -78,11 +85,15 @@ class DrawerConstruct extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20, right: 30),
                   child: ElevatedButton(
                       onPressed: () async {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const LoginScreen()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   CupertinoPageRoute(
+                        //       builder: (context) => const LoginScreen()),
+                        // );
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()),
+                            (Route<dynamic> route) => false);
 
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
@@ -135,11 +146,11 @@ class DrawerConstruct extends StatelessWidget {
               Text(username,
                   style: TextStyle(
                       color: Colors.grey.shade200,
-                      fontSize: 19,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold)),
               Text(
                 t,
-                style: TextStyle(color: Colors.grey.shade200, fontSize: 14),
+                style: TextStyle(color: Colors.grey.shade300, fontSize: 12),
               ),
             ],
           ),
@@ -171,10 +182,13 @@ class DrawerConstruct extends StatelessWidget {
       children: [
         buildMenuItem(DrawerItems.dashboard),
         buildMenuItem(DrawerItems.event),
-        buildMenuItem(DrawerItems.systemlogs),
         buildMenuItem(DrawerItems.ticketscan),
-        buildMenuItem(DrawerItems.help),
-        buildMenuItem(DrawerItems.contact),
+        buildMenuItem(DrawerItems.addcoin),
+        buildMenuItem(DrawerItems.systemlogs),
+        buildMenuItem(DrawerItems.volunteerControl),
+
+        // buildMenuItem(DrawerItems.help),
+        // buildMenuItem(DrawerItems.contact),
       ],
     );
   }
@@ -184,7 +198,7 @@ class DrawerConstruct extends StatelessWidget {
       children: [
         buildMenuItem(DrawerItems.dashboard),
         buildMenuItem(DrawerItems.event),
-        buildMenuItem(DrawerItems.systemlogs),
+        // buildMenuItem(DrawerItems.systemlogs),
         buildMenuItem(DrawerItems.ticketscan),
         buildMenuItem(DrawerItems.help),
         buildMenuItem(DrawerItems.contact),
@@ -199,6 +213,7 @@ class DrawerConstruct extends StatelessWidget {
         buildMenuItem(DrawerItems.event),
         // buildMenuItem(DrawerItems.systemlogs),
         buildMenuItem(DrawerItems.ticketscan),
+        buildMenuItem(DrawerItems.addcoin),
         buildMenuItem(DrawerItems.help),
         buildMenuItem(DrawerItems.contact),
       ],
@@ -236,7 +251,7 @@ class DrawerConstruct extends StatelessWidget {
             leading: Icon(item.icon),
             title: Text(item.title,
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)
                 // color: Colors.grey.shade400),
                 ),
             onTap: () {
