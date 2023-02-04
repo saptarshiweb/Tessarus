@@ -21,30 +21,22 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  // int userlevel = 1;
-  // String username = '';
-  // String useremail = '';
-  // getDetails() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   // await prefs.setInt('userLevel', 2);
-  //   final int? level = prefs.getInt("Level");
-  //   final String? name = prefs.getString("Name");
-  //   final String? email = prefs.getString("Email");
-
-  //   userlevel = level!;
-  //   username = name!;
-  //   useremail = email!;
-  // }
-
   DrawerItem currentItem = DrawerItems.event;
 
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
       style: DrawerStyle.defaultStyle,
+      mainScreenTapClose: true,
+
+      // menuScreenTapClose: true,
+
+      openDragSensitivity: 1000,
+      closeDragSensitivity: 1000,
       borderRadius: 20,
       showShadow: true,
       menuBackgroundColor: drawer_back,
+      disableDragGesture: true,
       angle: 0,
       slideWidth: MediaQuery.of(context).size.width * 0.75,
       mainScreen: getScreen(),
