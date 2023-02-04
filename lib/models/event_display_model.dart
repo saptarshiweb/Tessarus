@@ -73,7 +73,7 @@ class Events {
 
   Events.fromJson(Map<String, dynamic> json) {
     eventOrganiserClub = json['eventOrganiserClub'] != null
-        ? new EventOrganiserClub.fromJson(json['eventOrganiserClub'])
+        ? EventOrganiserClub.fromJson(json['eventOrganiserClub'])
         : null;
     sId = json['_id'];
     title = json['title'];
@@ -85,7 +85,7 @@ class Events {
     if (json['eventImages'] != null) {
       eventImages = <EventImages>[];
       json['eventImages'].forEach((v) {
-        eventImages!.add(new EventImages.fromJson(v));
+        eventImages!.add(EventImages.fromJson(v));
       });
     }
     eventType = json['eventType'];
@@ -95,7 +95,7 @@ class Events {
     if (json['eventCoordinators'] != null) {
       eventCoordinators = <EventCoordinators>[];
       json['eventCoordinators'].forEach((v) {
-        eventCoordinators!.add(new EventCoordinators.fromJson(v));
+        eventCoordinators!.add(EventCoordinators.fromJson(v));
       });
     }
     createdBy = json['createdBy'];
@@ -105,32 +105,32 @@ class Events {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.eventOrganiserClub != null) {
-      data['eventOrganiserClub'] = this.eventOrganiserClub!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (eventOrganiserClub != null) {
+      data['eventOrganiserClub'] = eventOrganiserClub!.toJson();
     }
-    data['_id'] = this.sId;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['tagLine'] = this.tagLine;
-    data['startTime'] = this.startTime;
-    data['endTime'] = this.endTime;
-    data['eventVenue'] = this.eventVenue;
-    if (this.eventImages != null) {
-      data['eventImages'] = this.eventImages!.map((v) => v.toJson()).toList();
+    data['_id'] = sId;
+    data['title'] = title;
+    data['description'] = description;
+    data['tagLine'] = tagLine;
+    data['startTime'] = startTime;
+    data['endTime'] = endTime;
+    data['eventVenue'] = eventVenue;
+    if (eventImages != null) {
+      data['eventImages'] = eventImages!.map((v) => v.toJson()).toList();
     }
-    data['eventType'] = this.eventType;
-    data['eventMinParticipants'] = this.eventMinParticipants;
-    data['eventMaxParticipants'] = this.eventMaxParticipants;
-    data['eventPrice'] = this.eventPrice;
-    if (this.eventCoordinators != null) {
+    data['eventType'] = eventType;
+    data['eventMinParticipants'] = eventMinParticipants;
+    data['eventMaxParticipants'] = eventMaxParticipants;
+    data['eventPrice'] = eventPrice;
+    if (eventCoordinators != null) {
       data['eventCoordinators'] =
-          this.eventCoordinators!.map((v) => v.toJson()).toList();
+          eventCoordinators!.map((v) => v.toJson()).toList();
     }
-    data['createdBy'] = this.createdBy;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    data['createdBy'] = createdBy;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = iV;
     return data;
   }
 }
@@ -147,9 +147,9 @@ class EventOrganiserClub {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['image'] = image;
     return data;
   }
 }
@@ -166,9 +166,9 @@ class EventImages {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['url'] = url;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -187,10 +187,10 @@ class EventCoordinators {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['phone'] = phone;
+    data['_id'] = sId;
     return data;
   }
 }

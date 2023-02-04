@@ -46,14 +46,14 @@ class _VolunteerControlState extends State<VolunteerControl> {
     // print(responseval);
 
     var responseData = responseval["volunteers"];
-    print(responseData.length);
+    // print(responseData.length);
 
     List<VolunteerDisplayModel> volunteer1 = [];
-    print(responseData[0]['name']);
+    // print(responseData[0]['name']);
 
     for (int i = 0; i < responseData.length; i++) {
-      print(i);
-      print(responseData[i]['name']);
+      // print(i);
+      // print(responseData[i]['name']);
 
       VolunteerDisplayModel volunteer = VolunteerDisplayModel(
           sId: responseData[i]['_id'],
@@ -69,7 +69,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
       volunteer1.add(volunteer);
     }
 
-    print(responseData.length);
+    print(volunteer1.length);
     return volunteer1;
   }
 

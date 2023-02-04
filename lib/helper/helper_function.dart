@@ -1,6 +1,21 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:http/http.dart' as http;
+
+normalNavigation(Widget route, BuildContext context) {
+  Navigator.push(
+    context,
+    CupertinoPageRoute(builder: (context) => route),
+  );
+}
+
+easyNavigation(Widget route, BuildContext context) {
+  Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => route),
+      (Route<dynamic> route) => false);
+}
 
 deleteVolunteer(String id) async {
   String authVal = '';
@@ -21,5 +36,4 @@ deleteVolunteer(String id) async {
   );
   // ignore: avoid_print
   print(response.body);
-  
 }

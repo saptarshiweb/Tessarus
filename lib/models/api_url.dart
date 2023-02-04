@@ -37,6 +37,8 @@ String add_event_image =
     '''https://tessarus.gdsckgec.in/api/events/images/[event_id]'''; //POST
 String delete_event =
     '''https://tessarus.gdsckgec.in/api/events/images/[event_id]'''; //DELETE
+String all_event_url = 'https://tessarus.gdsckgec.in/api/events/all'; //GET
+String specific_event = 'https://tessarus.gdsckgec.in/api/events/';//GET
 
 //QR Scan
 String user_qr_scan =
