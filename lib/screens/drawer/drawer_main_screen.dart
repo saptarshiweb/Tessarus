@@ -31,12 +31,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
       // menuScreenTapClose: true,
 
-      openDragSensitivity: 1000,
-      closeDragSensitivity: 1000,
       borderRadius: 20,
       showShadow: true,
       menuBackgroundColor: drawer_back,
-      disableDragGesture: true,
+      disableDragGesture: false,
       angle: 0,
       slideWidth: MediaQuery.of(context).size.width * 0.75,
       mainScreen: getScreen(),

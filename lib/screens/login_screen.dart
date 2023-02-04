@@ -87,11 +87,11 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                tfield1(controller: email_controller, label: 'Email'),
+                tfield1(controller: email_controller, label: 'your Email'),
                 const SizedBox(height: 10),
                 tfield1(
                     controller: password_controller,
-                    label: 'Password',
+                    label: 'your Password',
                     obscuretext: true),
                 const SizedBox(height: 30),
                 Row(

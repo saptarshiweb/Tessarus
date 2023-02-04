@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 import 'package:tessarus_volunteer/screens/event/event_tabbar.dart';
 import 'package:tessarus_volunteer/screens/event/ongoing_events.dart';
@@ -22,7 +23,8 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar('Events', Colors.orange),
+      // appBar: customAppBar('Events', Colors.orange),
+      appBar: eventsPageAppBar('Events', alltemp),
       body: Column(
         children: const [
           Expanded(child: EventTabbar()),

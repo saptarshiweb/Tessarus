@@ -13,7 +13,7 @@ Widget tfield1(
       style: const TextStyle(
           color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
-        hintText: 'Enter your $label',
+        hintText: 'Enter $label',
 
         labelText: label,
         labelStyle: TextStyle(

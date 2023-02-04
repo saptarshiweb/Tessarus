@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +16,7 @@ class UpcomingEvents extends StatefulWidget {
 
 class _UpcomingEventsState extends State<UpcomingEvents> {
   String auth_val = '';
-  Future<List<Events>> eventList() async {
+  Future<List<Events>> eventListUpcoming() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
@@ -72,7 +71,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: eventList(),
+        future: eventListUpcoming(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return Padding(
@@ -89,8 +88,8 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                       padding: const EdgeInsets.only(bottom: 10, top: 10),
                       child: Padding(
                           padding: const EdgeInsets.only(left: 8, right: 8),
-                          child: EventCardDisplay(
-                              context, snapshot.data[index])));
+                          child:
+                              EventCardDisplay(context, snapshot.data[index])));
                 });
           }
         });
