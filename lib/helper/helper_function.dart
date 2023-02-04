@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +12,7 @@ normalNavigation(Widget route, BuildContext context) {
 
 easyNavigation(Widget route, BuildContext context) {
   Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => route),
+      CupertinoPageRoute(builder: (context) => route),
       (Route<dynamic> route) => false);
 }
 
