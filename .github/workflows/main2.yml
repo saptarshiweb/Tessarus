@@ -1,49 +1,42 @@
-name: Flutter CI
+name: Android Release
 
-# This workflow is triggered on pushes to the repository.
-
+# 1
 on:
+  # 2
   push:
-    branches:
-    - main
-    
-# on: push    # Default will running for every branch.
-    
+    branches: main  
+
+  # 3
+  workflow_dispatch:
+
+# 4
 jobs:
+  # 5
   build:
-    # This job will run on ubuntu virtual machine
+    # 6
     runs-on: ubuntu-latest
+
+    # 7
     steps:
-    
-    # Setup Java environment in order to build the Android app.
-    - uses: actions/checkout@v1
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    
-    # Setup the flutter environment.
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: 'beta' # 'dev', 'alpha', default to: 'stable'
-        # flutter-version: '1.12.x' # you can also specify exact version of flutter
-    
-    # Get flutter dependencies.
-    - run: flutter pub get
-    
-    # Check for any formatting issues in the code.
-    - run: flutter format --set-exit-if-changed .
-    
-    # Statically analyze the Dart code for any errors.
-    - run: flutter analyze .
-    
-    # Run widget tests for our flutter project.
-    - run: flutter test
-    
-    # Build apk.
-    - run: flutter build apk
-    
-    # Upload generated apk to the artifacts.
-    - uses: actions/upload-artifact@v1
-      with:
-        name: release-apk
-        path: build/app/outputs/apk/release/app-release.apk
+      # 8
+      - uses: actions/checkout@v3
+      # 9
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: "12.x"
+          cache: gradle
+      # 10   
+      - uses: subosito/flutter-action@v2
+        with:
+          # 11
+          flutter-version: "3.0.0"
+          channel: 'stable'
+          cache: true
+      # 12
+      - name: Get dependencies
+        run: flutter pub get
+
+      # Runs a set of commands using the runners shell
+      - name: Start release build
+        run: flutter build apk --split-per-abi
