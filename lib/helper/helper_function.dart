@@ -3,6 +3,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:http/http.dart' as http;
 
+shiftFocus(BuildContext context) {
+  Navigator.pop(context);
+}
+
 normalNavigation(Widget route, BuildContext context) {
   Navigator.push(
     context,

@@ -1,19 +1,14 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print, unused_local_variable
 
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/typicons_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_container.dart';
-import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/volunteer_display_model.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
-import 'package:tessarus_volunteer/screens/super_admin_exclusive/add_new_volunteer.dart';
 
 class VolunteerControl extends StatefulWidget {
   const VolunteerControl({super.key});
@@ -60,12 +55,13 @@ class _VolunteerControlState extends State<VolunteerControl> {
           name: responseData[i]['name'],
           email: responseData[i]['email'],
           phone: responseData[i]['phone'],
-          // events: responseData[i]['events'],
+          events: responseData[i]['events'].cast<String>(),
           accessLevel: responseData[i]['accessLevel'],
           profileImageUrl: responseData[i]['profileImageUrl'],
           createdAt: responseData[i]['createdAt'],
           updatedAt: responseData[i]['updatedAt'],
           iV: responseData[i]['__v']);
+
       volunteer1.add(volunteer);
     }
 
@@ -83,17 +79,13 @@ class _VolunteerControlState extends State<VolunteerControl> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      appBar: customAppBar('Volunteer Control', Colors.orange),
+      appBar: VolunteerControlAppBar('Volunteer Control'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Column(
             children: [
               //top Widget
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: SingleChildScrollView(child: topWidget()),
-              ),
               Expanded(
                 child: SizedBox(
                   height: 300,
@@ -116,18 +108,14 @@ class _VolunteerControlState extends State<VolunteerControl> {
                                 return Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 10, top: 10),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8, right: 8),
-                                      child: volunteerDisplay(
-                                          context,
-                                          snapshot.data[index].name,
-                                          snapshot.data[index].email,
-                                          snapshot.data[index].phone,
-                                          snapshot.data[index].accessLevel
-                                              .toString(),
-                                          snapshot.data[index].sId),
-                                    ));
+                                    child: volunteerDisplay(
+                                        context,
+                                        snapshot.data[index].name,
+                                        snapshot.data[index].email,
+                                        snapshot.data[index].phone,
+                                        snapshot.data[index].accessLevel
+                                            .toString(),
+                                        snapshot.data[index].sId));
                               });
                         }
                       },
@@ -142,32 +130,19 @@ class _VolunteerControlState extends State<VolunteerControl> {
     );
   }
 
-  Widget topWidget() {
-    return Row(
-      children: [
-        Flexible(
-          flex: 6,
-          child: tfield1(controller: search_volunteer, label: 'Volunteer ID'),
-        ),
-        const SizedBox(width: 12),
-        Flexible(
-          flex: 2,
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: buttonColor),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                      builder: (context) => const AddVolunteer()),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Icon(Typicons.user_add_outline,
-                    color: textcolor2, size: 23),
-              )),
-        )
-      ],
-    );
-  }
+  // Widget topWidget() {
+  //   return Row(
+  //     children: [
+  //       Flexible(
+  //         flex: 6,
+  //         child: tfield1(controller: search_volunteer, label: 'Volunteer ID'),
+  //       ),
+  //       const SizedBox(width: 12),
+  //       Flexible(
+  //         flex: 2,
+  //         child:
+  //       )
+  //     ],
+  //   );
+  // }
 }

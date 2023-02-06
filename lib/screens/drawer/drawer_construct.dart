@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/elusive_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/octicons_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/models/drawer_model.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
+import 'package:fluttericon/rpg_awesome_icons.dart';
 
 class DrawerItems {
-  static const dashboard =
-      DrawerItem('Dashboard', Icons.dashboard_customize_outlined);
-  static const event = DrawerItem('Event', Icons.event);
+  static const dashboard = DrawerItem('Dashboard', Elusive.group_circled);
+  static const event = DrawerItem('Event', Octicons.calendar);
   static const help = DrawerItem('Help', Icons.help);
   static const contact = DrawerItem('Contact', Icons.contact_page);
-  static const systemlogs =
-      DrawerItem('System Logs', Icons.system_security_update_good_rounded);
+  static const systemlogs = DrawerItem('System Logs', Typicons.cog_outline);
   static const ticketscan =
       DrawerItem('Ticket Scan', Icons.qr_code_scanner_rounded);
 
-  static const addcoin =
-      DrawerItem('Add Coins', Icons.add_circle_outline_rounded);
+  static const addcoin = DrawerItem('Add Coins', FontAwesome5.rupee_sign);
   static const volunteerControl =
-      DrawerItem('Volunteer Control', Icons.control_point_duplicate_rounded);
+      DrawerItem('Volunteer Control', RpgAwesome.heavy_shield);
 
   static const all = <DrawerItem>[
     dashboard,

@@ -212,7 +212,6 @@ class EventCoordinatorsAdd {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['phone'] = phone;
-    
     return data;
   }
 }

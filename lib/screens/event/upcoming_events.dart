@@ -34,9 +34,8 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     var responseval = json.decode(response.body);
     // print(responseval);
 
-    var responseData = responseval["events"];
+    var responseData = responseval['events']["documents"];
     // print(responseData.length);
-    print(responseData[0]['title']);
 
     List<Events> event1 = [];
 
@@ -50,7 +49,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
         startTime: responseData[i]["startTime"],
         endTime: responseData[i]["endTime"],
         eventVenue: responseData[i]["eventVenue"],
-        // eventImages: responseData[i]["eventImages"],
+        // eventImages: responseData[i]["eventImages"].cast<String>(),
         eventMinParticipants: responseData[i]["eventMinParticipants"],
         eventMaxParticipants: responseData[i]["eventMaxParticipants"],
         eventPrice: responseData[i]["eventPrice"],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 Color drawer_back = Colors.purple.shade900;
 Color alltemp = Colors.orange;
+Color allcancel = Colors.red;
 
 Color primaryColor = Colors.white;
 

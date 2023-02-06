@@ -28,3 +28,33 @@ Widget tfield1(
     ),
   );
 }
+
+Widget numfield1(
+    {required TextEditingController controller,
+    required String label,
+    obscuretext = false}) {
+  return ElevatedButton(
+    onPressed: () {},
+    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+    child: TextFormField(
+      controller: controller,
+      obscureText: obscuretext,
+      keyboardType: TextInputType.number,
+      style: const TextStyle(
+          color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+      decoration: InputDecoration(
+        hintText: 'Enter $label',
+
+        labelText: label,
+        labelStyle: TextStyle(
+            color: Colors.grey.shade600,
+            fontSize: 11,
+            fontWeight: FontWeight.bold),
+        // border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+        // enabledBorder: OutlineInputBorder(
+        //     borderSide: const BorderSide(color: Colors.black, width: 2.3),
+        //     borderRadius: BorderRadius.circular(16)),
+      ),
+    ),
+  );
+}

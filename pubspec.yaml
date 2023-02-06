@@ -40,6 +40,7 @@ dependencies:
   flutter_zoom_drawer: ^3.0.3
   fluttericon: ^2.0.0
   simple_barcode_scanner: ^0.0.7
+  pretty_qr_code: ^2.0.3
   
   
   

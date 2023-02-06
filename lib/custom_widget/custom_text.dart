@@ -42,6 +42,6 @@ Text headtext(String text) {
   return Text(
     text,
     style: const TextStyle(
-        color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+        color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold),
   );
 }

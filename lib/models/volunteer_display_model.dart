@@ -33,6 +33,7 @@ class VolunteerDisplayModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    
   }
 
   Map<String, dynamic> toJson() {
