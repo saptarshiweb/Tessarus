@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously
 import 'dart:convert';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/iconic_icons.dart';
@@ -576,35 +577,75 @@ class _AddEventPageState extends State<AddEventPage> {
             child: Column(children: [
               Row(
                 children: [
-                  Text(
-                    'Event Type',
-                    style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                      'Event Type',
+                      style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const Spacer(),
-                  DropdownButton(
-                    value: eventtype,
-                    dropdownColor: textcolor2,
-                    icon: Icon(FontAwesome.down_open,
-                        color: textcolor1, size: 22),
-                    elevation: 0,
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(
-                          '$items      ',
-                          style: TextStyle(color: textcolor1, fontSize: 22),
+                  Flexible(
+                    flex: 3,
+                    child: DropdownSearch<String>(
+                      popupProps: PopupProps.bottomSheet(
+                        bottomSheetProps: BottomSheetProps(
+                            backgroundColor: textcolor2,
+                            elevation: 100,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12))),
+                        listViewProps: const ListViewProps(shrinkWrap: true),
+                        fit: FlexFit.tight,
+                        constraints: const BoxConstraints(maxHeight: 200),
+                        showSelectedItems: true,
+                        // disabledItemFn: (String s) => s.startsWith('I'),
+                      ),
+                      items: items,
+                      dropdownDecoratorProps: DropDownDecoratorProps(
+                        baseStyle: TextStyle(color: textcolor1),
+                        dropdownSearchDecoration: const InputDecoration(
+                          filled: true,
+                          labelText: "Select Log Type",
+                          hintText: "Log Type",
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        eventtype = value!;
-                      });
-                    },
+                      ),
+                      onSaved: (value) async {
+                        setState(() {
+                          eventtype = value!;
+                        });
+                      },
+                      onChanged: (value) async {
+                        setState(() {
+                          eventtype = value!;
+                        });
+                      },
+                      selectedItem: eventtype,
+                    ),
                   ),
+                  // DropdownButton(
+                  //   value: eventtype,
+                  //   dropdownColor: textcolor2,
+                  //   icon: Icon(FontAwesome.down_open,
+                  //       color: textcolor1, size: 22),
+                  //   elevation: 0,
+                  //   items: items.map((String items) {
+                  //     return DropdownMenuItem(
+                  //       value: items,
+                  //       child: Text(
+                  //         '$items      ',
+                  //         style: TextStyle(color: textcolor1, fontSize: 22),
+                  //       ),
+                  //     );
+                  //   }).toList(),
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       eventtype = value!;
+                  //     });
+                  //   },
+                  // ),
                 ],
               )
             ])));

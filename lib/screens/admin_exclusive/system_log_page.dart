@@ -191,33 +191,35 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   }
 
   Widget dropDownWidgetLogType(BuildContext context) {
-    return DropdownSearch<String>(
-      popupProps: const PopupProps.menu(
-        showSelectedItems: true,
-        // disabledItemFn: (String s) => s.startsWith('I'),
-      ),
-      items: items,
-      dropdownDecoratorProps: const DropDownDecoratorProps(
-        dropdownSearchDecoration: InputDecoration(
-          labelText: "Select Log Type",
-          hintText: "Log Type",
+    return SingleChildScrollView(
+      child: DropdownSearch<String>(
+        popupProps: const PopupProps.menu(
+          showSelectedItems: true,
+          // disabledItemFn: (String s) => s.startsWith('I'),
         ),
+        items: items,
+        dropdownDecoratorProps: const DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+            labelText: "Select Log Type",
+            hintText: "Log Type",
+          ),
+        ),
+        onSaved: (value) async {
+          setState(() {
+            logtype = value!;
+            _currentPage = 0;
+          });
+          LogsPrint();
+        },
+        onChanged: (value) async {
+          setState(() {
+            logtype = value!;
+            _currentPage = 0;
+          });
+          LogsPrint();
+        },
+        selectedItem: logtype,
       ),
-      onSaved: (value) async {
-        setState(() {
-          logtype = value!;
-          _currentPage = 0;
-        });
-        LogsPrint();
-      },
-      onChanged: (value) async {
-        setState(() {
-          logtype = value!;
-          _currentPage = 0;
-        });
-        LogsPrint();
-      },
-      selectedItem: logtype,
     );
   }
 }
