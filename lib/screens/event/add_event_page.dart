@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -13,7 +12,6 @@ import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
-
 import '../../custom_widget/custom_modal_routes.dart';
 
 class AddEventPage extends StatefulWidget {
@@ -710,7 +708,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 0),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
@@ -841,7 +839,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 0),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
