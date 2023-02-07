@@ -15,6 +15,7 @@ import 'package:tessarus_volunteer/models/user_model_qr.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
+import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
 
 class AddCoins extends StatefulWidget {
   const AddCoins({super.key});
@@ -95,6 +96,7 @@ class _AddCoinsState extends State<AddCoins> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SimpleDrawerCustom(),
       appBar: customAppBar('Add Coins', alltemp),
       body: (qrvalue != 'Sample')
           ? SingleChildScrollView(

@@ -6,15 +6,14 @@ import 'package:fluttericon/iconic_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
-import 'package:tessarus_volunteer/screens/drawer/drawer_menu_widget.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_page.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/add_new_volunteer.dart';
 
 import '../../color_constants.dart';
 
-
 AppBar customAppBar(String text, Color col) {
   return AppBar(
+    iconTheme: IconThemeData(color: textcolor1),
     elevation: 0,
     backgroundColor: col,
     systemOverlayStyle: SystemUiOverlayStyle(
@@ -26,7 +25,8 @@ AppBar customAppBar(String text, Color col) {
       style: const TextStyle(
           color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
     ),
-    leading: const DrawerMenuWidget(),
+    // leading: const DrawerMenuWidget(),
+    // leading: const SimpleDrawerCustom(),
   );
 }
 
@@ -40,6 +40,7 @@ AppBar eventsPageAppBar(String text, Color col) {
   }
 
   return AppBar(
+    iconTheme: IconThemeData(color: textcolor1),
     elevation: 0,
     backgroundColor: col,
     systemOverlayStyle: SystemUiOverlayStyle(
@@ -77,7 +78,7 @@ AppBar eventsPageAppBar(String text, Color col) {
             );
           }
         })),
-    leading: const DrawerMenuWidget(),
+    // leading: const DrawerMenuWidget(),
   );
 }
 
@@ -91,6 +92,7 @@ AppBar VolunteerControlAppBar(String text) {
   }
 
   return AppBar(
+    iconTheme: IconThemeData(color: textcolor1),
     elevation: 0,
     backgroundColor: alltemp,
     systemOverlayStyle: SystemUiOverlayStyle(
@@ -129,6 +131,6 @@ AppBar VolunteerControlAppBar(String text) {
             );
           }
         })),
-    leading: const DrawerMenuWidget(),
+    // leading: const DrawerMenuWidget(),
   );
 }

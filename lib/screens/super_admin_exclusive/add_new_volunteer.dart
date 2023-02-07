@@ -49,7 +49,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
       }),
     );
     var responseval = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (responseval.length < 10) {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
@@ -57,7 +57,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           context: context,
           builder: (context) {
-            return errorModal('Entered Wrong Details', context);
+            return errorModal2(responseval['message'], context);
           });
     } else {
       showModalBottomSheet(
@@ -66,7 +66,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           context: context,
           builder: (context) {
-            return successModal('Successfully Added Volunteer!', context);
+            return successModal2('Successfully Added Volunteer !!!', context);
           });
     }
   }
@@ -77,7 +77,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
       appBar: appbar1('Add Volunteer', context),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 14),
+          padding: const EdgeInsets.only(left: 12, right: 12, top: 40),
           child: Column(
             children: [
               tfield1(controller: volunteer_name, label: 'Name'),
@@ -87,7 +87,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
               tfield1(controller: volunteer_phone, label: 'Phone'),
               const SizedBox(height: 12),
               tfield1(controller: volunteer_accessLevel, label: 'Access Level'),
-              const SizedBox(height: 12),
+              const SizedBox(height: 24),
               //confirm add
               ElevatedButton(
                   onPressed: () async {

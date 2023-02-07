@@ -9,6 +9,7 @@ import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/volunteer_display_model.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
+import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
 
 class VolunteerControl extends StatefulWidget {
   const VolunteerControl({super.key});
@@ -79,6 +80,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
+      drawer: const SimpleDrawerCustom(),
       appBar: VolunteerControlAppBar('Volunteer Control'),
       body: SafeArea(
         child: Padding(
@@ -109,6 +111,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
                                     padding: const EdgeInsets.only(
                                         bottom: 10, top: 10),
                                     child: volunteerDisplay(
+                                      
                                         context,
                                         snapshot.data[index].name,
                                         snapshot.data[index].email,

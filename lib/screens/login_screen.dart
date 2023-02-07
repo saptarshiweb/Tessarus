@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:http/http.dart' as http;
+import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'dart:convert';
 import 'package:tessarus_volunteer/models/api_url.dart';
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController password_controller = TextEditingController();
 
   Future LoginRequest(String email, String password) async {
+    showLoaderDialog(context);
     final response = await http.post(
       Uri.parse(volunteer_login),
       headers: <String, String>{
@@ -44,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
       int level = 1;
       String email = '';
       String auth = '';
+      String profileImage = '';
 
       VolunteerLogin vol1 = VolunteerLogin.fromJson(jsonDecode(response.body));
       if (vol1.volunteer?.name != null) {
@@ -51,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         level = vol1.volunteer!.accessLevel!;
         email = vol1.volunteer!.email!;
         auth = vol1.authToken!;
+        profileImage = vol1.volunteer!.profileImageUrl!;
       }
       // ignore: use_build_context_synchronously
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -59,18 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setInt('Level', level);
       await prefs.setString('Email', email);
       await prefs.setString('Auth', auth);
+      await prefs.setString('DrawerItem', 'Dasboard');
+      await prefs.setString('profileImage', profileImage);
 
-      // ignore: use_build_context_synchronously
-      // Navigator.push(
-      //   context,
-      //   CupertinoPageRoute(builder: (context) => const DrawerScreen()),
-      // );
-
-      // ignore: use_build_context_synchronously
-      // Navigator.of(context).pushAndRemoveUntil(
-      //     MaterialPageRoute(builder: (context) => const DrawerScreen()),
-      //     (Route<dynamic> route) => false);
-
+      Navigator.pop(context);
       easyNavigation(const DrawerScreen(), context);
     }
   }

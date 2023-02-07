@@ -18,3 +18,6 @@ Color buttongreen = Colors.greenAccent.shade700;
 Color textcolor2 = Colors.white;
 Color textcolor1 = Colors.black;
 Color textcolor3 = Colors.grey.shade300;
+Color textcolor4 = Colors.grey.shade900;
+
+//drawer Colors

@@ -28,7 +28,7 @@ Widget volunteerDisplay(BuildContext context, String name, String email,
         color: alltemp.withOpacity(0.2),
         borderRadius: BorderRadius.circular(14)),
     child: Padding(
-      padding: const EdgeInsets.only(top: 12, bottom: 12, left: 10, right: 10),
+      padding: const EdgeInsets.only(top: 18, bottom: 18, left: 18, right: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

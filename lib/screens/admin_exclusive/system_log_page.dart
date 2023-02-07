@@ -13,6 +13,7 @@ import 'package:tessarus_volunteer/models/system_logs_model.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
 
 import '../../color_constants.dart';
 
@@ -139,6 +140,7 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
     );
 
     return Scaffold(
+      drawer: const SimpleDrawerCustom(),
       appBar: customAppBar('System Logs', Colors.orange),
       body: pages[_currentPage],
       // card for elevation
