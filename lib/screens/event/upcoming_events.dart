@@ -92,11 +92,9 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
-                        padding: const EdgeInsets.only(bottom: 10, top: 10),
-                        child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: EventCardDisplay(
-                                context, snapshot.data[index])));
+                        padding: const EdgeInsets.only(bottom: 10, top: 10,left:8,right:8),
+                        child: EventCardDisplay(
+                            context, snapshot.data[index]));
                   });
             }
           }),
