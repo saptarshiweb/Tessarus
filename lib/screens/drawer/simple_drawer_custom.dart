@@ -66,12 +66,12 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 35),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     topbar(context),
                     const SizedBox(height: 12),
                     profileWidget(context),
-                    const SizedBox(height: 6),
+                    const Spacer(),
                     DrawerListItem(context, 'Dashboard', Elusive.group_circled,
                         const DashboardMain()),
                     DrawerListItem(

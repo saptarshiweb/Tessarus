@@ -40,7 +40,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     List<Events> event1 = [];
 
     for (int i = 0; i < responseData.length; i++) {
-      print(i);
+      // print(i);
       Events eventfile = Events(
         sId: responseData[i]["_id"],
         title: responseData[i]["title"],

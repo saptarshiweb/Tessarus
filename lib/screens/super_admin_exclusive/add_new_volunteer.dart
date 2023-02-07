@@ -10,8 +10,10 @@ import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
+import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:http/http.dart' as http;
+import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_control.dart';
 
 class AddVolunteer extends StatefulWidget {
   const AddVolunteer({super.key});
@@ -27,6 +29,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
   TextEditingController volunteer_accessLevel = TextEditingController();
   String auth_val = '';
   Future volunteer_add(BuildContext context) async {
+    showLoaderDialog(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? auth = prefs.getString("Auth");
@@ -50,6 +53,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
     );
     var responseval = json.decode(response.body);
     // print(response.body);
+    Navigator.pop(context);//stop loading widget
     if (responseval.length < 10) {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
@@ -66,7 +70,8 @@ class _AddVolunteerState extends State<AddVolunteer> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           context: context,
           builder: (context) {
-            return successModal2('Successfully Added Volunteer !!!', context);
+            return successModal2('Successfully Added Volunteer !!!', context,
+                const VolunteerControl());
           });
     }
   }

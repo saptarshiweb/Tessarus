@@ -11,8 +11,10 @@ import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
+import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import '../../custom_widget/custom_modal_routes.dart';
 
 class AddEventPage extends StatefulWidget {
@@ -159,6 +161,7 @@ class _AddEventPageState extends State<AddEventPage> {
 
   Future eventAdd() async {
     //organiser club
+    showLoaderDialog(context);
 
     String h1 = '', m1 = '';
     String s2 = _timeController.text;
@@ -283,6 +286,7 @@ class _AddEventPageState extends State<AddEventPage> {
     // ignore: use_build_context_synchronously
 
     var responseval = json.decode(response.body);
+    Navigator.pop(context);
     if (responseval['message'] != 'Event added successfully') {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
@@ -299,7 +303,8 @@ class _AddEventPageState extends State<AddEventPage> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           context: context,
           builder: (context) {
-            return successModal2(responseval['message'], context);
+            return successModal2(
+                responseval['message'], context, const EventPage());
           });
     }
 

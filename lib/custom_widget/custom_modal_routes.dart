@@ -192,7 +192,7 @@ Widget errorModal2(String message, BuildContext context) {
   );
 }
 
-Widget successModal2(String message, BuildContext context) {
+Widget successModal2(String message, BuildContext context,Widget route) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -230,7 +230,7 @@ Widget successModal2(String message, BuildContext context) {
               const SizedBox(height: 2),
               TextButton(
                   onPressed: () {
-                    easyNavigation(const DrawerScreen(), context);
+                    normalNavigation(route, context);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
