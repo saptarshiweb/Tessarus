@@ -52,59 +52,61 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 23, bottom: 8),
-      child: Drawer(
-        surfaceTintColor: alltemp,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        backgroundColor: textcolor2,
-        elevation: 10,
-        child: FutureBuilder(
-          future: getDetails(),
-          builder: (context, snapshot) {
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 35),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    topbar(context),
-                    const SizedBox(height: 12),
-                    profileWidget(context),
-                    const Spacer(),
-                    DrawerListItem(context, 'Dashboard', Elusive.group_circled,
-                        const DashboardMain()),
-                    DrawerListItem(
-                        context, 'Event', Octicons.calendar, const EventPage()),
-                    DrawerListItem(context, 'Ticket Scan',
-                        Icons.qr_code_scanner_rounded, const TicketScanMain()),
-                    DrawerListItem(context, 'Add Coins',
-                        FontAwesome5.rupee_sign, const AddCoins()),
-                    DrawerListItem(context, 'Volunteer Control',
-                        RpgAwesome.heavy_shield, const VolunteerControl()),
-                    (userlevel >= 3)
-                        ? DrawerListItem(context, 'System Logs',
-                            Typicons.cog_outline, const SystemLogsPage())
-                        : const SizedBox(),
-                    (userlevel <= 2)
-                        ? DrawerListItem(
-                            context, 'Help', Icons.help, const HelpPage())
-                        : const SizedBox(),
-                    (userlevel <= 2)
-                        ? DrawerListItem(context, 'Contact', Icons.contact_page,
-                            const ContactUs())
-                        : const SizedBox(),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: logoutButton(context),
-                    )
-                  ],
-                ),
+    return Drawer(
+      surfaceTintColor: alltemp,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      backgroundColor: textcolor2,
+      child: FutureBuilder(
+        future: getDetails(),
+        builder: (context, snapshot) {
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 25, top: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  topbar(context),
+                  const SizedBox(height: 18),
+                  profileWidget(context),
+                  const SizedBox(height: 30),
+                  DrawerListItem(context, 'Dashboard', Elusive.group_circled,
+                      const DashboardMain()),
+                  DrawerListItem(
+                      context, 'Event', Octicons.calendar, const EventPage()),
+                  (userlevel >= 2)
+                      ? DrawerListItem(context, 'Ticket Scan',
+                          Icons.qr_code_scanner_rounded, const TicketScanMain())
+                      : const SizedBox(),
+                  (userlevel >= 2)
+                      ? DrawerListItem(context, 'Add Coins',
+                          FontAwesome5.rupee_sign, const AddCoins())
+                      : const SizedBox(),
+                  (userlevel >= 3)
+                      ? DrawerListItem(context, 'Volunteer Control',
+                          RpgAwesome.heavy_shield, const VolunteerControl())
+                      : const SizedBox(),
+                  (userlevel >= 3)
+                      ? DrawerListItem(context, 'System Logs',
+                          Typicons.cog_outline, const SystemLogsPage())
+                      : const SizedBox(),
+                  (userlevel <= 2)
+                      ? DrawerListItem(
+                          context, 'Help', Icons.help, const HelpPage())
+                      : const SizedBox(),
+                  (userlevel <= 2)
+                      ? DrawerListItem(context, 'Contact', Icons.contact_page,
+                          const ContactUs())
+                      : const SizedBox(),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: logoutButton(context),
+                  )
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
