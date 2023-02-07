@@ -10,8 +10,6 @@ class PastEvents extends StatefulWidget {
 class _PastEventsState extends State<PastEvents> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text('PastEvents'),
-    );
+    return const Text('PastEvents');
   }
 }

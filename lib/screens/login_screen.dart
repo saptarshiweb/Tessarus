@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
         auth = vol1.authToken!;
         profileImage = vol1.volunteer!.profileImageUrl!;
       }
-      // ignore: use_build_context_synchronously
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('signIn', true);
       await prefs.setString('Name', name);

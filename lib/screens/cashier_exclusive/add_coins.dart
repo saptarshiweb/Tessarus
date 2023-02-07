@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_local_variable
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -56,8 +58,6 @@ class _AddCoinsState extends State<AddCoins> {
 
     Navigator.pop(context);
     fetchUserDetails();
-
-    print(response.body);
   }
 
   Future fetchUserDetails() async {
@@ -77,7 +77,7 @@ class _AddCoinsState extends State<AddCoins> {
         // body: jsonEncode(<String, String>),
 
         body: json.encode(body));
-    print('0');
+
     // print(response.body);
     var responseval = json.decode(response.body);
     // print(responseval);
@@ -86,7 +86,6 @@ class _AddCoinsState extends State<AddCoins> {
         qrvalue = user_id;
         var responseData = responseval['user'];
         selectedUser = User.fromJson(responseData);
-        print(selectedUser.college);
       });
     }
 

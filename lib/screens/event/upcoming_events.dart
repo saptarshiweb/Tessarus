@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +65,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       );
       event1.add(eventfile);
     }
-    print(event1.length);
+    // print(event1.length);
     return event1;
   }
 

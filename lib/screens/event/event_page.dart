@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
@@ -25,7 +27,7 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: customAppBar('Events', Colors.orange),
-      drawer: SimpleDrawerCustom(),
+      drawer: const SimpleDrawerCustom(),
       appBar: eventsPageAppBar('Events', alltemp),
       body: Column(
         children: const [

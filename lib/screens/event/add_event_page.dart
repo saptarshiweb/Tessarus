@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously, unused_field
 import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -283,7 +283,7 @@ class _AddEventPageState extends State<AddEventPage> {
 
         body: json.encode(body));
 
-    // ignore: use_build_context_synchronously
+    
 
     var responseval = json.decode(response.body);
     Navigator.pop(context);

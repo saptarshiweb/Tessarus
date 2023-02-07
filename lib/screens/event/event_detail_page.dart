@@ -13,9 +13,9 @@ class _EventDetailPageState extends State<EventDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar1('Event Details', context),
-      body: Column(children: [
-        
-      ],),
+      body: Column(
+        children: const [],
+      ),
     );
   }
 }

@@ -59,13 +59,12 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   Future<List<Documents>> LogsPrint() async {
     List<Documents> log1 = [];
     // log1.clear();
-    print(logtype);
+
     log_url = '$all_logs?dpp=$dpp';
     if (logtype != 'All Logs') {
       log_url = '$log_url?&logType=$logtype';
     }
     log_url += '&page=${_currentPage + 1}';
-    print(log_url);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
