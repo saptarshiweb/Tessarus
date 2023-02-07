@@ -18,7 +18,6 @@ class DrawerItems {
   static const systemlogs = DrawerItem('System Logs', Typicons.cog_outline);
   static const ticketscan =
       DrawerItem('Ticket Scan', Icons.qr_code_scanner_rounded);
-
   static const addcoin = DrawerItem('Add Coins', FontAwesome5.rupee_sign);
   static const volunteerControl =
       DrawerItem('Volunteer Control', RpgAwesome.heavy_shield);

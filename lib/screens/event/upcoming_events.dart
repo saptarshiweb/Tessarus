@@ -67,30 +67,39 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     return event1;
   }
 
+  Future<Future<List<Events>>> _refreshUpcomingEvents(
+      BuildContext context) async {
+    setState(() {});
+    return eventListUpcoming();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: eventListUpcoming(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Center(child: loadingwidget()),
-            );
-          } else {
-            return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data.length,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                      padding: const EdgeInsets.only(bottom: 10, top: 10),
-                      child: Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          child:
-                              EventCardDisplay(context, snapshot.data[index])));
-                });
-          }
-        });
+    return RefreshIndicator(
+      onRefresh: () => _refreshUpcomingEvents(context),
+      child: FutureBuilder(
+          future: eventListUpcoming(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Center(child: loadingwidget()),
+              );
+            } else {
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.length,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                        padding: const EdgeInsets.only(bottom: 10, top: 10),
+                        child: Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            child: EventCardDisplay(
+                                context, snapshot.data[index])));
+                  });
+            }
+          }),
+    );
   }
 }
