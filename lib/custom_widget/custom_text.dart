@@ -45,3 +45,10 @@ Text headtext(String text) {
         color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold),
   );
 }
+
+Text ctext(String text, Color col) {
+  return Text(
+    text,
+    style: TextStyle(color: col, fontSize: 18, fontWeight: FontWeight.bold),
+  );
+}

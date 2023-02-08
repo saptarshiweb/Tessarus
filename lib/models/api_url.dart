@@ -38,8 +38,11 @@ String add_event_image =
 String delete_event =
     '''https://tessarus.gdsckgec.in/api/events/images/[event_id]'''; //DELETE
 String all_event_url = 'https://tessarus.gdsckgec.in/api/events/all'; //GET
-String specific_event = 'https://tessarus.gdsckgec.in/api/events/';//GET
+String specific_event = 'https://tessarus.gdsckgec.in/api/events/'; //GET
 
 //QR Scan
 String user_qr_scan =
-    '''https://tessarus.gdsckgec.in/api/volunteers/userqrscan''';//POST
+    '''https://tessarus.gdsckgec.in/api/volunteers/userqrscan'''; //POST
+
+//Ticket Scan
+String fetch_ticket_url = '''https://tessarus.gdsckgec.in/api/tickets/''';

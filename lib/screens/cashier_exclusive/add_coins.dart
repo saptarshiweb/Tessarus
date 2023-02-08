@@ -88,8 +88,6 @@ class _AddCoinsState extends State<AddCoins> {
         selectedUser = User.fromJson(responseData);
       });
     }
-
-    // print(responseData);
   }
 
   @override
