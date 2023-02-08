@@ -86,35 +86,34 @@ class _TicketScanMainState extends State<TicketScanMain> {
       ),
     );
   }
-  Widget checkinButton(BuildContext context)
-  {
+
+  Widget checkinButton(BuildContext context) {
     return ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: alltemp),
-                  onPressed: () async {
-                    var res = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SimpleBarcodeScannerPage(
-                            scanType: ScanType.qr,
-                            centerTitle: true,
-                            appBarTitle: 'Scan User Profile',
-                            lineColor: '#FFA500',
-                          ),
-                        ));
-                    setState(() {
-                      if (res is String) {
-                        // qrvalue = res;
-                        ticket_id=res;
-                        fetchTicketDetails();
-                        
-                      }
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: smbold1('Scan New User'),
-                  ),
-                ),
+      style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+      onPressed: () async {
+        var res = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SimpleBarcodeScannerPage(
+                scanType: ScanType.qr,
+                centerTitle: true,
+                appBarTitle: 'Scan User Profile',
+                lineColor: '#FFA500',
+              ),
+            ));
+        setState(() {
+          if (res is String) {
+            // qrvalue = res;
+            ticket_id = res;
+            fetchTicketDetails();
+          }
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: smbold1('Scan New User'),
+      ),
+    );
   }
 
   Widget ticketWidget() {
