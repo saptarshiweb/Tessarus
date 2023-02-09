@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +12,6 @@ import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
 import 'package:http/http.dart' as http;
 import 'package:ticket_widget/ticket_widget.dart';
-
 import '../../custom_widget/custom_text.dart';
 
 class TicketScanMain extends StatefulWidget {

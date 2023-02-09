@@ -10,8 +10,7 @@ import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'dart:convert';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/volunteer_model.dart';
-
-import 'drawer/drawer_main_screen.dart';
+import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -63,11 +62,11 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setInt('Level', level);
       await prefs.setString('Email', email);
       await prefs.setString('Auth', auth);
-      await prefs.setString('DrawerItem', 'Dasboard');
+      await prefs.setString('DrawerItem', 'Dashboard');
       await prefs.setString('profileImage', profileImage);
 
       Navigator.pop(context);
-      easyNavigation(const DrawerScreen(), context);
+      easyNavigation(const DashboardMain(), context);
     }
   }
 
