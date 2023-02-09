@@ -58,19 +58,27 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   int dpp = 10;
   Future<List<Documents>> LogsPrint() async {
     List<Documents> log1 = [];
-    // log1.clear();
 
-    log_url = '$all_logs?dpp=$dpp';
-    if (logtype != 'All Logs') {
-      log_url = '$log_url?&logType=$logtype';
-    }
-    log_url += '&page=${_currentPage + 1}';
+    // log_url = '$all_logs?dpp=$dpp';
+    // if (logtype != 'All Logs') {
+    //   log_url = '$log_url?&logType=$logtype';
+    // }
+    // int page1 = _currentPage + 1;
+    // log_url += '&page=$page1';
+
+    print(log_url);
+    var queryParams = (logtype != 'All Logs')
+        ? {'dpp': 10, 'logType': logtype, 'page': _currentPage + 1}
+        : {'dpp': 10, 'page': _currentPage + 1};
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
     final response = await http.get(
-      Uri.parse(log_url),
+      Uri.parse(log_url).replace(
+        queryParameters:
+            queryParams.map((key, value) => MapEntry(key, value.toString())),
+      ),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -81,13 +89,11 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
       },
     );
     var responseval = json.decode(response.body);
+    print(responseval);
     var responseData = responseval["logs"]["documents"];
 
     for (int i = 0; i < responseData.length; i++) {
-      Documents l1 = Documents(
-          logType: responseData[i]['logType'],
-          description: responseData[i]['description'],
-          createdAt: responseData[i]['createdAt']);
+      Documents l1 = Documents.fromJson(responseData[i]);
       log1.add(l1);
     }
     return log1;
@@ -173,19 +179,20 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-            color: textcolor1, borderRadius: BorderRadius.circular(12)),
+            color: primaryColor1.withOpacity(0.7),
+            borderRadius: BorderRadius.circular(12)),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(14.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  ctext1(l.logType ?? '', textcolor2, 14),
+                  ctext1(l.logType ?? '', textcolor2, 18),
                 ],
               ),
               const SizedBox(height: 8),
-              ctext1(l.description ?? '', textcolor2, 10),
+              ctext1(l.description ?? '', textcolor2.withOpacity(0.8), 14),
               const SizedBox(height: 8),
               subtitletext('Created At:  $date $time'),
             ],
@@ -200,7 +207,6 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
       child: DropdownSearch<String>(
         popupProps: const PopupProps.menu(
           showSelectedItems: true,
-          // disabledItemFn: (String s) => s.startsWith('I'),
         ),
         items: items,
         dropdownDecoratorProps: DropDownDecoratorProps(

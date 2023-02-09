@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
+import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,7 +39,7 @@ class _StartScreenState extends State<StartScreen> {
       body: FutureBuilder(
           future: checkToken(),
           builder: ((context, snapshot) {
-            if (go == true) return const DashboardMain();
+            if (go == true) return const EventPage();
             return const LoginScreen();
           })),
     );

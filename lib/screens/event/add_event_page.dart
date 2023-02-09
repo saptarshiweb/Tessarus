@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously, unused_field
 import 'dart:convert';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/iconic_icons.dart';
@@ -25,6 +24,8 @@ class AddEventPage extends StatefulWidget {
 }
 
 class _AddEventPageState extends State<AddEventPage> {
+  Color choiceChipColor = primaryColor;
+  bool solo = false;
   //Date Time Configure
   late double _height;
   late double _width;
@@ -88,9 +89,6 @@ class _AddEventPageState extends State<AddEventPage> {
         if (_minute.length == 1) _minute = '0$_minute';
         _time = '$_hour : $_minute';
         _timeController.text = _time;
-        // _timeController.text = formatDate(
-        //     DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
-        //     [hh, ':', nn, " ", am]).toString();
       });
     }
   }
@@ -109,9 +107,6 @@ class _AddEventPageState extends State<AddEventPage> {
         if (_minute.length == 1) _minute = '0$_minute';
         _time = '$_hour : $_minute';
         _timeController2.text = _time;
-        // _timeController.text = formatDate(
-        //     DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
-        //     [hh, ':', nn, " ", am]).toString();
       });
     }
   }
@@ -119,17 +114,17 @@ class _AddEventPageState extends State<AddEventPage> {
   @override
   void initState() {
     _dateController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
-    //current time print
-    _timeController.text = '${DateTime.now().hour} : ${DateTime.now().minute}';
 
-    //time 2
+    String h = DateTime.now().hour.toString();
+    String m = DateTime.now().minute.toString();
+    if (h.length == 1) h = '0$h';
+    if (m.length == 1) m = '0$m';
+    _timeController.text = '$h:$m';
+
     _dateController2.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
-    //current time print
-    _timeController2.text = '${DateTime.now().hour} : ${DateTime.now().minute}';
 
-    // _timeController.text = formatDate(
-    //     DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
-    //     [hh, ':', nn, " ", am]).toString();
+    _timeController2.text = '$h:$m';
+
     super.initState();
   }
 
@@ -283,8 +278,6 @@ class _AddEventPageState extends State<AddEventPage> {
 
         body: json.encode(body));
 
-    
-
     var responseval = json.decode(response.body);
     Navigator.pop(context);
     if (responseval['message'] != 'Event added successfully') {
@@ -332,67 +325,71 @@ class _AddEventPageState extends State<AddEventPage> {
     _width = MediaQuery.of(context).size.width;
     dateTime = DateFormat('dd/MM/yyyy').format(DateTime.now());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appbar1('Add Event Details', context),
       backgroundColor: primaryColor,
       body: Padding(
-        padding:
-            const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 10),
-        child: ListView(
-          children: [
-            tfield1(controller: title, label: 'Event Title'),
-            const SizedBox(height: 12),
-            descfield1(controller: description, label: 'Event Description'),
-            const SizedBox(height: 12),
-            tfield1(controller: tagLine, label: 'Event Tagline'),
-            const SizedBox(height: 12),
-            tfield1(controller: eventVenue, label: 'Event Venue'),
-            const SizedBox(height: 12),
-            //Date Time-----------------------
-            startTimeWidget(context),
-            const SizedBox(height: 12),
-            endTimeWidget(context),
-            const SizedBox(height: 12),
-            eventTypeWidget(context),
-            const SizedBox(height: 12),
-            numfield1(controller: eventMin, label: 'Min Participants'),
-            const SizedBox(height: 12),
-            numfield1(controller: eventMax, label: 'Max Participants'),
-            const SizedBox(height: 12),
-            numfield1(controller: eventPrice, label: 'Event Price'),
-            const SizedBox(height: 12),
-            tfield1(controller: organiserClub, label: 'Organiser Club'),
-            const SizedBox(height: 12),
-            coordinatorHeader(context),
-            const SizedBox(height: 12),
-            (total_coordinator > 0)
-                ? coordinatorDisplayContainer(context)
-                : const SizedBox(height: 0, width: 0),
-            (showCoordinatorAdd == true)
-                ? addCoordinatorContainer()
-                : const SizedBox(height: 0, width: 0),
-            const SizedBox(height: 25),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: alltemp),
-                      onPressed: () async {
-                        eventAdd();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            smbold1('Confirm'),
-                          ],
-                        ),
-                      )),
-                ),
-              ],
-            ),
-            const SizedBox(height: 35),
-          ],
+        padding: const EdgeInsets.only(left: 12, right: 12, top: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              tfield1(controller: title, label: 'Event Title'),
+              const SizedBox(height: 12),
+              descfield1(controller: description, label: 'Event Description'),
+              const SizedBox(height: 12),
+              tfield1(controller: tagLine, label: 'Event Tagline'),
+              const SizedBox(height: 12),
+              tfield1(controller: eventVenue, label: 'Event Venue'),
+
+              const SizedBox(height: 12),
+              //Date Time-----------------------
+              startTimeWidget(context),
+              const SizedBox(height: 12),
+              endTimeWidget(context),
+              const SizedBox(height: 12),
+              eventTypeWidget(context),
+              const SizedBox(height: 12),
+              numfield1(controller: eventMin, label: 'Min Participants'),
+              const SizedBox(height: 12),
+              numfield1(controller: eventMax, label: 'Max Participants'),
+              const SizedBox(height: 12),
+              numfield1(controller: eventPrice, label: 'Event Price'),
+              const SizedBox(height: 12),
+              tfield1(controller: organiserClub, label: 'Organiser Club'),
+              const SizedBox(height: 12),
+              coordinatorHeader(context),
+              const SizedBox(height: 12),
+              (total_coordinator > 0)
+                  ? coordinatorDisplayContainer(context)
+                  : const SizedBox(height: 0, width: 0),
+              (showCoordinatorAdd == true)
+                  ? addCoordinatorContainer()
+                  : const SizedBox(height: 0, width: 0),
+              const SizedBox(height: 25),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                side: BorderSide(
+                                    color: containerColor, width: 1))),
+                        onPressed: () async {
+                          eventAdd();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: ctext1(
+                              'Confirm', textcolor2.withOpacity(0.9), 16),
+                        )),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 35),
+            ],
+          ),
         ),
       ),
     );
@@ -401,7 +398,10 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget coordinatorDisplayContainer(BuildContext context) {
     return ElevatedButton(
         onPressed: () {},
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: textcolor2.withOpacity(0.1),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(children: [
@@ -438,8 +438,9 @@ class _AddEventPageState extends State<AddEventPage> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey.shade200,
-      ),
+          backgroundColor: textcolor2.withOpacity(0.1),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -448,7 +449,7 @@ class _AddEventPageState extends State<AddEventPage> {
             Text(
               'Add Coordinators',
               style: TextStyle(
-                  color: Colors.grey.shade600,
+                  color: textcolor2.withOpacity(0.5),
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
@@ -472,7 +473,7 @@ class _AddEventPageState extends State<AddEventPage> {
                     });
                   }
                 },
-                icon: Icon(Iconic.plus_circle, color: textcolor1, size: 22))
+                icon: Icon(Iconic.plus_circle, color: textcolor2, size: 22))
           ],
         ),
       ),
@@ -484,36 +485,30 @@ class _AddEventPageState extends State<AddEventPage> {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(14)),
+            color: textcolor2.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 12, bottom: 8, left: 10, right: 10),
+              const EdgeInsets.only(top: 5, bottom: 8, left: 10, right: 10),
           child: Column(
             children: [
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: alltemp,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Row(
-                          children: [
-                            smbold2('Add Coordinator ${total_coordinator + 1}'),
-                            const Spacer(),
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    showCoordinatorAdd = false;
-                                  });
-                                },
-                                icon: Icon(Iconic.cancel_circle,
-                                    color: textcolor1, size: 22))
-                          ],
-                        ),
-                      ),
+                    child: Row(
+                      children: [
+                        ctext1('Add Coordinator ${total_coordinator + 1}',
+                            textcolor2.withOpacity(0.5), 16),
+                        const Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                showCoordinatorAdd = false;
+                              });
+                            },
+                            icon: Icon(Iconic.cancel_circle,
+                                color: textcolor2, size: 22))
+                      ],
                     ),
                   ),
                 ],
@@ -530,13 +525,13 @@ class _AddEventPageState extends State<AddEventPage> {
                   : const SizedBox(height: 0, width: 0),
               const SizedBox(height: 6),
               (total_coordinator == 0)
-                  ? tfield1(controller: phoneCoordinator1, label: 'Phone')
+                  ? numfield1(controller: phoneCoordinator1, label: 'Phone')
                   : const SizedBox(height: 0, width: 0),
               (total_coordinator == 1)
-                  ? tfield1(controller: phoneCoordinator2, label: 'Phone')
+                  ? numfield1(controller: phoneCoordinator2, label: 'Phone')
                   : const SizedBox(height: 0, width: 0),
               (total_coordinator == 2)
-                  ? tfield1(controller: phoneCoordinator3, label: 'Phone')
+                  ? numfield1(controller: phoneCoordinator3, label: 'Phone')
                   : const SizedBox(height: 0, width: 0),
               const SizedBox(height: 8),
               Row(
@@ -546,7 +541,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
-                            backgroundColor: Colors.lightGreenAccent.shade700),
+                            backgroundColor: primaryColor),
                         onPressed: () {
                           setState(() {
                             total_coordinator++;
@@ -557,7 +552,7 @@ class _AddEventPageState extends State<AddEventPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: Text(
-                            'Confirm',
+                            'Add',
                             style: TextStyle(
                                 color: textcolor2,
                                 fontWeight: FontWeight.bold,
@@ -577,81 +572,62 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget eventTypeWidget(BuildContext context) {
     return ElevatedButton(
         onPressed: () {},
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: textcolor2.withOpacity(0.1),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         child: Padding(
             padding: const EdgeInsets.only(top: 12, bottom: 12),
             child: Column(children: [
               Row(
                 children: [
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      'Event Type',
-                      style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  Text(
+                    'Event Type',
+                    style: TextStyle(
+                        color: textcolor2.withOpacity(0.5),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
-                  Flexible(
-                    flex: 3,
-                    child: DropdownSearch<String>(
-                      popupProps: PopupProps.bottomSheet(
-                        bottomSheetProps: BottomSheetProps(
-                            backgroundColor: textcolor2,
-                            elevation: 100,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12))),
-                        listViewProps: const ListViewProps(shrinkWrap: true),
-                        fit: FlexFit.tight,
-                        constraints: const BoxConstraints(maxHeight: 200),
-                        showSelectedItems: true,
-                        // disabledItemFn: (String s) => s.startsWith('I'),
-                      ),
-                      items: items,
-                      dropdownDecoratorProps: DropDownDecoratorProps(
-                        baseStyle: TextStyle(color: textcolor1),
-                        dropdownSearchDecoration: const InputDecoration(
-                          filled: true,
-                          labelText: "Select Log Type",
-                          hintText: "Log Type",
-                        ),
-                      ),
-                      onSaved: (value) async {
-                        setState(() {
-                          eventtype = value!;
-                        });
-                      },
-                      onChanged: (value) async {
-                        setState(() {
-                          eventtype = value!;
-                        });
-                      },
-                      selectedItem: eventtype,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        eventtype = 'Group';
+                        solo = false;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: (solo == false)
+                              ? primaryColor
+                              : textcolor2.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, bottom: 10, left: 18, right: 18),
+                          child: ctext1('Group', textcolor2, 12)),
                     ),
                   ),
-                  // DropdownButton(
-                  //   value: eventtype,
-                  //   dropdownColor: textcolor2,
-                  //   icon: Icon(FontAwesome.down_open,
-                  //       color: textcolor1, size: 22),
-                  //   elevation: 0,
-                  //   items: items.map((String items) {
-                  //     return DropdownMenuItem(
-                  //       value: items,
-                  //       child: Text(
-                  //         '$items      ',
-                  //         style: TextStyle(color: textcolor1, fontSize: 22),
-                  //       ),
-                  //     );
-                  //   }).toList(),
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       eventtype = value!;
-                  //     });
-                  //   },
-                  // ),
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        eventtype = 'Solo';
+                        solo = true;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: (solo == true)
+                              ? primaryColor
+                              : textcolor2.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, bottom: 10, left: 18, right: 18),
+                          child: ctext1('Solo', textcolor2, 12)),
+                    ),
+                  ),
                 ],
               )
             ])));
@@ -660,7 +636,10 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget startTimeWidget(BuildContext context) {
     return ElevatedButton(
       onPressed: () {},
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+      style: ElevatedButton.styleFrom(
+          backgroundColor: textcolor2.withOpacity(0.1),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       child: Padding(
         padding: const EdgeInsets.only(top: 12, bottom: 8),
         child: Column(
@@ -672,7 +651,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   child: Text(
                     'Event Start Time',
                     style: TextStyle(
-                        color: Colors.grey.shade600,
+                        color: textcolor2.withOpacity(0.5),
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                   ),
@@ -682,9 +661,9 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 1,
                   child: TextFormField(
                     style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: textcolor1),
+                        color: textcolor2.withOpacity(0.5),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,
                     keyboardType: TextInputType.number,
@@ -706,9 +685,9 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 3,
                   child: TextFormField(
                     style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: textcolor1),
+                        color: textcolor2.withOpacity(0.5),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,
                     keyboardType: TextInputType.number,
@@ -716,9 +695,6 @@ class _AddEventPageState extends State<AddEventPage> {
                     onChanged: (value) {
                       _setDate = value;
                     },
-                    // onSaved: (String val) {
-                    //   _setDate = val;
-                    // },
                     decoration: const InputDecoration(
                         disabledBorder:
                             UnderlineInputBorder(borderSide: BorderSide.none),
@@ -733,23 +709,30 @@ class _AddEventPageState extends State<AddEventPage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14))),
                     onPressed: () {
                       _selectDate(context);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Choose Date',
-                          style: TextStyle(
-                              color: textcolor2,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5),
-                        ),
-                        const SizedBox(width: 6),
-                        Icon(FontAwesome.calendar, color: textcolor2, size: 22)
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Choose Date',
+                            style: TextStyle(
+                                color: textcolor2,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5),
+                          ),
+                          const SizedBox(width: 12),
+                          Icon(FontAwesome.calendar,
+                              color: textcolor2, size: 22)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -760,23 +743,29 @@ class _AddEventPageState extends State<AddEventPage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14))),
                     onPressed: () {
                       _selectTime(context);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Choose Time',
-                          style: TextStyle(
-                              color: textcolor2,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5),
-                        ),
-                        const SizedBox(width: 6),
-                        Icon(FontAwesome.clock, color: textcolor2, size: 22)
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Choose Time',
+                            style: TextStyle(
+                                color: textcolor2,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5),
+                          ),
+                          const SizedBox(width: 12),
+                          Icon(FontAwesome.clock, color: textcolor2, size: 22)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -791,7 +780,10 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget endTimeWidget(BuildContext context) {
     return ElevatedButton(
       onPressed: () {},
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+      style: ElevatedButton.styleFrom(
+          backgroundColor: textcolor2.withOpacity(0.1),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       child: Padding(
         padding: const EdgeInsets.only(top: 12, bottom: 8),
         child: Column(
@@ -803,7 +795,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   child: Text(
                     'Event End Time',
                     style: TextStyle(
-                        color: Colors.grey.shade600,
+                        color: textcolor2.withOpacity(0.5),
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                   ),
@@ -813,9 +805,9 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 1,
                   child: TextFormField(
                     style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: textcolor1),
+                        color: textcolor2.withOpacity(0.5),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,
                     keyboardType: TextInputType.number,
@@ -837,9 +829,9 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 3,
                   child: TextFormField(
                     style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: textcolor1),
+                        color: textcolor2.withOpacity(0.5),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,
                     keyboardType: TextInputType.number,
@@ -864,23 +856,30 @@ class _AddEventPageState extends State<AddEventPage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14))),
                     onPressed: () {
                       _selectDate2(context);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Choose Date',
-                          style: TextStyle(
-                              color: textcolor2,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5),
-                        ),
-                        const SizedBox(width: 6),
-                        Icon(FontAwesome.calendar, color: textcolor2, size: 22)
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Choose Date',
+                            style: TextStyle(
+                                color: textcolor2,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5),
+                          ),
+                          const SizedBox(width: 12),
+                          Icon(FontAwesome.calendar,
+                              color: textcolor2, size: 22)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -891,23 +890,29 @@ class _AddEventPageState extends State<AddEventPage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14))),
                     onPressed: () {
                       _selectTime2(context);
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Choose Time',
-                          style: TextStyle(
-                              color: textcolor2,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5),
-                        ),
-                        const SizedBox(width: 6),
-                        Icon(FontAwesome.clock, color: textcolor2, size: 22)
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Choose Time',
+                            style: TextStyle(
+                                color: textcolor2,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5),
+                          ),
+                          const SizedBox(width: 12),
+                          Icon(FontAwesome.clock, color: textcolor2, size: 22)
+                        ],
+                      ),
                     ),
                   ),
                 ),

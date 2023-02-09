@@ -192,13 +192,13 @@ Widget errorModal2(String message, BuildContext context) {
   );
 }
 
-Widget successModal2(String message, BuildContext context,Widget route) {
+Widget successModal2(String message, BuildContext context, Widget route) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
         height: 120,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(12)),
+            color: successModalColor, borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding:
               const EdgeInsets.only(top: 6, bottom: 4, left: 10, right: 10),
@@ -264,6 +264,8 @@ Widget successModal2(String message, BuildContext context,Widget route) {
         )),
   );
 }
+
+
 
 Widget successModal(String message, BuildContext context) {
   return Padding(
@@ -331,3 +333,4 @@ Widget successModal(String message, BuildContext context) {
         )),
   );
 }
+

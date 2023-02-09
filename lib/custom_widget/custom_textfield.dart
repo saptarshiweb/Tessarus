@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 
 Widget tfield1(
     {required TextEditingController controller,
@@ -6,17 +7,19 @@ Widget tfield1(
     obscuretext = false}) {
   return ElevatedButton(
     onPressed: () {},
-    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+    style: ElevatedButton.styleFrom(
+        backgroundColor: textcolor2.withOpacity(0.1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
       controller: controller,
       obscureText: obscuretext,
-      style: const TextStyle(
-          color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+      style: TextStyle(
+          color: textcolor2, fontSize: 18, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: 'Enter $label',
-        labelText: label,
+        labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: Colors.grey.shade600,
+            color: textcolor2.withOpacity(0.5),
             fontSize: 15,
             fontWeight: FontWeight.bold),
       ),
@@ -30,9 +33,11 @@ Widget descfield1(
     obscuretext = false}) {
   return ElevatedButton(
     onPressed: () {},
-    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+    style: ElevatedButton.styleFrom(
+        backgroundColor: textcolor2.withOpacity(0.1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
-      minLines: 2,
+      minLines: 1,
       maxLines: 4,
       controller: controller,
       obscureText: obscuretext,
@@ -40,9 +45,9 @@ Widget descfield1(
           color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: 'Enter $label',
-        labelText: label,
+        labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: Colors.grey.shade600,
+            color: textcolor2.withOpacity(0.5),
             fontSize: 15,
             fontWeight: FontWeight.bold),
       ),
@@ -56,7 +61,9 @@ Widget datefield1(
     obscuretext = false}) {
   return ElevatedButton(
     onPressed: () {},
-    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+    style: ElevatedButton.styleFrom(
+        backgroundColor: textcolor2.withOpacity(0.1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
       controller: controller,
       obscureText: obscuretext,
@@ -65,9 +72,9 @@ Widget datefield1(
           color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: 'Enter $label',
-        labelText: label,
+        labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: Colors.grey.shade600,
+            color: textcolor2.withOpacity(0.5),
             fontSize: 15,
             fontWeight: FontWeight.bold),
       ),
@@ -81,7 +88,9 @@ Widget numfield1(
     obscuretext = false}) {
   return ElevatedButton(
     onPressed: () {},
-    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.shade200),
+    style: ElevatedButton.styleFrom(
+        backgroundColor: textcolor2.withOpacity(0.1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
       controller: controller,
       obscureText: obscuretext,
@@ -90,10 +99,10 @@ Widget numfield1(
           color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: 'Enter $label',
-        labelText: label,
+        labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: Colors.grey.shade600,
-            fontSize: 11,
+            color: textcolor2.withOpacity(0.5),
+            fontSize: 15,
             fontWeight: FontWeight.bold),
       ),
     ),

@@ -11,7 +11,7 @@
 //     if (json['events'] != null) {
 //       events = <Events>[];
 //       json['events'].forEach((v) {
-//         events!.add(new Events.fromJson(v));
+//         events!.add(Events.fromJson(v));
 //       });
 //     }
 //     message = json['message'];
@@ -20,13 +20,13 @@
 //   }
 
 //   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     if (this.events != null) {
-//       data['events'] = this.events!.map((v) => v.toJson()).toList();
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     if (events != null) {
+//       data['events'] = events!.map((v) => v.toJson()).toList();
 //     }
-//     data['message'] = this.message;
-//     data['statusCode'] = this.statusCode;
-//     data['statusMessage'] = this.statusMessage;
+//     data['message'] = message;
+//     data['statusCode'] = statusCode;
+//     data['statusMessage'] = statusMessage;
 //     return data;
 //   }
 // }
@@ -198,14 +198,12 @@ class EventCoordinators {
 class EventCoordinatorsAdd {
   String? name;
   String? phone;
-  
 
   EventCoordinatorsAdd({this.name, this.phone});
 
   EventCoordinatorsAdd.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     phone = json['phone'];
-    
   }
 
   Map<String, dynamic> toJson() {

@@ -7,13 +7,21 @@ Color drawer_back = Colors.purple.shade900;
 Color alltemp = Colors.orange;
 Color allcancel = Colors.red;
 
-Color primaryColor = const Color.fromARGB(255, 120, 37, 229);
+// Color primaryColor = const Color.fromARGB(255, 120, 37, 229);
+
+Color primaryColor1 = const Color.fromARGB(255, 28, 0, 64);
+Color primaryColor = const Color.fromARGB(255, 17, 0, 40);
 Color secondaryColor = Colors.deepPurpleAccent.shade700;
 Color containerColor = const Color.fromARGB(255, 248, 153, 80);
 Color textcol = Colors.black;
 Color bgcolor1 = Colors.white;
+Color subtitleColor = Colors.grey;
+Color modalbackColor2 = Colors.blueGrey;
+Color modalbackColor = primaryColor;
+//
+Color successModalColor = const Color.fromARGB(255, 179, 65, 255);
 
-Color buttonColor = Colors.orangeAccent.shade700;
+Color buttonColor = Colors.orangeAccent.shade400;
 Color buttongreen = Colors.greenAccent.shade700;
 
 Color textcolor2 = Colors.white;
