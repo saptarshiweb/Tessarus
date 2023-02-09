@@ -1,17 +1,23 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/elusive_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_barcode_scanner/enum.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
+import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
+import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:tessarus_volunteer/models/ticket_model_scan.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
 import 'package:http/http.dart' as http;
-import 'package:ticket_widget/ticket_widget.dart';
 import '../../custom_widget/custom_text.dart';
 
 class TicketScanMain extends StatefulWidget {
@@ -24,9 +30,35 @@ class TicketScanMain extends StatefulWidget {
 class _TicketScanMainState extends State<TicketScanMain> {
   bool addcoinwidgetshow = false;
   Tickets selectedTicket = Tickets();
+  Events event1 = Events();
   String auth_val = '';
   String ticket_id = '';
   String ticket_qr_value = 'Sample';
+
+  Future checkInFunctio() async {
+    showLoaderDialog(context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? auth = prefs.getString("Auth");
+    auth_val = auth!;
+    final response = await http.post(
+      Uri.parse(checkIn_ticket_url + ticket_id),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+        'Authorization': 'Bearer $auth_val'
+      },
+      // body: jsonEncode(<String, String>),
+    );
+
+    // print(response.body);
+    var responseval = json.decode(response.body);
+    Navigator.pop(context);
+    successModal2(responseval.message, context, const TicketScanMain());
+  }
+
   Future fetchTicketDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
@@ -50,7 +82,9 @@ class _TicketScanMainState extends State<TicketScanMain> {
       setState(() {
         ticket_qr_value = ticket_id;
         var responseData = responseval['ticket'];
+        var responseData2 = responseval['event'];
         selectedTicket = Tickets.fromJson(responseData);
+        event1 = Events.fromJson(responseData2);
       });
     }
 
@@ -76,9 +110,77 @@ class _TicketScanMainState extends State<TicketScanMain> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(flex: 1, child: ctext('Your Ticket', alltemp)),
-          const SizedBox(height: 10),
-          Expanded(flex: 14, child: ticketWidget()),
+          ctext('Your Ticket', alltemp),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(child: ticketWidget()),
+            ],
+          ),
+          const SizedBox(height: 15),
+          (selectedTicket.checkedIn == true)
+              ? Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: alltemp,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: Center(
+                            child: smbold1(
+                                'Your Ticket is not valid for Checking In!'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : checkinButton(context),
+          // const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.transparent),
+                    onPressed: () {
+                      setState(() {
+                        // qrvalue = 'Sample';
+                        // user_id = '';
+                        // selectedUser = User();
+                        ticket_qr_value = 'Sample';
+                        ticket_id = '';
+                        selectedTicket = Tickets();
+                        event1 = Events();
+                        // fetchUserDetails();
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8, bottom: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesome.left,
+                            color: alltemp.withOpacity(0.5),
+                            size: 22,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Go Back',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: alltemp.withOpacity(0.5)),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -116,19 +218,129 @@ class _TicketScanMainState extends State<TicketScanMain> {
   Widget ticketWidget() {
     return Container(
       decoration: BoxDecoration(
-          color: alltemp, borderRadius: BorderRadius.circular(14)),
+          border: Border.all(width: 1, color: alltemp),
+          color: textcolor2,
+          borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: TicketWidget(
-          width: double.maxFinite,
-          height: double.minPositive,
-          isCornerRounded: true,
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: const [],
-          ),
+        padding: const EdgeInsets.all(14.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: alltemp.withOpacity(0.2)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ctext('ESPEKTRO', alltemp),
+                    )),
+                const Spacer(),
+                smbold(selectedTicket.ticketNumber ?? ''),
+              ],
+            ),
+            const SizedBox(height: 10),
+            teamWidget(),
+            const SizedBox(height: 10),
+            eventWidget()
+          ],
         ),
       ),
+    );
+  }
+
+  Widget eventWidget() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: alltemp.withOpacity(0.2)),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      smbold(event1.title ?? ''),
+                      const Spacer(),
+                      Icon(Icons.event, color: alltemp, size: 22)
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Icon(FontAwesome.star, color: alltemp, size: 20),
+                      const SizedBox(width: 7),
+                      smbold(event1.eventOrganiserClub!.name ?? ''),
+                      const Spacer(),
+                      subtitletext('Organiser')
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Icon(Icons.place_rounded, color: alltemp, size: 20),
+                      const SizedBox(width: 7),
+                      subtitletext(event1.eventVenue ?? ''),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget teamWidget() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: alltemp.withOpacity(0.2)),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      smbold(selectedTicket.team!.name!),
+                      const Spacer(),
+                      Icon(Elusive.group, color: alltemp, size: 22)
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Icon(Typicons.user, color: alltemp, size: 20),
+                      const SizedBox(width: 7),
+                      smbold(selectedTicket.team!.members![0].name!),
+                      const Spacer(),
+                      subtitletext('Team Leader')
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Icon(FontAwesome5.orcid, color: alltemp, size: 20),
+                      const SizedBox(width: 7),
+                      smbold(selectedTicket.team!.members![0].espektroId!),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

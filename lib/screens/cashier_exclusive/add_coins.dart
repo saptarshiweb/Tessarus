@@ -152,6 +152,7 @@ class _AddCoinsState extends State<AddCoins> {
               ),
             ],
           ),
+          
           Row(
             children: [
               Expanded(
