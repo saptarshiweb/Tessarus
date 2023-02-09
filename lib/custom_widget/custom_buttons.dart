@@ -5,7 +5,7 @@ import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 
 ElevatedButton ebutton({required fun, required String text}) {
   return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+      style: ElevatedButton.styleFrom(backgroundColor: secondaryColor),
       onPressed: () {
         fun();
       },
@@ -19,7 +19,6 @@ ElevatedButton ebutton({required fun, required String text}) {
         ),
       ));
 }
-
 
 TextButton tbutton({required fun, required String text}) {
   return TextButton(

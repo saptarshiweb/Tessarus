@@ -93,8 +93,9 @@ class _AddCoinsState extends State<AddCoins> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       drawer: const SimpleDrawerCustom(),
-      appBar: customAppBar('Add Coins', alltemp),
+      appBar: customAppBar('Add Coins', containerColor),
       body: (qrvalue != 'Sample')
           ? SingleChildScrollView(
               child: userSelectedWidget(context, selectedUser))
@@ -124,7 +125,8 @@ class _AddCoinsState extends State<AddCoins> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: containerColor),
                   onPressed: () async {
                     var res = await Navigator.push(
                         context,
@@ -152,7 +154,6 @@ class _AddCoinsState extends State<AddCoins> {
               ),
             ],
           ),
-          
           Row(
             children: [
               Expanded(
@@ -174,7 +175,7 @@ class _AddCoinsState extends State<AddCoins> {
                         children: [
                           Icon(
                             FontAwesome.left,
-                            color: alltemp.withOpacity(0.5),
+                            color: containerColor.withOpacity(0.5),
                             size: 22,
                           ),
                           const SizedBox(width: 12),
@@ -183,7 +184,7 @@ class _AddCoinsState extends State<AddCoins> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: alltemp.withOpacity(0.5)),
+                                color: containerColor.withOpacity(0.5)),
                           )
                         ],
                       ),
@@ -199,7 +200,7 @@ class _AddCoinsState extends State<AddCoins> {
   Widget userProfileWidget(BuildContext context, User user1) {
     return Container(
       decoration: BoxDecoration(
-          color: alltemp.withOpacity(0.2),
+          color: containerColor.withOpacity(0.2),
           borderRadius: BorderRadius.circular(18)),
       child: Padding(
         padding: const EdgeInsets.all(14.0),
@@ -244,7 +245,7 @@ class _AddCoinsState extends State<AddCoins> {
               children: [
                 smbold('Coins '),
                 const SizedBox(width: 9),
-                Icon(FontAwesome5.magento, color: alltemp, size: 16),
+                Icon(FontAwesome5.magento, color: containerColor, size: 16),
                 const SizedBox(width: 6),
                 smbold(user1.coins.toString()),
                 const Spacer(),
@@ -266,7 +267,7 @@ class _AddCoinsState extends State<AddCoins> {
                   child: Row(
                     children: [
                       smbold('Add Coin '),
-                      Icon(Iconic.plus_circle, color: alltemp, size: 22)
+                      Icon(Iconic.plus_circle, color: containerColor, size: 22)
                     ],
                   ),
                 ),
@@ -288,10 +289,7 @@ class _AddCoinsState extends State<AddCoins> {
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  gradient: LinearGradient(colors: [
-                    alltemp,
-                    alltemp.withOpacity(0.7),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+                  color: containerColor),
               child: Padding(
                 padding: const EdgeInsets.all(26.0),
                 child: PrettyQr(
@@ -312,7 +310,8 @@ class _AddCoinsState extends State<AddCoins> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: containerColor),
                   onPressed: () async {
                     var res = await Navigator.push(
                         context,
@@ -350,7 +349,7 @@ class _AddCoinsState extends State<AddCoins> {
       padding: const EdgeInsets.only(top: 15),
       child: Container(
         decoration: BoxDecoration(
-            color: alltemp.withOpacity(0.2),
+            color: containerColor.withOpacity(0.2),
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding:
@@ -363,8 +362,8 @@ class _AddCoinsState extends State<AddCoins> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                        style:
-                            ElevatedButton.styleFrom(backgroundColor: alltemp),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: containerColor),
                         onPressed: () async {
                           addCoinFunction();
                           // setState(() {

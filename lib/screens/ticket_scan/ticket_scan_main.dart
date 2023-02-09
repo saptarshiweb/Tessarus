@@ -94,6 +94,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       drawer: const SimpleDrawerCustom(),
       appBar: customAppBar('Scan Ticket', Colors.orange),
       body: (ticket_qr_value != 'Sample')
@@ -110,7 +111,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ctext('Your Ticket', alltemp),
+          ctext('Your Ticket', containerColor),
           const SizedBox(height: 20),
           Row(
             children: [
@@ -124,7 +125,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                            color: alltemp,
+                            color: containerColor,
                             borderRadius: BorderRadius.circular(6)),
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
@@ -164,7 +165,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                         children: [
                           Icon(
                             FontAwesome.left,
-                            color: alltemp.withOpacity(0.5),
+                            color: textcolor2,
                             size: 22,
                           ),
                           const SizedBox(width: 12),
@@ -173,7 +174,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: alltemp.withOpacity(0.5)),
+                                color: textcolor2),
                           )
                         ],
                       ),
@@ -188,7 +189,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
 
   Widget checkinButton(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+      style: ElevatedButton.styleFrom(backgroundColor: containerColor),
       onPressed: () async {
         var res = await Navigator.push(
             context,
@@ -218,9 +219,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
   Widget ticketWidget() {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 1, color: alltemp),
-          color: textcolor2,
-          borderRadius: BorderRadius.circular(12)),
+          color: containerColor, borderRadius: BorderRadius.circular(18)),
       child: Padding(
         padding: const EdgeInsets.all(14.0),
         child: Column(
@@ -231,13 +230,13 @@ class _TicketScanMainState extends State<TicketScanMain> {
                 Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
-                        color: alltemp.withOpacity(0.2)),
+                        color: textcolor2),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: ctext('ESPEKTRO', alltemp),
+                      child: ctext('ESPEKTRO', containerColor),
                     )),
                 const Spacer(),
-                smbold(selectedTicket.ticketNumber ?? ''),
+                ctext1(selectedTicket.ticketNumber ?? '', textcolor2, 14),
               ],
             ),
             const SizedBox(height: 10),
@@ -256,8 +255,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: alltemp.withOpacity(0.2)),
+                borderRadius: BorderRadius.circular(6), color: textcolor2),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -265,17 +263,18 @@ class _TicketScanMainState extends State<TicketScanMain> {
                 children: [
                   Row(
                     children: [
-                      smbold(event1.title ?? ''),
+                      ctext(event1.title ?? '', containerColor),
                       const Spacer(),
-                      Icon(Icons.event, color: alltemp, size: 22)
+                      Icon(Icons.event, color: textcolor1, size: 22)
                     ],
                   ),
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      Icon(FontAwesome.star, color: alltemp, size: 20),
+                      Icon(FontAwesome.star, color: textcolor1, size: 20),
                       const SizedBox(width: 7),
-                      smbold(event1.eventOrganiserClub!.name ?? ''),
+                      ctext1(event1.eventOrganiserClub!.name ?? '', textcolor1,
+                          14),
                       const Spacer(),
                       subtitletext('Organiser')
                     ],
@@ -283,7 +282,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(Icons.place_rounded, color: alltemp, size: 20),
+                      Icon(Icons.place_rounded,
+                          color: containerColor, size: 20),
                       const SizedBox(width: 7),
                       subtitletext(event1.eventVenue ?? ''),
                     ],
@@ -303,8 +303,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: alltemp.withOpacity(0.2)),
+                borderRadius: BorderRadius.circular(6), color: textcolor2),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -312,17 +311,18 @@ class _TicketScanMainState extends State<TicketScanMain> {
                 children: [
                   Row(
                     children: [
-                      smbold(selectedTicket.team!.name!),
+                      ctext(selectedTicket.team!.name!, containerColor),
                       const Spacer(),
-                      Icon(Elusive.group, color: alltemp, size: 22)
+                      Icon(Elusive.group, color: containerColor, size: 22)
                     ],
                   ),
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      Icon(Typicons.user, color: alltemp, size: 20),
+                      Icon(Typicons.user, color: containerColor, size: 20),
                       const SizedBox(width: 7),
-                      smbold(selectedTicket.team!.members![0].name!),
+                      ctext(selectedTicket.team!.members![0].name!,
+                          containerColor),
                       const Spacer(),
                       subtitletext('Team Leader')
                     ],
@@ -330,9 +330,10 @@ class _TicketScanMainState extends State<TicketScanMain> {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(FontAwesome5.orcid, color: alltemp, size: 20),
+                      Icon(FontAwesome5.orcid, color: containerColor, size: 20),
                       const SizedBox(width: 7),
-                      smbold(selectedTicket.team!.members![0].espektroId!),
+                      ctext1(selectedTicket.team!.members![0].espektroId!,
+                          textcolor1, 12),
                     ],
                   ),
                 ],
@@ -354,10 +355,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  gradient: LinearGradient(colors: [
-                    alltemp,
-                    alltemp.withOpacity(0.7),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+                  color: containerColor),
               child: Padding(
                 padding: const EdgeInsets.all(26.0),
                 child: PrettyQr(
@@ -378,7 +376,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: alltemp),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: containerColor),
                   onPressed: () async {
                     var res = await Navigator.push(
                         context,

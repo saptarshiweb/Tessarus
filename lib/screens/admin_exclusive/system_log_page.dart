@@ -139,6 +139,7 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
     );
 
     return Scaffold(
+      backgroundColor: primaryColor,
       drawer: const SimpleDrawerCustom(),
       appBar: customAppBar('System Logs', Colors.orange),
       body: pages[_currentPage],
@@ -172,16 +173,19 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: alltemp, width: 1.8),
-            borderRadius: BorderRadius.circular(12)),
+            color: textcolor1, borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              smbold(l.logType ?? ''),
+              Row(
+                children: [
+                  ctext1(l.logType ?? '', textcolor2, 14),
+                ],
+              ),
               const SizedBox(height: 8),
-              subtitletext(l.description ?? ''),
+              ctext1(l.description ?? '', textcolor2, 10),
               const SizedBox(height: 8),
               subtitletext('Created At:  $date $time'),
             ],
@@ -199,8 +203,13 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
           // disabledItemFn: (String s) => s.startsWith('I'),
         ),
         items: items,
-        dropdownDecoratorProps: const DropDownDecoratorProps(
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          baseStyle: TextStyle(color: textcolor2),
           dropdownSearchDecoration: InputDecoration(
+            labelStyle: TextStyle(color: textcolor2),
+            hintStyle: TextStyle(color: textcolor2),
+            suffixIconColor: textcolor2,
+            prefixStyle: TextStyle(color: textcolor2),
             labelText: "Select Log Type",
             hintText: "Log Type",
           ),

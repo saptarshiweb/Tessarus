@@ -16,12 +16,12 @@ class EventTabbar extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Material(
-              color: alltemp,
+              color: primaryColor,
               child: TabBar(
                 unselectedLabelColor: Colors.grey.shade300,
                 indicatorWeight: 6.0,
-                indicatorColor: Colors.deepPurple.shade600,
-                labelColor: Colors.black,
+                indicatorColor: containerColor,
+                labelColor: textcolor2,
                 labelStyle:
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 tabs: const [

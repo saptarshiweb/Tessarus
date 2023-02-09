@@ -8,14 +8,14 @@ AppBar appbar1(String text, BuildContext context) {
   return AppBar(
      systemOverlayStyle: SystemUiOverlayStyle(
     // Status bar color
-    statusBarColor: alltemp, 
+    statusBarColor: primaryColor, 
 
     // Status bar brightness (optional)
    
   ),
     automaticallyImplyLeading: false,
     elevation: 0,
-    backgroundColor: alltemp,
+    backgroundColor: primaryColor,
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -24,11 +24,11 @@ AppBar appbar1(String text, BuildContext context) {
               Navigator.pop(context);
             },
             icon:
-                Icon(Typicons.left_open, color: textcolor1, size: 24)),
+                Icon(Typicons.left_open, color: textcolor2, size: 24)),
         Text(text,
             style: TextStyle(
-                color: textcolor1, fontSize: 24, fontWeight: FontWeight.bold)),
-        Icon(FontAwesome.question_circle_o, color: textcolor1, size: 24),
+                color: textcolor2, fontSize: 24, fontWeight: FontWeight.bold)),
+        Icon(FontAwesome.question_circle_o, color: textcolor2, size: 24),
       ],
     ),
   );

@@ -27,6 +27,7 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: customAppBar('Events', Colors.orange),
+      backgroundColor: primaryColor,
       drawer: const SimpleDrawerCustom(),
       appBar: eventsPageAppBar('Events', alltemp),
       body: Column(

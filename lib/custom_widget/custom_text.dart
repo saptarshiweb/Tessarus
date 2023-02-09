@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 
 Text smtext(String text) {
   return Text(
@@ -17,8 +18,8 @@ Text subtitletext(String text) {
 Text smbold(String text) {
   return Text(
     text,
-    style: const TextStyle(
-        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+    style:
+        TextStyle(color: textcolor2, fontWeight: FontWeight.bold, fontSize: 18),
   );
 }
 
@@ -50,5 +51,11 @@ Text ctext(String text, Color col) {
   return Text(
     text,
     style: TextStyle(color: col, fontSize: 18, fontWeight: FontWeight.bold),
+  );
+}
+Text ctext1(String text, Color col,double s) {
+  return Text(
+    text,
+    style: TextStyle(color: col, fontSize: s, fontWeight: FontWeight.bold),
   );
 }

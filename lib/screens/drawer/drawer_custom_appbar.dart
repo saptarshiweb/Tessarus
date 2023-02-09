@@ -13,17 +13,17 @@ import '../../color_constants.dart';
 
 AppBar customAppBar(String text, Color col) {
   return AppBar(
-    iconTheme: IconThemeData(color: textcolor1),
+    iconTheme: IconThemeData(color: textcolor2),
     elevation: 0,
-    backgroundColor: col,
+    backgroundColor: primaryColor,
     systemOverlayStyle: SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: alltemp,
+      statusBarColor: primaryColor,
     ),
     title: Text(
       text,
-      style: const TextStyle(
-          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
+      style: TextStyle(
+          color: textcolor2, fontWeight: FontWeight.bold, fontSize: 24),
     ),
     // leading: const DrawerMenuWidget(),
     // leading: const SimpleDrawerCustom(),
@@ -40,12 +40,12 @@ AppBar eventsPageAppBar(String text, Color col) {
   }
 
   return AppBar(
-    iconTheme: IconThemeData(color: textcolor1),
+    iconTheme: IconThemeData(color: textcolor2),
     elevation: 0,
-    backgroundColor: col,
+    backgroundColor: primaryColor,
     systemOverlayStyle: SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: alltemp,
+      statusBarColor: primaryColor,
     ),
     title: FutureBuilder(
         future: decideAddEvent(),
@@ -55,8 +55,8 @@ AppBar eventsPageAppBar(String text, Color col) {
               children: [
                 Text(
                   text,
-                  style: const TextStyle(
-                      color: Colors.black,
+                  style: TextStyle(
+                      color: textcolor2,
                       fontWeight: FontWeight.bold,
                       fontSize: 24),
                 ),
@@ -65,16 +65,14 @@ AppBar eventsPageAppBar(String text, Color col) {
                     onPressed: () {
                       normalNavigation(const AddEventPage(), context);
                     },
-                    icon: Icon(Iconic.plus_circle, color: textcolor1, size: 26))
+                    icon: Icon(Iconic.plus_circle, color: textcolor2, size: 26))
               ],
             );
           } else {
             return Text(
               text,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24),
+              style: TextStyle(
+                  color: textcolor2, fontWeight: FontWeight.bold, fontSize: 24),
             );
           }
         })),
@@ -92,12 +90,12 @@ AppBar VolunteerControlAppBar(String text) {
   }
 
   return AppBar(
-    iconTheme: IconThemeData(color: textcolor1),
+    iconTheme: IconThemeData(color: textcolor2),
     elevation: 0,
-    backgroundColor: alltemp,
+    backgroundColor: primaryColor,
     systemOverlayStyle: SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: alltemp,
+      statusBarColor: primaryColor,
     ),
     title: FutureBuilder(
         future: decideVolunteerLevel(),
@@ -107,8 +105,8 @@ AppBar VolunteerControlAppBar(String text) {
               children: [
                 Text(
                   text,
-                  style: const TextStyle(
-                      color: Colors.black,
+                  style: TextStyle(
+                      color: textcolor2,
                       fontWeight: FontWeight.bold,
                       fontSize: 24),
                 ),
@@ -118,7 +116,7 @@ AppBar VolunteerControlAppBar(String text) {
                       normalNavigation(const AddVolunteer(), context);
                     },
                     icon: Icon(Typicons.user_add_outline,
-                        color: textcolor1, size: 22)),
+                        color: textcolor2, size: 22)),
               ],
             );
           } else {

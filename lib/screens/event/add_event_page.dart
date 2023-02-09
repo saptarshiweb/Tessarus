@@ -333,6 +333,7 @@ class _AddEventPageState extends State<AddEventPage> {
     dateTime = DateFormat('dd/MM/yyyy').format(DateTime.now());
     return Scaffold(
       appBar: appbar1('Add Event Details', context),
+      backgroundColor: primaryColor,
       body: Padding(
         padding:
             const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 10),

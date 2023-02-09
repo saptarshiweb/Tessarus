@@ -79,6 +79,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       appBar: appbar1('Add Volunteer', context),
       body: SingleChildScrollView(
         child: Padding(
