@@ -55,7 +55,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: MediaQuery.of(context).size.width * 0.80,
+      width: MediaQuery.of(context).size.width * 0.76,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       backgroundColor: Colors.transparent,
       child: FutureBuilder(
@@ -198,10 +198,10 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                   size: 38,
                 )
               : SizedBox(
-                  height: 50,
-                  width: 60,
+                  height: 40,
+                  width: 40,
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(30),
                       child: Image.network(profileImage)),
                 ),
           const SizedBox(width: 18),
@@ -228,7 +228,8 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
       },
       title: Container(
         decoration: BoxDecoration(
-            color: (dval == text) ? containerColor : textcolor2,
+            color:
+                (dval == text) ? containerColor : textcolor2.withOpacity(0.1),
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding:
@@ -239,22 +240,25 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
               Icon(
                 icon,
                 size: 21,
-                color: (dval == text) ? textcolor2 : textcolor4,
+                color:
+                    (dval == text) ? textcolor2 : textcolor2.withOpacity(0.7),
               ),
               const SizedBox(width: 12),
               Text(
                 text,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: (dval == text) ? textcolor2 : textcolor4,
+                  color:
+                      (dval == text) ? textcolor2 : textcolor2.withOpacity(0.7),
                 ),
               ),
               const Spacer(),
               Icon(
                 WebSymbols.right_circle,
                 size: 24,
-                color: (dval == text) ? textcolor2 : textcolor4,
+                color:
+                    (dval == text) ? textcolor2 : textcolor2.withOpacity(0.7),
               ),
             ],
           ),

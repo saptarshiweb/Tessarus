@@ -6,24 +6,21 @@ import 'package:tessarus_volunteer/color_constants.dart';
 AppBar appbar1(String text, BuildContext context) {
   return AppBar(
     systemOverlayStyle: SystemUiOverlayStyle(
-      // Status bar color
       statusBarColor: primaryColor,
-
-      // Status bar brightness (optional)
     ),
-    automaticallyImplyLeading: false,
+    titleSpacing: 0,
     elevation: 0,
     backgroundColor: primaryColor,
+    leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Icon(FontAwesome.left_open, color: textcolor2, size: 19)),
     title: Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(right: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(FontAwesome.left_open, color: textcolor2, size: 19)),
           const Spacer(),
           Text(text,
               style: TextStyle(

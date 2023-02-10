@@ -1,9 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable
 
 import 'dart:convert';
-
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
@@ -11,10 +11,8 @@ import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/system_logs_model.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
-
 import '../../color_constants.dart';
 
 class SystemLogsPage extends StatefulWidget {
@@ -58,13 +56,6 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   int dpp = 10;
   Future<List<Documents>> LogsPrint() async {
     List<Documents> log1 = [];
-
-    // log_url = '$all_logs?dpp=$dpp';
-    // if (logtype != 'All Logs') {
-    //   log_url = '$log_url?&logType=$logtype';
-    // }
-    // int page1 = _currentPage + 1;
-    // log_url += '&page=$page1';
 
     print(log_url);
     var queryParams = (logtype != 'All Logs')
@@ -173,8 +164,27 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   Widget logDisplayWidget(Documents l) {
     String createdAt = '';
     createdAt = l.createdAt ?? '';
+
     String date = createdAt.substring(0, 10);
-    String time = createdAt.substring(11, 16);
+    String time = "${createdAt.substring(11, 16)}:00";
+    createdAt = "$date $time";
+    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(createdAt, true);
+    var dateLocal = dateTime.toLocal();
+    // int len = time.length;
+    // int minutes = int.parse(time.substring(len - 2));
+    // int hour = int.parse(time.substring(0, 2));
+    // if (minutes >= 30) {
+    //   minutes = minutes - 30;
+    //   hour++;
+    // } else {
+    //   minutes += 30;
+    // }
+    // hour += 5;
+    // String h1 = hour.toString();
+    // String m1 = minutes.toString();
+    // if (h1.length < 2) h1 = "0$h1";
+    // if (m1.length < 2) m1 = "0$m1";
+    // time = "$h1 : $m1";
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
@@ -194,7 +204,8 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
               const SizedBox(height: 8),
               ctext1(l.description ?? '', textcolor2.withOpacity(0.8), 14),
               const SizedBox(height: 8),
-              subtitletext('Created At:  $date $time'),
+              ctext1('Created At: ${dateLocal.toString().substring(0, 16)}',
+                  textcolor2.withOpacity(0.4), 12),
             ],
           ),
         ),

@@ -110,7 +110,7 @@ class _AddCoinsState extends State<AddCoins> {
         // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          headtext('  Selected User'),
+          ctext1('  Selected User', textcolor2, 18),
           const SizedBox(height: 15),
           Row(
             children: [
@@ -125,8 +125,10 @@ class _AddCoinsState extends State<AddCoins> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: containerColor),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: containerColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14))),
                   onPressed: () async {
                     var res = await Navigator.push(
                         context,
@@ -148,7 +150,8 @@ class _AddCoinsState extends State<AddCoins> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: smbold1('Scan New User'),
+                    child: ctext1(
+                        'Scan New User', textcolor2.withOpacity(0.9), 15),
                   ),
                 ),
               ),
@@ -175,7 +178,7 @@ class _AddCoinsState extends State<AddCoins> {
                         children: [
                           Icon(
                             FontAwesome.left,
-                            color: containerColor.withOpacity(0.5),
+                            color: containerColor.withOpacity(0.9),
                             size: 22,
                           ),
                           const SizedBox(width: 12),
@@ -184,7 +187,7 @@ class _AddCoinsState extends State<AddCoins> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: containerColor.withOpacity(0.5)),
+                                color: containerColor.withOpacity(0.9)),
                           )
                         ],
                       ),
@@ -200,15 +203,17 @@ class _AddCoinsState extends State<AddCoins> {
   Widget userProfileWidget(BuildContext context, User user1) {
     return Container(
       decoration: BoxDecoration(
-          color: containerColor.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(18)),
+          border: Border.all(color: containerColor, width: 1),
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding:
+            const EdgeInsets.only(top: 18, bottom: 18, left: 15, right: 15),
         child: Column(
           children: [
             Row(
               children: [
-                smbold(user1.name ?? ''),
+                ctext1(user1.name ?? '', textcolor2, 18),
                 const Spacer(), //Image Show
                 Container(
                   decoration:
@@ -224,50 +229,41 @@ class _AddCoinsState extends State<AddCoins> {
             const SizedBox(height: 10),
             Row(
               children: [
-                subtitletext(user1.email ?? ''),
+                ctext1(user1.email ?? '', textcolor2.withOpacity(0.6), 12),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                subtitletext(user1.college ?? ''),
+                ctext1(user1.college ?? '', textcolor2.withOpacity(0.8), 15),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                smbold('Espektro ID '),
-                smbold(user1.espektroId ?? ''),
+                ctext1('Espektro ID ', textcolor2.withOpacity(0.8), 15),
+                ctext1(user1.espektroId ?? '', containerColor, 14),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                smbold('Coins '),
+                ctext1('Coins ', textcolor2.withOpacity(0.6), 16),
                 const SizedBox(width: 9),
                 Icon(FontAwesome5.magento, color: containerColor, size: 16),
                 const SizedBox(width: 6),
-                smbold(user1.coins.toString()),
+                ctext1(user1.coins.toString(), textcolor2.withOpacity(0.9), 14),
                 const Spacer(),
                 GestureDetector(
                   onTap: () {
-                    // showModalBottomSheet(
-                    //     backgroundColor: Colors.transparent,
-                    //     shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(12)),
-                    //     context: context,
-                    //     builder: (context) {
-                    //       return addCoinModalWidget(context);
-                    //     });
-
                     setState(() {
                       addcoinwidgetshow = true;
                     });
                   },
                   child: Row(
                     children: [
-                      smbold('Add Coin '),
-                      Icon(Iconic.plus_circle, color: containerColor, size: 22)
+                      ctext1('Add Coin ', textcolor2, 14),
+                      Icon(Iconic.plus_circle, color: containerColor, size: 18)
                     ],
                   ),
                 ),
@@ -349,7 +345,8 @@ class _AddCoinsState extends State<AddCoins> {
       padding: const EdgeInsets.only(top: 15),
       child: Container(
         decoration: BoxDecoration(
-            color: containerColor.withOpacity(0.2),
+            border: Border.all(width: 1, color: containerColor),
+            color: primaryColor,
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding:
@@ -363,15 +360,17 @@ class _AddCoinsState extends State<AddCoins> {
                   Expanded(
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: containerColor),
+                            backgroundColor: containerColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
                         onPressed: () async {
                           addCoinFunction();
-                          // setState(() {
-                          //   addcoinwidgetshow = false;
-                          // });
-                          // addCoinFunction();
                         },
-                        child: smbold1('Confirm')),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: ctext1(
+                              'Confirm', textcolor2.withOpacity(0.9), 14),
+                        )),
                   ),
                 ],
               ),
