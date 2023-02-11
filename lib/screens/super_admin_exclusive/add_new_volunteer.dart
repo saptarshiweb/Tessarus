@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
@@ -53,7 +54,7 @@ class _AddVolunteerState extends State<AddVolunteer> {
     );
     var responseval = json.decode(response.body);
     // print(response.body);
-    Navigator.pop(context);//stop loading widget
+    Navigator.pop(context); //stop loading widget
     if (responseval.length < 10) {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
@@ -79,13 +80,16 @@ class _AddVolunteerState extends State<AddVolunteer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: primaryColor,
       appBar: appbar1('Add Volunteer', context),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 40),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+        child: SingleChildScrollView(
           child: Column(
             children: [
+              Icon(FontAwesome.user_plus, color: containerColor, size: 120),
+              const SizedBox(height: 40),
               tfield1(controller: volunteer_name, label: 'Name'),
               const SizedBox(height: 12),
               tfield1(controller: volunteer_email, label: 'Email'),
@@ -105,16 +109,19 @@ class _AddVolunteerState extends State<AddVolunteer> {
                     volunteer_add(context);
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightGreenAccent.shade400),
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 1, color: containerColor),
+                          borderRadius: BorderRadius.circular(14))),
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: const EdgeInsets.all(18.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        smbold('Confirm'),
+                        ctext1('Confirm', textcolor2.withOpacity(0.8), 16),
                         const SizedBox(width: 14),
                         Icon(Typicons.user_add_outline,
-                            color: textcolor1, size: 18),
+                            color: textcolor2.withOpacity(0.8), size: 16),
                       ],
                     ),
                   ))

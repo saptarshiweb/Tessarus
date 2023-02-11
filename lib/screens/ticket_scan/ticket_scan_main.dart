@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, avoid_print, unused_local_variable
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
@@ -96,7 +96,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
     return Scaffold(
       backgroundColor: primaryColor,
       drawer: const SimpleDrawerCustom(),
-      appBar: customAppBar('Scan Ticket', Colors.orange),
+      appBar: customAppBar('Scan Ticket', containerColor),
       body: (ticket_qr_value != 'Sample')
           ? ticketSelectedWidget(context)
           : noTicketSelectedWidget(context),

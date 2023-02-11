@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unused_local_variable
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print
 
 import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';

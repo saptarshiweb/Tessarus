@@ -325,11 +325,12 @@ class _AddEventPageState extends State<AddEventPage> {
     _width = MediaQuery.of(context).size.width;
     dateTime = DateFormat('dd/MM/yyyy').format(DateTime.now());
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: appbar1('Add Event Details', context),
       backgroundColor: primaryColor,
       body: Padding(
-        padding: const EdgeInsets.only(left: 12, right: 12, top: 20),
+        padding:
+            const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 10),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -387,7 +388,6 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 35),
             ],
           ),
         ),

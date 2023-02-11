@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:http/http.dart' as http;
@@ -73,48 +74,47 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(toolbarHeight: 0.0),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            tfield1(controller: email_controller, label: 'your Email'),
+            const SizedBox(height: 10),
+            tfield1(
+                controller: password_controller,
+                label: 'your Password',
+                obscuretext: true),
+            const SizedBox(height: 30),
+            Row(
               children: [
-                tfield1(controller: email_controller, label: 'your Email'),
-                const SizedBox(height: 10),
-                tfield1(
-                    controller: password_controller,
-                    label: 'your Password',
-                    obscuretext: true),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orangeAccent.shade100),
-                          onPressed: () {
-                            FocusScopeNode currentFocus =
-                                FocusScope.of(context);
-                            if (!currentFocus.hasPrimaryFocus &&
-                                currentFocus.focusedChild != null) {
-                              currentFocus.focusedChild!.unfocus();
-                            }
-                            LoginRequest(email_controller.text,
-                                password_controller.text);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(14.0),
-                            child: smbold('Confirm'),
-                          )),
-                    ),
-                  ],
-                )
+                Expanded(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(9)),
+                          backgroundColor: containerColor),
+                      onPressed: () {
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        if (!currentFocus.hasPrimaryFocus &&
+                            currentFocus.focusedChild != null) {
+                          currentFocus.focusedChild!.unfocus();
+                        }
+                        LoginRequest(
+                            email_controller.text, password_controller.text);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: ctext1('Login', textcolor2.withOpacity(0.8), 14),
+                      )),
+                ),
               ],
-            ),
-          ),
+            )
+          ],
         ),
       ),
     );

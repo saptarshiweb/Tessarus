@@ -1,4 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_element
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -189,68 +190,84 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
 
   Widget confirmDeleteDialogEvent(
       String id, BuildContext context, String text) {
-    return Container(
-        height: 300,
-        decoration: BoxDecoration(
-            color: modalbackColor,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24), topRight: Radius.circular(24))),
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 30, bottom: 4, left: 10, right: 10),
-          child: Column(
-            children: [
-              Container(
-                  decoration: BoxDecoration(
-                      color: containerColor.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Icon(FontAwesome.trash, color: textcolor2, size: 30),
-                  )),
-              const SizedBox(height: 30),
-              ctext1(text, textcolor2, 22),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          deleteEvent(id.toString(), context);
-                          eventListUpcoming();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: allcancel,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14))),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(FontAwesome.cancel_circled),
+            iconSize: 22,
+            color: textcolor2),
+        const SizedBox(height: 6),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+          child: Container(
+              decoration: BoxDecoration(
+                  color: primaryColor1,
+                  borderRadius: BorderRadius.circular(18)),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 30, bottom: 4, left: 10, right: 10),
+                child: Column(
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                            color: containerColor.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(25)),
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            'Yes, Delete it',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: textcolor2),
-                          ),
+                          padding: const EdgeInsets.all(20.0),
+                          child: Icon(FontAwesome.trash,
+                              color: textcolor2, size: 30),
                         )),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(fontSize: 18, color: textcolor3),
+                    const SizedBox(height: 30),
+                    ctext1(text, textcolor2.withOpacity(0.8), 18),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                deleteEvent(id.toString(), context);
+                                eventListUpcoming();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: allcancel.withOpacity(0.8),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text(
+                                  'Yes, Delete it',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: textcolor2.withOpacity(0.8)),
+                                ),
+                              )),
+                        ),
+                      ],
                     ),
-                  ))
-            ],
-          ),
-        ));
+                    const SizedBox(height: 10),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       Navigator.pop(context);
+                    //     },
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(12.0),
+                    //       child: Text(
+                    //         'Cancel',
+                    //         style: TextStyle(fontSize: 18, color: textcolor3),
+                    //       ),
+                    //     ))
+                  ],
+                ),
+              )),
+        ),
+      ],
+    );
   }
 }

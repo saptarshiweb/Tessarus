@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 
 Widget loadingwidget() {
-  return const CircularProgressIndicator(
-    color: Colors.orange,
-    backgroundColor: Colors.purple,
+  return CircularProgressIndicator(
+    color: containerColor,
+    backgroundColor: primaryColor1,
   );
 }
 
