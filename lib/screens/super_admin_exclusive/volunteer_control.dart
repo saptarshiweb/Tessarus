@@ -1,7 +1,9 @@
-// ignore_for_file: non_constant_identifier_names, avoid_print, unused_local_variable
-
+// ignore_for_file: non_constant_identifier_names, avoid_print, unused_local_variable, use_build_context_synchronously
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
@@ -23,6 +25,35 @@ class VolunteerControl extends StatefulWidget {
 class _VolunteerControlState extends State<VolunteerControl> {
   String auth_val = '';
   TextEditingController search_volunteer = TextEditingController();
+  Future deleteVolunteer(String id) async {
+    String authVal = '';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? auth = prefs.getString("Auth");
+    authVal = auth!;
+    final response = await http.delete(
+      Uri.parse("$remove_volunteer$id"),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+        'Authorization': 'Bearer $authVal'
+      },
+    );
+    print(response.body);
+    var responseval = jsonDecode(response.body);
+    // ignore: avoid_print
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        context: context,
+        builder: (context) {
+          return successModal2(
+              responseval['message']!, context, const VolunteerControl());
+        });
+  }
 
   Future<List<VolunteerDisplayModel>> volunteer_detail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,20 +81,8 @@ class _VolunteerControlState extends State<VolunteerControl> {
     // print(responseData[0]['name']);
 
     for (int i = 0; i < responseData.length; i++) {
-      // print(i);
-      // print(responseData[i]['name']);
-
-      VolunteerDisplayModel volunteer = VolunteerDisplayModel(
-          sId: responseData[i]['_id'],
-          name: responseData[i]['name'],
-          email: responseData[i]['email'],
-          phone: responseData[i]['phone'],
-          events: responseData[i]['events'].cast<String>(),
-          accessLevel: responseData[i]['accessLevel'],
-          profileImageUrl: responseData[i]['profileImageUrl'],
-          createdAt: responseData[i]['createdAt'],
-          updatedAt: responseData[i]['updatedAt'],
-          iV: responseData[i]['__v']);
+      VolunteerDisplayModel volunteer =
+          VolunteerDisplayModel.fromJson(responseData[i]);
 
       volunteer1.add(volunteer);
     }
@@ -114,13 +133,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
                                     padding: const EdgeInsets.only(
                                         bottom: 10, top: 10),
                                     child: volunteerDisplay(
-                                        context,
-                                        snapshot.data[index].name,
-                                        snapshot.data[index].email,
-                                        snapshot.data[index].phone,
-                                        snapshot.data[index].accessLevel
-                                            .toString(),
-                                        snapshot.data[index].sId));
+                                        context, snapshot.data[index]));
                               });
                         }
                       },
@@ -135,8 +148,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
     );
   }
 
-  Widget volunteerDisplay(BuildContext context, String name, String email,
-      String phone, String access, String id) {
+  Widget volunteerDisplay(BuildContext context, VolunteerDisplayModel v) {
     String vol(String access) {
       if (access == '4') {
         return 'Super Admin';
@@ -150,50 +162,57 @@ class _VolunteerControlState extends State<VolunteerControl> {
 
     return Container(
       decoration: BoxDecoration(
-          color: textcolor1, borderRadius: BorderRadius.circular(12)),
+          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
       child: Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding:
+            const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                ctext1(name, textcolor2, 14),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ctext1(v.name ?? '', textcolor2, 18),
+                    const SizedBox(height: 12),
+                    ctext1(v.email ?? '', textcolor2.withOpacity(0.6), 12)
+                  ],
+                ),
                 const Spacer(),
-                ctext1(phone, textcolor2, 12)
+                (v.profileImageUrl == '')
+                    ? Icon(
+                        Typicons.user,
+                        color: textcolor4,
+                        size: 38,
+                      )
+                    : SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Image.network(v.profileImageUrl!)),
+                      ),
               ],
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 12),
             Row(
               children: [
-                ctext1(email, textcolor2, 12),
+                ctext1(vol(v.accessLevel.toString()), containerColor, 22),
                 const Spacer(),
-                ctext1(vol(access), textcolor2, 12)
-              ],
-            ),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange),
+                IconButton(
                     onPressed: () {},
-                    child: const Text('Edit')),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    icon: Icon(FontAwesome.pencil_squared,
+                        color: containerColor, size: 22)),
+                const SizedBox(width: 10),
+                IconButton(
                     onPressed: () {
-                      showModalBottomSheet(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return confirm(id, context);
-                          });
+                      deleteVolunteer(v.sId!);
+                      volunteer_detail();
                     },
-                    child: const Text('Delete')),
+                    icon: Icon(FontAwesome5.trash_alt,
+                        color: allcancel, size: 22))
               ],
             ),
           ],

@@ -200,14 +200,7 @@ class _AddEventPageState extends State<AddEventPage> {
       if (endTime[i] != ' ') endTime2 += endTime[i];
     }
     endTime = endTime2;
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return AlertDialog(
-    //         content: Text(endTime),
-    //       );
-    //     });
-    // endTime = "${_timeController2.text}:00";
+
     String year1 = _dateController.text.substring(6);
     String year2 = _dateController2.text.substring(6);
 

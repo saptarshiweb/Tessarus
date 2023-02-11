@@ -201,9 +201,27 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   Widget dropDownWidgetLogType(BuildContext context) {
     return SingleChildScrollView(
       child: DropdownSearch<String>(
-        popupProps: const PopupProps.menu(
-          showSelectedItems: true,
-        ),
+        popupProps: PopupProps.menu(
+            //change text color in popupWidget
+            itemBuilder: (context, item, isSelected) {
+              return ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: textcolor1),
+                onPressed: () {
+                  setState(() {
+                    isSelected = true;
+                    logtype = item;
+                  });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ctext1(item, textcolor2, 16),
+                  ],
+                ),
+              );
+            },
+            showSelectedItems: true,
+            menuProps: MenuProps(backgroundColor: textcolor1)),
         items: items,
         dropdownDecoratorProps: DropDownDecoratorProps(
           baseStyle: TextStyle(color: textcolor2),

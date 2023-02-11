@@ -25,7 +25,7 @@ Widget confirm(String id, BuildContext context) {
                   Expanded(
                     child: ElevatedButton(
                         onPressed: () {
-                          deleteVolunteer(id);
+                          
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
