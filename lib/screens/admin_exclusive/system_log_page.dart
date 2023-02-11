@@ -170,27 +170,12 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
     createdAt = "$date $time";
     var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(createdAt, true);
     var dateLocal = dateTime.toLocal();
-    // int len = time.length;
-    // int minutes = int.parse(time.substring(len - 2));
-    // int hour = int.parse(time.substring(0, 2));
-    // if (minutes >= 30) {
-    //   minutes = minutes - 30;
-    //   hour++;
-    // } else {
-    //   minutes += 30;
-    // }
-    // hour += 5;
-    // String h1 = hour.toString();
-    // String m1 = minutes.toString();
-    // if (h1.length < 2) h1 = "0$h1";
-    // if (m1.length < 2) m1 = "0$m1";
-    // time = "$h1 : $m1";
+
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-            color: primaryColor1.withOpacity(0.7),
-            borderRadius: BorderRadius.circular(12)),
+            color: primaryColor1, borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(

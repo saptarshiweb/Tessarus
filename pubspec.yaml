@@ -45,6 +45,7 @@ dependencies:
   dropdown_search: ^5.0.5
   number_paginator: ^0.2.3
   ticket_widget: ^0.0.1
+  lottie: ^2.2.0
   
   
   

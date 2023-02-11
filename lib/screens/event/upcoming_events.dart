@@ -203,10 +203,10 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
             color: textcolor2),
         const SizedBox(height: 6),
         Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
           child: Container(
               decoration: BoxDecoration(
-                  color: primaryColor1,
+                  color: modalbackColor2,
                   borderRadius: BorderRadius.circular(18)),
               child: Padding(
                 padding: const EdgeInsets.only(

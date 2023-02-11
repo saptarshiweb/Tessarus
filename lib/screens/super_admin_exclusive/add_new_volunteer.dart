@@ -62,7 +62,8 @@ class _AddVolunteerState extends State<AddVolunteer> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           context: context,
           builder: (context) {
-            return errorModal2(responseval['message'], context);
+            return errorModal2(
+                responseval['message'], context);
           });
     } else {
       showModalBottomSheet(

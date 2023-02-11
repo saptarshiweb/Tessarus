@@ -90,29 +90,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: 'your Password',
                 obscuretext: true),
             const SizedBox(height: 30),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(9)),
-                          backgroundColor: containerColor),
-                      onPressed: () {
-                        FocusScopeNode currentFocus = FocusScope.of(context);
-                        if (!currentFocus.hasPrimaryFocus &&
-                            currentFocus.focusedChild != null) {
-                          currentFocus.focusedChild!.unfocus();
-                        }
-                        LoginRequest(
-                            email_controller.text, password_controller.text);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: ctext1('Login', textcolor2.withOpacity(0.8), 14),
-                      )),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            backgroundColor: containerColor),
+                        onPressed: () {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus &&
+                              currentFocus.focusedChild != null) {
+                            currentFocus.focusedChild!.unfocus();
+                          }
+                          LoginRequest(
+                              email_controller.text, password_controller.text);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child:
+                              ctext1('Login', textcolor2.withOpacity(0.8), 16),
+                        )),
+                  ),
+                ],
+              ),
             )
           ],
         ),
