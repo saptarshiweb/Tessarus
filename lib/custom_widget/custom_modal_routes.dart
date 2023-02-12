@@ -47,7 +47,7 @@ Widget errorModal2(String message, BuildContext context) {
                     Text(
                       message,
                       style: TextStyle(
-                          color: textcolor2.withOpacity(0.7),
+                          color: textcolor5,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),

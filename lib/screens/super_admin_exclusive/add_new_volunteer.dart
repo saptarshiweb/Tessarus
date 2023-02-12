@@ -119,10 +119,10 @@ class _AddVolunteerState extends State<AddVolunteer> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ctext1('Confirm', textcolor2.withOpacity(0.8), 16),
+                        ctext1('Confirm', textcolor5, 16),
                         const SizedBox(width: 14),
                         Icon(Typicons.user_add_outline,
-                            color: textcolor2.withOpacity(0.8), size: 16),
+                            color: textcolor5, size: 16),
                       ],
                     ),
                   ))

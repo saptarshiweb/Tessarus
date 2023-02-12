@@ -177,7 +177,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
                   children: [
                     ctext1(v.name ?? '', textcolor2, 18),
                     const SizedBox(height: 12),
-                    ctext1(v.email ?? '', textcolor2.withOpacity(0.6), 12)
+                    ctext1(v.email ?? '', textcolor5, 12)
                   ],
                 ),
                 const Spacer(),

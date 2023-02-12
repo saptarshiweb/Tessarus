@@ -177,7 +177,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
               Text(
                 'Logout',
                 style: TextStyle(
-                    color: textcolor2.withOpacity(0.8),
+                    color: textcolor5,
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
               )
@@ -210,7 +210,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
             children: [
               ctext1(username, textcolor2, 18),
               const SizedBox(height: 2),
-              ctext1(useremail, textcolor2.withOpacity(0.4), 12)
+              ctext1(useremail, textcolor5, 12)
             ],
           )
         ],
@@ -241,7 +241,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                 icon,
                 size: 21,
                 color:
-                    (dval == text) ? textcolor2 : textcolor2.withOpacity(0.7),
+                    (dval == text) ? textcolor2 : textcolor5,
               ),
               const SizedBox(width: 12),
               Text(
@@ -250,7 +250,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color:
-                      (dval == text) ? textcolor2 : textcolor2.withOpacity(0.7),
+                      (dval == text) ? textcolor2 : textcolor5,
                 ),
               ),
               const Spacer(),
@@ -258,7 +258,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                 WebSymbols.right_circle,
                 size: 24,
                 color:
-                    (dval == text) ? textcolor2 : textcolor2.withOpacity(0.7),
+                    (dval == text) ? textcolor2 : textcolor5,
               ),
             ],
           ),

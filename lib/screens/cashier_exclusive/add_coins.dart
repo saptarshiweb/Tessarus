@@ -151,7 +151,7 @@ class _AddCoinsState extends State<AddCoins> {
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: ctext1(
-                        'Scan New User', textcolor2.withOpacity(0.9), 15),
+                        'Scan New User', textcolor5, 15),
                   ),
                 ),
               ),
@@ -178,7 +178,7 @@ class _AddCoinsState extends State<AddCoins> {
                         children: [
                           Icon(
                             FontAwesome.left,
-                            color: containerColor.withOpacity(0.9),
+                            color: containerColor,
                             size: 22,
                           ),
                           const SizedBox(width: 12),
@@ -187,7 +187,7 @@ class _AddCoinsState extends State<AddCoins> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: containerColor.withOpacity(0.9)),
+                                color: containerColor),
                           )
                         ],
                       ),
@@ -229,30 +229,30 @@ class _AddCoinsState extends State<AddCoins> {
             const SizedBox(height: 10),
             Row(
               children: [
-                ctext1(user1.email ?? '', textcolor2.withOpacity(0.6), 12),
+                ctext1(user1.email ?? '', textcolor5, 12),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                ctext1(user1.college ?? '', textcolor2.withOpacity(0.8), 15),
+                ctext1(user1.college ?? '', textcolor5, 15),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                ctext1('Espektro ID ', textcolor2.withOpacity(0.8), 15),
+                ctext1('Espektro ID ', textcolor5, 15),
                 ctext1(user1.espektroId ?? '', containerColor, 14),
               ],
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                ctext1('Coins ', textcolor2.withOpacity(0.6), 16),
+                ctext1('Coins ', textcolor5, 16),
                 const SizedBox(width: 9),
                 Icon(FontAwesome5.magento, color: containerColor, size: 16),
                 const SizedBox(width: 6),
-                ctext1(user1.coins.toString(), textcolor2.withOpacity(0.9), 14),
+                ctext1(user1.coins.toString(), textcolor5, 14),
                 const Spacer(),
                 GestureDetector(
                   onTap: () {
@@ -369,7 +369,7 @@ class _AddCoinsState extends State<AddCoins> {
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: ctext1(
-                              'Confirm', textcolor2.withOpacity(0.9), 14),
+                              'Confirm', textcolor5, 14),
                         )),
                   ),
                 ],
@@ -393,7 +393,7 @@ class _AddCoinsState extends State<AddCoins> {
                             children: [
                               Icon(
                                 FontAwesome.left,
-                                color: allcancel.withOpacity(0.5),
+                                color: allcancel,
                                 size: 22,
                               ),
                               const SizedBox(width: 12),
@@ -402,7 +402,7 @@ class _AddCoinsState extends State<AddCoins> {
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: allcancel.withOpacity(0.5)),
+                                    color: allcancel),
                               )
                             ],
                           ),

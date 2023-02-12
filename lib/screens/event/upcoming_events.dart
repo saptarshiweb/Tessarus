@@ -214,7 +214,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                   children: [
                     Container(
                         decoration: BoxDecoration(
-                            color: containerColor.withOpacity(0.9),
+                            color: containerColor,
                             borderRadius: BorderRadius.circular(25)),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
@@ -222,7 +222,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                               color: textcolor2, size: 30),
                         )),
                     const SizedBox(height: 30),
-                    ctext1(text, textcolor2.withOpacity(0.8), 18),
+                    ctext1(text, textcolor5, 18),
                     const SizedBox(height: 20),
                     Row(
                       children: [
@@ -234,7 +234,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                                 eventListUpcoming();
                               },
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: allcancel.withOpacity(0.8),
+                                  backgroundColor: allcancel,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8))),
                               child: Padding(
@@ -244,7 +244,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color: textcolor2.withOpacity(0.8)),
+                                      color: textcolor5),
                                 ),
                               )),
                         ),

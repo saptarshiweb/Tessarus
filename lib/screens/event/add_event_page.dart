@@ -399,7 +399,7 @@ class _AddEventPageState extends State<AddEventPage> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              ctext1(title, textcolor2.withOpacity(0.6), 14),
+              ctext1(title, textcolor5, 14),
               const Spacer(),
               IconButton(
                   onPressed: () {
@@ -606,7 +606,7 @@ class _AddEventPageState extends State<AddEventPage> {
             Text(
               'Add Coordinators',
               style: TextStyle(
-                  color: textcolor2.withOpacity(0.5),
+                  color: textcolor5,
                   fontSize: 15,
                   fontWeight: FontWeight.bold),
             ),
@@ -655,7 +655,7 @@ class _AddEventPageState extends State<AddEventPage> {
                     child: Row(
                       children: [
                         ctext1('Add Coordinator ${total_coordinator + 1}',
-                            textcolor2.withOpacity(0.5), 16),
+                            textcolor5, 16),
                         const Spacer(),
                         IconButton(
                             onPressed: () {
@@ -741,7 +741,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   Text(
                     'Event Type',
                     style: TextStyle(
-                        color: textcolor2.withOpacity(0.5),
+                        color: textcolor5,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                   ),
@@ -808,7 +808,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   child: Text(
                     'Event Start Time',
                     style: TextStyle(
-                        color: textcolor2.withOpacity(0.5),
+                        color: textcolor5,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                   ),
@@ -818,7 +818,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 1,
                   child: TextFormField(
                     style: TextStyle(
-                        color: textcolor2.withOpacity(0.5),
+                        color: textcolor5,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -842,7 +842,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 3,
                   child: TextFormField(
                     style: TextStyle(
-                        color: textcolor2.withOpacity(0.5),
+                        color: textcolor5,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -952,7 +952,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   child: Text(
                     'Event End Time',
                     style: TextStyle(
-                        color: textcolor2.withOpacity(0.5),
+                        color: textcolor5,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                   ),
@@ -962,7 +962,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 1,
                   child: TextFormField(
                     style: TextStyle(
-                        color: textcolor2.withOpacity(0.5),
+                        color: textcolor5,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -986,7 +986,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   flex: 3,
                   child: TextFormField(
                     style: TextStyle(
-                        color: textcolor2.withOpacity(0.5),
+                        color: textcolor5,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
