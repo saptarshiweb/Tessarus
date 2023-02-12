@@ -20,8 +20,6 @@ easyNavigation(Widget route, BuildContext context) {
       (Route<dynamic> route) => false);
 }
 
-
-
 Future deleteEvent(String id, BuildContext context) async {
   String authVal = '';
   SharedPreferences prefs = await SharedPreferences.getInstance();

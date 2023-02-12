@@ -17,7 +17,7 @@ Color containerColor = const Color.fromARGB(255, 248, 153, 80);
 Color textcol = Colors.black;
 Color bgcolor1 = Colors.white;
 Color subtitleColor = Colors.grey;
-Color modalbackColor2 = Color.fromARGB(255, 27, 2, 44);
+Color modalbackColor2 = const Color.fromARGB(255, 27, 2, 44);
 Color modalbackColor = primaryColor;
 //
 Color successModalColor = const Color.fromARGB(255, 179, 65, 255);

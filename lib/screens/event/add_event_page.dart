@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/iconic_icons.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
@@ -132,7 +133,7 @@ class _AddEventPageState extends State<AddEventPage> {
   String auth_val = '';
   //event add controllers
   TextEditingController title = TextEditingController();
-  TextEditingController description = TextEditingController();
+  String description = 'Event Description';
   TextEditingController tagLine = TextEditingController();
   // TextEditingController startTime = TextEditingController();
   // TextEditingController endTime = TextEditingController();
@@ -157,6 +158,8 @@ class _AddEventPageState extends State<AddEventPage> {
   Future eventAdd() async {
     //organiser club
     showLoaderDialog(context);
+
+    print(description);
 
     String h1 = '', m1 = '';
     String s2 = _timeController.text;
@@ -235,17 +238,13 @@ class _AddEventPageState extends State<AddEventPage> {
           name: nameCoordinator3.text, phone: phoneCoordinator3.text);
       eventCoordinator1.add(e1);
     }
-    // for (int i = 0; i < total_coordinator; i++) {
-    //   EventCoordinatorsAdd e1 = EventCoordinatorsAdd(
-    //       name: coordinatorName[i].text, phone: coordinatorPhone[i].text);
-    //   eventCoordinator1.add(e1);
-    // }
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
     var body = {
       'title': title.text,
-      'description': description.text,
+      'description': description,
       'tagLine': tagLine.text,
       'startTime': startTime,
       'endTime': endTime,
@@ -323,13 +322,14 @@ class _AddEventPageState extends State<AddEventPage> {
       backgroundColor: primaryColor,
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 10),
+            const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 22),
         child: SingleChildScrollView(
           child: Column(
             children: [
               tfield1(controller: title, label: 'Event Title'),
               const SizedBox(height: 12),
-              descfield1(controller: description, label: 'Event Description'),
+              // descfield1(controller: description, label: 'Event Description'),
+              preCustomEditor(context, 'Event Description'),
               const SizedBox(height: 12),
               tfield1(controller: tagLine, label: 'Event Tagline'),
               const SizedBox(height: 12),
@@ -360,32 +360,196 @@ class _AddEventPageState extends State<AddEventPage> {
                   ? addCoordinatorContainer()
                   : const SizedBox(height: 0, width: 0),
               const SizedBox(height: 25),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                side: BorderSide(
-                                    color: containerColor, width: 1))),
-                        onPressed: () async {
-                          eventAdd();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: ctext1(
-                              'Confirm', textcolor2.withOpacity(0.9), 16),
-                        )),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 18, right: 18),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: containerColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              )),
+                          onPressed: () async {
+                            eventAdd();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            child: ctext1('Confirm', primaryColor, 16),
+                          )),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget preCustomEditor(BuildContext context, String title) {
+    HtmlEditorController controller = HtmlEditorController();
+    return Container(
+        decoration: BoxDecoration(
+            color: textcolor2.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              ctext1(title, textcolor2.withOpacity(0.6), 14),
+              const Spacer(),
+              IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 50),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(
+                                          FontAwesome.cancel_circled),
+                                      iconSize: 22,
+                                      color: textcolor2),
+                                  const SizedBox(height: 6),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(12),
+                                            topRight: Radius.circular(12)),
+                                        color: textcolor2),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 20, bottom: 6),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          ctext1(
+                                              'Add $title', primaryColor, 18),
+                                          const SizedBox(height: 15),
+                                          HtmlEditor(
+                                            htmlToolbarOptions:
+                                                HtmlToolbarOptions(
+                                                    textStyle: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: textcolor1),
+                                                    toolbarType: ToolbarType
+                                                        .nativeExpandable,
+                                                    toolbarPosition:
+                                                        ToolbarPosition
+                                                            .belowEditor,
+                                                    defaultToolbarButtons: [
+                                                  const ListButtons(
+                                                      listStyles: false),
+                                                  const StyleButtons(
+                                                      style: true),
+                                                  const FontSettingButtons(
+                                                      fontSizeUnit: false,
+                                                      fontSize: true,
+                                                      fontName: true),
+                                                  const FontButtons(
+                                                      superscript: false,
+                                                      subscript: false,
+                                                      clearAll: false,
+                                                      strikethrough: false),
+                                                  const ColorButtons(
+                                                      foregroundColor: true,
+                                                      highlightColor: true),
+                                                  const ParagraphButtons(
+                                                      textDirection: false,
+                                                      caseConverter: false,
+                                                      lineHeight: false,
+                                                      increaseIndent: false,
+                                                      decreaseIndent: false),
+                                                  const InsertButtons(
+                                                      link: false,
+                                                      picture: false,
+                                                      audio: false,
+                                                      video: false,
+                                                      otherFile: false,
+                                                      table: false,
+                                                      hr: false)
+                                                ]),
+                                            otherOptions: const OtherOptions(),
+                                            controller: controller,
+                                            htmlEditorOptions:
+                                                const HtmlEditorOptions(
+                                                    hint:
+                                                        'Enter your text here...'),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20, right: 20),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              containerColor,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12))),
+                                                      onPressed: () async {
+                                                        String v =
+                                                            await controller
+                                                                .getText();
+                                                        print(v);
+
+                                                        setState(() {
+                                                          description = v;
+                                                        });
+
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                top: 14,
+                                                                bottom: 14),
+                                                        child: ctext1('Done',
+                                                            primaryColor1, 14),
+                                                      )),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                    // normalNavigation(
+                    //     CustomTextEditor(title, description,context), context);
+                  },
+                  icon: const Icon(FontAwesome.right_open),
+                  iconSize: 16,
+                  color: textcolor2.withOpacity(0.6))
+            ],
+          ),
+        ));
   }
 
   Widget coordinatorDisplayContainer(BuildContext context) {

@@ -177,8 +177,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                     child: Padding(
                       padding: const EdgeInsets.only(
                           top: 12, bottom: 12, left: 0, right: 0),
-                      child: ctext1(
-                          'Get Details', textcolor2.withOpacity(0.7), 12),
+                      child: ctext1('Get Details', primaryColor1, 12),
                     ))
               ],
             ),
