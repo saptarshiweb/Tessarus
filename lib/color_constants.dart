@@ -32,4 +32,5 @@ Color textcolor3 = Colors.grey.shade300;
 Color textcolor4 = Colors.grey.shade900;
 
 //drawer Colors
-Color textcolor5 = Colors.grey;
+Color textcolor5 = Colors.grey.shade300;
+Color textfieldColor = textcolor2.withOpacity(0.1);

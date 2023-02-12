@@ -111,8 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child:
-                              ctext1('Login', textcolor5, 16),
+                          child: ctext1('Login', primaryColor1, 16),
                         )),
                   ),
                 ],

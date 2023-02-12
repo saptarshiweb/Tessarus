@@ -229,7 +229,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
       title: Container(
         decoration: BoxDecoration(
             color:
-                (dval == text) ? containerColor : textcolor2.withOpacity(0.1),
+                (dval == text) ? containerColor : textfieldColor,
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding:

@@ -8,7 +8,7 @@ Widget tfield1(
   return ElevatedButton(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
-        backgroundColor: textcolor5,
+        backgroundColor: textfieldColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
       controller: controller,
@@ -19,9 +19,7 @@ Widget tfield1(
         hintText: 'Enter $label',
         labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: textcolor5,
-            fontSize: 15,
-            fontWeight: FontWeight.bold),
+            color: textcolor5, fontSize: 15, fontWeight: FontWeight.bold),
       ),
     ),
   );
@@ -34,7 +32,7 @@ Widget descfield1(
   return ElevatedButton(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
-        backgroundColor: textcolor5,
+        backgroundColor: textfieldColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
       minLines: 1,
@@ -47,9 +45,7 @@ Widget descfield1(
         hintText: 'Enter $label',
         labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: textcolor5,
-            fontSize: 15,
-            fontWeight: FontWeight.bold),
+            color: textcolor5, fontSize: 15, fontWeight: FontWeight.bold),
       ),
     ),
   );
@@ -62,7 +58,7 @@ Widget datefield1(
   return ElevatedButton(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
-        backgroundColor: textcolor5,
+        backgroundColor: textfieldColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
       controller: controller,
@@ -74,9 +70,7 @@ Widget datefield1(
         hintText: 'Enter $label',
         labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: textcolor5,
-            fontSize: 15,
-            fontWeight: FontWeight.bold),
+            color: textcolor5, fontSize: 15, fontWeight: FontWeight.bold),
       ),
     ),
   );
@@ -89,7 +83,7 @@ Widget numfield1(
   return ElevatedButton(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
-        backgroundColor: textcolor5,
+        backgroundColor: textfieldColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
     child: TextFormField(
       controller: controller,
@@ -101,9 +95,7 @@ Widget numfield1(
         hintText: 'Enter $label',
         labelText: 'Enter $label',
         labelStyle: TextStyle(
-            color: textcolor5,
-            fontSize: 15,
-            fontWeight: FontWeight.bold),
+            color: textcolor5, fontSize: 15, fontWeight: FontWeight.bold),
       ),
     ),
   );

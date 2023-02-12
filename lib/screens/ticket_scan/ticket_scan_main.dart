@@ -111,7 +111,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ctext('Your Ticket', containerColor),
+          ctext1('Your Ticket', textcolor2, 20),
           const SizedBox(height: 20),
           Row(
             children: [
@@ -130,8 +130,10 @@ class _TicketScanMainState extends State<TicketScanMain> {
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: Center(
-                            child: smbold1(
-                                'Your Ticket is not valid for Checking In!'),
+                            child: ctext1(
+                                'Your Ticket is not valid for Checking In!',
+                                primaryColor1,
+                                14),
                           ),
                         ),
                       ),
@@ -219,7 +221,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
   Widget ticketWidget() {
     return Container(
       decoration: BoxDecoration(
-          color: containerColor, borderRadius: BorderRadius.circular(18)),
+          color: primaryColor, borderRadius: BorderRadius.circular(18)),
       child: Padding(
         padding: const EdgeInsets.all(14.0),
         child: Column(
@@ -230,7 +232,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                 Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
-                        color: textcolor2),
+                        color: textfieldColor),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ctext('ESPEKTRO', containerColor),
@@ -255,7 +257,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6), color: textcolor2),
+                borderRadius: BorderRadius.circular(6), color: textfieldColor),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -265,18 +267,18 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     children: [
                       ctext(event1.title ?? '', containerColor),
                       const Spacer(),
-                      Icon(Icons.event, color: textcolor1, size: 22)
+                      Icon(Icons.event, color: containerColor, size: 22)
                     ],
                   ),
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      Icon(FontAwesome.star, color: textcolor1, size: 20),
+                      Icon(FontAwesome.star, color: containerColor, size: 20),
                       const SizedBox(width: 7),
-                      ctext1(event1.eventOrganiserClub!.name ?? '', textcolor1,
+                      ctext1(event1.eventOrganiserClub!.name ?? '', textcolor5,
                           14),
                       const Spacer(),
-                      subtitletext('Organiser')
+                      ctext1('Organiser', textcolor5, 12)
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -285,7 +287,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                       Icon(Icons.place_rounded,
                           color: containerColor, size: 20),
                       const SizedBox(width: 7),
-                      subtitletext(event1.eventVenue ?? ''),
+                      ctext1(event1.eventVenue ?? '', textcolor5, 12)
                     ],
                   ),
                 ],
@@ -303,7 +305,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6), color: textcolor2),
+                borderRadius: BorderRadius.circular(6), color: textfieldColor),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
@@ -321,10 +323,10 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     children: [
                       Icon(Typicons.user, color: containerColor, size: 20),
                       const SizedBox(width: 7),
-                      ctext(selectedTicket.team!.members![0].name!,
-                          containerColor),
+                      ctext1(selectedTicket.team!.members![0].name!, textcolor5,
+                          14),
                       const Spacer(),
-                      subtitletext('Team Leader')
+                      ctext1('Team Leader', textcolor5, 12)
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -333,7 +335,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                       Icon(FontAwesome5.orcid, color: containerColor, size: 20),
                       const SizedBox(width: 7),
                       ctext1(selectedTicket.team!.members![0].espektroId!,
-                          textcolor1, 12),
+                          textcolor2, 12),
                     ],
                   ),
                 ],

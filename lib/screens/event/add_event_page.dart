@@ -393,8 +393,7 @@ class _AddEventPageState extends State<AddEventPage> {
     HtmlEditorController controller = HtmlEditorController();
     return Container(
         decoration: BoxDecoration(
-            color: textcolor2.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8)),
+            color: textfieldColor, borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -411,128 +410,138 @@ class _AddEventPageState extends State<AddEventPage> {
                           return Padding(
                             padding: const EdgeInsets.only(top: 50),
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.8,
+                              height: MediaQuery.of(context).size.height,
                               child: Column(
                                 children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: const Icon(
-                                          FontAwesome.cancel_circled),
-                                      iconSize: 22,
-                                      color: textcolor2),
-                                  const SizedBox(height: 6),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(12),
-                                            topRight: Radius.circular(12)),
+                                  Expanded(
+                                    flex: 1,
+                                    child: IconButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        icon: const Icon(
+                                            FontAwesome.cancel_circled),
+                                        iconSize: 22,
                                         color: textcolor2),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 20, bottom: 6),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          ctext1(
-                                              'Add $title', primaryColor, 18),
-                                          const SizedBox(height: 15),
-                                          HtmlEditor(
-                                            htmlToolbarOptions:
-                                                HtmlToolbarOptions(
-                                                    textStyle: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: textcolor1),
-                                                    toolbarType: ToolbarType
-                                                        .nativeExpandable,
-                                                    toolbarPosition:
-                                                        ToolbarPosition
-                                                            .belowEditor,
-                                                    defaultToolbarButtons: [
-                                                  const ListButtons(
-                                                      listStyles: false),
-                                                  const StyleButtons(
-                                                      style: true),
-                                                  const FontSettingButtons(
-                                                      fontSizeUnit: false,
-                                                      fontSize: true,
-                                                      fontName: true),
-                                                  const FontButtons(
-                                                      superscript: false,
-                                                      subscript: false,
-                                                      clearAll: false,
-                                                      strikethrough: false),
-                                                  const ColorButtons(
-                                                      foregroundColor: true,
-                                                      highlightColor: true),
-                                                  const ParagraphButtons(
-                                                      textDirection: false,
-                                                      caseConverter: false,
-                                                      lineHeight: false,
-                                                      increaseIndent: false,
-                                                      decreaseIndent: false),
-                                                  const InsertButtons(
-                                                      link: false,
-                                                      picture: false,
-                                                      audio: false,
-                                                      video: false,
-                                                      otherFile: false,
-                                                      table: false,
-                                                      hr: false)
-                                                ]),
-                                            otherOptions: const OtherOptions(),
-                                            controller: controller,
-                                            htmlEditorOptions:
-                                                const HtmlEditorOptions(
-                                                    hint:
-                                                        'Enter your text here...'),
-                                          ),
-                                          const SizedBox(height: 20),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 20, right: 20),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: ElevatedButton(
-                                                      style: ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              containerColor,
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12))),
-                                                      onPressed: () async {
-                                                        String v =
-                                                            await controller
-                                                                .getText();
-                                                        print(v);
-
-                                                        setState(() {
-                                                          description = v;
-                                                        });
-
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 14,
-                                                                bottom: 14),
-                                                        child: ctext1('Done',
-                                                            primaryColor1, 14),
-                                                      )),
-                                                ),
-                                              ],
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Expanded(
+                                    flex: 9,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(12),
+                                              topRight: Radius.circular(12)),
+                                          color: textcolor2),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 20, bottom: 20),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            ctext1(
+                                                'Add $title', primaryColor, 18),
+                                            const SizedBox(height: 15),
+                                            HtmlEditor(
+                                              htmlToolbarOptions:
+                                                  HtmlToolbarOptions(
+                                                      textStyle: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: textcolor1),
+                                                      toolbarType: ToolbarType
+                                                          .nativeGrid,
+                                                      toolbarPosition:
+                                                          ToolbarPosition
+                                                              .aboveEditor,
+                                                      defaultToolbarButtons: [
+                                                    const StyleButtons(
+                                                        style: true),
+                                                    const FontSettingButtons(
+                                                        fontSizeUnit: false,
+                                                        fontSize: true,
+                                                        fontName: true),
+                                                    const FontButtons(
+                                                        superscript: false,
+                                                        subscript: false,
+                                                        clearAll: false,
+                                                        strikethrough: false),
+                                                    const ColorButtons(
+                                                        foregroundColor: true,
+                                                        highlightColor: true),
+                                                    const ParagraphButtons(
+                                                        textDirection: false,
+                                                        caseConverter: false,
+                                                        lineHeight: false,
+                                                        increaseIndent: false,
+                                                        decreaseIndent: false),
+                                                    const InsertButtons(
+                                                        link: false,
+                                                        picture: false,
+                                                        audio: false,
+                                                        video: false,
+                                                        otherFile: false,
+                                                        table: false,
+                                                        hr: false),
+                                                    const ListButtons(
+                                                        listStyles: false),
+                                                  ]),
+                                              otherOptions:
+                                                  const OtherOptions(),
+                                              controller: controller,
+                                              htmlEditorOptions:
+                                                  const HtmlEditorOptions(
+                                                      hint:
+                                                          'Enter your text here...'),
                                             ),
-                                          )
-                                        ],
+                                            const Spacer(),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            backgroundColor:
+                                                                containerColor,
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12))),
+                                                        onPressed: () async {
+                                                          String v =
+                                                              await controller
+                                                                  .getText();
+                                                          print(v);
+
+                                                          setState(() {
+                                                            description = v;
+                                                          });
+
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 14,
+                                                                  bottom: 14),
+                                                          child: ctext1(
+                                                              'Done',
+                                                              primaryColor1,
+                                                              14),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -546,7 +555,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   },
                   icon: const Icon(FontAwesome.right_open),
                   iconSize: 16,
-                  color: textcolor2.withOpacity(0.6))
+                  color: textcolor5)
             ],
           ),
         ));
@@ -556,7 +565,7 @@ class _AddEventPageState extends State<AddEventPage> {
     return ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-            backgroundColor: textcolor2.withOpacity(0.1),
+            backgroundColor: textfieldColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         child: Padding(
@@ -595,7 +604,7 @@ class _AddEventPageState extends State<AddEventPage> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-          backgroundColor: textcolor2.withOpacity(0.1),
+          backgroundColor: textfieldColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       child: Padding(
@@ -606,9 +615,7 @@ class _AddEventPageState extends State<AddEventPage> {
             Text(
               'Add Coordinators',
               style: TextStyle(
-                  color: textcolor5,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
+                  color: textcolor5, fontSize: 15, fontWeight: FontWeight.bold),
             ),
             const Spacer(),
             IconButton(
@@ -642,8 +649,7 @@ class _AddEventPageState extends State<AddEventPage> {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-            color: textcolor2.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8)),
+            color: textfieldColor, borderRadius: BorderRadius.circular(8)),
         child: Padding(
           padding:
               const EdgeInsets.only(top: 5, bottom: 8, left: 10, right: 10),
@@ -730,7 +736,7 @@ class _AddEventPageState extends State<AddEventPage> {
     return ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-            backgroundColor: textcolor2.withOpacity(0.1),
+            backgroundColor: textfieldColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         child: Padding(
@@ -755,9 +761,8 @@ class _AddEventPageState extends State<AddEventPage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: (solo == false)
-                              ? primaryColor
-                              : textcolor2.withOpacity(0.1),
+                          color:
+                              (solo == false) ? primaryColor : textfieldColor,
                           borderRadius: BorderRadius.circular(12)),
                       child: Padding(
                           padding: const EdgeInsets.only(
@@ -775,9 +780,7 @@ class _AddEventPageState extends State<AddEventPage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: (solo == true)
-                              ? primaryColor
-                              : textcolor2.withOpacity(0.1),
+                          color: (solo == true) ? primaryColor : textfieldColor,
                           borderRadius: BorderRadius.circular(12)),
                       child: Padding(
                           padding: const EdgeInsets.only(
@@ -794,7 +797,7 @@ class _AddEventPageState extends State<AddEventPage> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-          backgroundColor: textcolor2.withOpacity(0.1),
+          backgroundColor: textfieldColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       child: Padding(
@@ -938,7 +941,7 @@ class _AddEventPageState extends State<AddEventPage> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-          backgroundColor: textcolor2.withOpacity(0.1),
+          backgroundColor: textfieldColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
       child: Padding(
