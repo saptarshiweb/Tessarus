@@ -38,3 +38,9 @@ String user_qr_scan = '''${server}api/volunteers/userqrscan'''; //POST
 //Ticket Scan
 String fetch_ticket_url = '''${server}api/tickets/''';
 String checkIn_ticket_url = '''${server}api/tickets/checkin/''';
+
+//Image Upload
+
+String image_upload_url = '''${server}api/utils/uploadimages''';
+
+String image_api_key = '''AyuN7xQM6GHhnvWsfZb2OUepNTGxEqrLTnlo8bbdsdwe2297JbT9''';

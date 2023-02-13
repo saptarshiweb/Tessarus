@@ -6,7 +6,7 @@ import 'package:fluttericon/iconic_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
-import 'package:tessarus_volunteer/screens/event/add_event_page.dart';
+import 'package:tessarus_volunteer/screens/event/add_event_pages/add_event_page.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/add_new_volunteer.dart';
 
 import '../../color_constants.dart';

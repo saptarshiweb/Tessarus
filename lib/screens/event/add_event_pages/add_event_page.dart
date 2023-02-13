@@ -12,10 +12,15 @@ import 'package:http/http.dart' as http;
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
+import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:tessarus_volunteer/screens/event/add_event_pages/add_coordinator.dart';
+import 'package:tessarus_volunteer/screens/event/add_event_pages/add_event_image.dart';
+import 'package:tessarus_volunteer/screens/event/add_event_pages/general_info_add.dart';
+import 'package:tessarus_volunteer/screens/event/add_event_pages/text_editor_info_add.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
-import '../../custom_widget/custom_modal_routes.dart';
+import '../../../custom_widget/custom_modal_routes.dart';
 
 class AddEventPage extends StatefulWidget {
   const AddEventPage({super.key});
@@ -322,68 +327,169 @@ class _AddEventPageState extends State<AddEventPage> {
       backgroundColor: primaryColor,
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 22),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              tfield1(controller: title, label: 'Event Title'),
-              const SizedBox(height: 12),
-              // descfield1(controller: description, label: 'Event Description'),
-              preCustomEditor(context, 'Event Description'),
-              const SizedBox(height: 12),
-              tfield1(controller: tagLine, label: 'Event Tagline'),
-              const SizedBox(height: 12),
-              tfield1(controller: eventVenue, label: 'Event Venue'),
-
-              const SizedBox(height: 12),
-              //Date Time-----------------------
-              startTimeWidget(context),
-              const SizedBox(height: 12),
-              endTimeWidget(context),
-              const SizedBox(height: 12),
-              eventTypeWidget(context),
-              const SizedBox(height: 12),
-              numfield1(controller: eventMin, label: 'Min Participants'),
-              const SizedBox(height: 12),
-              numfield1(controller: eventMax, label: 'Max Participants'),
-              const SizedBox(height: 12),
-              numfield1(controller: eventPrice, label: 'Event Price'),
-              const SizedBox(height: 12),
-              tfield1(controller: organiserClub, label: 'Organiser Club'),
-              const SizedBox(height: 12),
-              coordinatorHeader(context),
-              const SizedBox(height: 12),
-              (total_coordinator > 0)
-                  ? coordinatorDisplayContainer(context)
-                  : const SizedBox(height: 0, width: 0),
-              (showCoordinatorAdd == true)
-                  ? addCoordinatorContainer()
-                  : const SizedBox(height: 0, width: 0),
-              const SizedBox(height: 25),
-              Padding(
-                padding: const EdgeInsets.only(left: 18, right: 18),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: containerColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              )),
-                          onPressed: () async {
-                            eventAdd();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 15, bottom: 15),
-                            child: ctext1('Confirm', primaryColor, 16),
-                          )),
-                    ),
-                  ],
-                ),
+            const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 22),
+        child: Column(
+          children: [
+            generalInfo(context),
+            const SizedBox(height: 30),
+            texteditorInfo(context),
+            const SizedBox(height: 30),
+            eventImageinfo(context),
+            const SizedBox(height: 30),
+            coordinatorInfo(context),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.only(left: 18, right: 18),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: containerColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                        onPressed: () async {
+                          eventAdd();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          child: ctext1('Confirm', primaryColor, 16),
+                        )),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget texteditorInfo(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ctext1('Comprehensive Info', textcolor2, 22),
+                const SizedBox(height: 10),
+                ctext1('Event description, rules, prizes etc.', textcolor5, 12)
+              ],
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () {
+                normalNavigation(const TextEditorInfo(), context);
+              },
+              icon: const Icon(FontAwesome.right_open),
+              iconSize: 22,
+              color: textcolor2,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget eventImageinfo(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ctext1('Event Images', textcolor2, 22),
+                const SizedBox(height: 10),
+                ctext1(
+                    'Add images by simply picking from gallery', textcolor5, 12)
+              ],
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () {
+                normalNavigation(const AddEventImage(), context);
+              },
+              icon: const Icon(FontAwesome.right_open),
+              iconSize: 22,
+              color: textcolor2,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget coordinatorInfo(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ctext1('Coordinator Info', textcolor2, 22),
+                const SizedBox(height: 10),
+                ctext1('Coordinator name, phone etc.', textcolor5, 12)
+              ],
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () {
+                normalNavigation(const AddCoordinatorEvent(), context);
+              },
+              icon: const Icon(FontAwesome.right_open),
+              iconSize: 22,
+              color: textcolor2,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget generalInfo(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ctext1('General Info', textcolor2, 22),
+                const SizedBox(height: 10),
+                ctext1('Event name, date, time etc.', textcolor5, 12)
+              ],
+            ),
+            const Spacer(),
+            IconButton(
+              onPressed: () {
+                normalNavigation(const AddGeneralInfoEvent(), context);
+              },
+              icon: const Icon(FontAwesome.right_open),
+              iconSize: 22,
+              color: textcolor2,
+            ),
+          ],
         ),
       ),
     );

@@ -49,6 +49,10 @@ dependencies:
   intl: ^0.18.0
   html_editor_enhanced: ^2.5.1
   html: ^0.15.1
+  dotted_border: ^2.0.0+3
+  image_picker: ^0.8.6+1
+  path_provider: ^2.0.12
+  file_picker: ^5.2.5
   
   
   
