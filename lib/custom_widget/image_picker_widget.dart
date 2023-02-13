@@ -1,18 +1,16 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable
 
-import 'dart:convert';
 import 'dart:io' as io;
-import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/image_picker_model.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 import 'custom_modal_routes.dart';
 
@@ -28,60 +26,73 @@ class _ImagePickWidgetState extends State<ImagePickWidget> {
   @override
   Widget build(BuildContext context) {
     io.File? pickedImage;
-    //   Future<File> imageToFile(String imageName, String ext) async {
-    //   var bytes = await rootBundle.load('assets/$imageName.$ext');
-    //   String tempPath = (await getTemporaryDirectory()).path;
-    //   File file = File([],'$tempPath/profile.png');
-    //   await file.writeAsBytes(
-    //       bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
-    //   return file;
-    // }
+
     Future uploadImage() async {
       //API PUT
-      var body = {'images': pickedImage};
-      final response = await http.put(Uri.parse(image_upload_url),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-            // 'Accept': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': 'true',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-            'UTILS-API-KEY': image_api_key
-          },
-          // body: jsonEncode(<String, String>),
+      // var body = {'images': pickedImage};
+      var postUri = Uri.parse(image_upload_url);
+      var request = http.MultipartRequest("PUT", postUri);
+      request.headers.addAll(<String, String>{
+        "Content-Type": "application/x-www-form-urlencoded",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+        'UTILS-API-KEY': image_api_key
+      });
+      request.files.add(http.MultipartFile.fromBytes('file',
+          await io.File.fromUri(Uri.parse(pickedImage!.path)).readAsBytes(),
+          contentType: MediaType('image', 'jpeg')));
 
-          body: json.encode(body)
-          
-          );
+      request.send().then((response) {
+        print(response);
+        if (response.statusCode == 200) print("Uploaded!");
+      });
+      // final response = await http.put(Uri.parse(image_upload_url),
+      //     headers: <String, String>{
+      //       // 'Content-Type': 'application/json',
+      //       "Content-Type": "application/x-www-form-urlencoded",
+      //       // 'Accept': 'application/json',
+      //       'Access-Control-Allow-Origin': '*',
+      //       'Access-Control-Allow-Credentials': 'true',
+      //       'Access-Control-Allow-Headers': 'Content-Type',
+      //       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+      //       'UTILS-API-KEY': image_api_key
+      //     },
+      //     encoding: Encoding.getByName('utf-8'),
+      //     // body: jsonEncode(<String, String>),
 
-      print(response.body);
+      //     body: {
+      //       {'images': pickedImage}
+      //     });
+
+      // print(response.body);
     }
 
     Future pickImage() async {
-      final picker = ImagePicker();
-      // Pick an image
-      final pickedfile = await picker.pickImage(source: ImageSource.gallery);
+      // final picker = ImagePicker();
+      // // Pick an image
+      // final pickedfile = await picker.pickImage(source: ImageSource.gallery);
 
-      if (pickedfile == null) return;
-      final imageTemporary=io.File(pickedfile.path);
+      // if (pickedfile == null) return;
+      // final imageTemporary = io.File(pickedfile.path);
 
-      setState(() {
-        pickedImage = imageTemporary;
-        print(pickedImage!.path);
-      });
+      // setState(() {
+      //   pickedImage = imageTemporary;
+      //   print(pickedImage!.path);
+      // });
 
-      // FilePickerResult? result = await FilePicker.platform.pickFiles();
-      // io.File file = io.File(result!.files.single.path!);
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      io.File file = io.File(result!.files.single.path!);
 
-      // if (result != null) {
-      //   setState(() {
-      //     pickedImage = file;
-      //     print(pickedImage!.path);
-      //   });
-      // } else {
-      //   // User canceled the picker
-      // }
+      if (result != null) {
+        setState(() {
+          pickedImage = file;
+          print(pickedImage!.path);
+        });
+      } else {
+        // User canceled the picker
+      }
     }
 
     // Image convertFileToImage(io.File picture) {
@@ -168,7 +179,7 @@ class _ImagePickWidgetState extends State<ImagePickWidget> {
                     icon: Icon(FontAwesome.trash, color: allcancel, size: 22))
               ],
             ),
-            pickedImage!=null?Image.file(pickedImage!):Container(),
+            // pickedImage != null ? Image.file(pickedImage!) : Container(),
           ],
         ),
       ),
