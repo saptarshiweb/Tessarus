@@ -315,6 +315,7 @@ class _AddEventPageState extends State<AddEventPage> {
 
   List<TextEditingController> coordinatorName = [];
   List<TextEditingController> coordinatorPhone = [];
+  static String hello = 'Sample';
 
   @override
   Widget build(BuildContext context) {
@@ -338,6 +339,7 @@ class _AddEventPageState extends State<AddEventPage> {
             const SizedBox(height: 30),
             coordinatorInfo(context),
             const SizedBox(height: 30),
+            ctext1(hello, containerColor, 19),
             Padding(
               padding: const EdgeInsets.only(left: 18, right: 18),
               child: Row(

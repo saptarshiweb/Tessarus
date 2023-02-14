@@ -1,15 +1,18 @@
-import 'dart:convert';
+// ignore_for_file: use_build_context_synchronously
 
-import 'package:file_picker/file_picker.dart';
+import 'dart:convert';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'dart:io';
 import "package:images_picker/images_picker.dart";
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:async/async.dart';
-
+import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
+import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import '../../../models/api_url.dart';
 
 class AddEventImage extends StatefulWidget {
@@ -21,8 +24,17 @@ class AddEventImage extends StatefulWidget {
 
 class _AddEventImageState extends State<AddEventImage> {
   File? imageFile;
+  List<String> urlList = [];
+  String url = '';
+  int urlInd = 1;
+  String url1 = '';
+  String url2 = '';
+  String url3 = '';
 
-  Future uploadImage() async {
+  uploadImage(BuildContext context) async {
+    showLoaderDialog(context);
+    var responseval;
+    String urlVal = 'Error';
     var stream = http.ByteStream(DelegatingStream.typed(imageFile!.openRead()));
 
     var length = await imageFile!.length();
@@ -47,11 +59,19 @@ class _AddEventImageState extends State<AddEventImage> {
     await request.send().then((response) async {
       // listen for response
       response.stream.transform(utf8.decoder).listen((value) {
-        print(value);
+        // print(value);
+        responseval = json.decode(value);
+        urlVal = responseval['images'][0].toString();
+        print(urlVal);
+        urlList.add(urlVal.toString());
+        urlInd++;
+        print(urlList.length);
       });
     }).catchError((e) {
       print(e);
     });
+
+    Navigator.pop(context);
   }
 
   getImage() async {
@@ -67,62 +87,148 @@ class _AddEventImageState extends State<AddEventImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: primaryColor,
+      backgroundColor: primaryColor,
       resizeToAvoidBottomInset: true,
       appBar: appbar1('Add Event Images', context),
       body: Padding(
         padding:
             const EdgeInsets.only(top: 20, bottom: 10, right: 20, left: 20),
         child: Column(
-          children: [imagePickerWidget()],
+          children: [
+            (urlList.isNotEmpty)
+                ? SizedBox(
+                    height: 300,
+                    child: ListView.builder(
+                        itemCount: urlList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: ctext1(urlList[index], textcolor2, 14),
+                          );
+                        }),
+                  )
+                : const SizedBox(height: 0, width: 0),
+            Container(
+              decoration: BoxDecoration(
+                  color: primaryColor1,
+                  borderRadius: BorderRadius.circular(14)),
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DottedBorder(
+                            color: containerColor,
+                            strokeWidth: 2,
+                            borderType: BorderType.RRect,
+                            radius: const Radius.circular(7),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 30, bottom: 30),
+                              child: Column(
+                                children: [
+                                  Center(
+                                      child: IconButton(
+                                    onPressed: () {
+                                      getImage();
+                                    },
+                                    icon: Icon(FontAwesome.upload,
+                                        color: containerColor, size: 22),
+                                  )),
+                                  const SizedBox(height: 15),
+                                  ctext1(
+                                      'Upload the Image', containerColor, 18),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        ctext1('Event Image $urlInd', textcolor2, 18),
+                        const Spacer(),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: containerColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12))),
+                            onPressed: () {
+                              uploadImage(context);
+                            },
+                            child: ctext1('Upload', primaryColor1, 12)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
   }
 
-  _getFromGallery() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      imageFile = File(pickedFile.path);
-    }
-  }
-
-  _getFileFromGallery() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      print(file.path);
-    } else {
-      print("No file selected");
-    }
-  }
-
-  Widget imagePickerWidget() {
-    return Row(
-      children: [
-        ElevatedButton(
-            onPressed: () {
-              getImage();
-            },
-            child: const Text('pick image')),
-        const SizedBox(width: 30),
-        ElevatedButton(
-            onPressed: () {
-              uploadImage();
-            },
-            child: const Text('Upload')),
-        SizedBox(
-          height: 60,
-          width: 60,
-          child: Image.network(
-              'https://tessarus.s3.ap-south-1.amazonaws.com/75fd99f34b654890252425f39bf3d891'),
+  Widget imagePickerWidget(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+      child: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: DottedBorder(
+                    color: containerColor,
+                    strokeWidth: 2,
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(7),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, bottom: 30),
+                      child: Column(
+                        children: [
+                          Center(
+                              child: IconButton(
+                            onPressed: () {
+                              getImage();
+                            },
+                            icon: Icon(FontAwesome.upload,
+                                color: containerColor, size: 22),
+                          )),
+                          const SizedBox(height: 15),
+                          ctext1('Upload the Image', containerColor, 18),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                ctext1('Event Image $urlInd', textcolor2, 18),
+                const Spacer(),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: containerColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    onPressed: () {
+                      uploadImage(context);
+                    },
+                    child: ctext1('Upload', primaryColor1, 12)),
+              ],
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

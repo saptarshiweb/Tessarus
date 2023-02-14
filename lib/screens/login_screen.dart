@@ -10,6 +10,7 @@ import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'dart:convert';
 import 'package:tessarus_volunteer/models/api_url.dart';
+import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:tessarus_volunteer/models/volunteer_model.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 
@@ -65,6 +66,9 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('Auth', auth);
       await prefs.setString('DrawerItem', 'Dashboard');
       await prefs.setString('profileImage', profileImage);
+      Events event1 = Events();
+      String newEvent = jsonEncode(event1);
+      await prefs.setString('newEvent', newEvent);
 
       Navigator.pop(context);
       easyNavigation(const DashboardMain(), context);
