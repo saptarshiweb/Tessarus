@@ -312,14 +312,6 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                                       ? '0'
                                       : eventPrice.text);
 
-                              // List<EventImages> img = [];
-                              // for (var i = 0; i < urlList.length; i++) {
-                              //   EventImages eventImages =
-                              //       EventImages(url: urlList[i]);
-                              //   img.add(eventImages);
-                              // }
-                              // newEvent1.eventImages = img;
-                              // print(newEvent1.eventImages!.length);
                               await prefs.setString(
                                   'newEvent', jsonEncode(newEvent1));
                               Navigator.pop(context);
