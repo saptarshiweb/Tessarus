@@ -40,6 +40,8 @@ class Events {
   String? startTime;
   String? endTime;
   String? eventVenue;
+  String? rules;
+  String? prizes;
   List<EventImages>? eventImages;
   String? eventType;
   int? eventMinParticipants;
@@ -59,6 +61,8 @@ class Events {
       this.tagLine,
       this.startTime,
       this.endTime,
+      this.rules,
+      this.prizes,
       this.eventVenue,
       this.eventImages,
       this.eventType,
@@ -82,6 +86,8 @@ class Events {
     startTime = json['startTime'];
     endTime = json['endTime'];
     eventVenue = json['eventVenue'];
+    rules = json['rules'];
+    prizes = json['prizes'];
     if (json['eventImages'] != null) {
       eventImages = <EventImages>[];
       json['eventImages'].forEach((v) {
@@ -116,6 +122,8 @@ class Events {
     data['startTime'] = startTime;
     data['endTime'] = endTime;
     data['eventVenue'] = eventVenue;
+    data['rules'] = rules;
+    data['prizes'] = prizes;
     if (eventImages != null) {
       data['eventImages'] = eventImages!.map((v) => v.toJson()).toList();
     }

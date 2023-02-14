@@ -1,9 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'dart:io';
@@ -14,6 +15,7 @@ import 'package:async/async.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import '../../../models/api_url.dart';
+import '../../../models/event_display_model.dart';
 
 class AddEventImage extends StatefulWidget {
   const AddEventImage({super.key});
@@ -31,6 +33,24 @@ class _AddEventImageState extends State<AddEventImage> {
   String url1 = '';
   String url2 = '';
   String url3 = '';
+
+  getEventImageInfo() async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Map<String, dynamic> jsonDetails = jsonDecode(prefs.getString('newEvent')!);
+    // var newEvent1 = Events.fromJson(jsonDetails);
+    // if (jsonDetails.isNotEmpty) {
+    //   print(newEvent1.title);
+    //   setState(() {
+    //     if (newEvent1.eventImages!.isNotEmpty) {
+    //       var img = newEvent1.eventImages!;
+    //       for (int i = 0; i < img.length; i++) {
+    //         urlList.add(img[i].url!);
+    //       }
+    //     }
+    //     if (urlList.length > 1) showImageList = true;
+    //   });
+    // }
+  }
 
   Future uploadImage(BuildContext context) async {
     showLoaderDialog(context);
@@ -91,10 +111,9 @@ class _AddEventImageState extends State<AddEventImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
-      appBar: appbar1('Add Event Images', context),
-      body: SingleChildScrollView(
-        child: Padding(
+        backgroundColor: primaryColor,
+        appBar: appbar1('Add Event Images', context),
+        body: Padding(
           padding:
               const EdgeInsets.only(top: 20, bottom: 10, right: 20, left: 20),
           child: Column(
@@ -186,11 +205,54 @@ class _AddEventImageState extends State<AddEventImage> {
                     ],
                   ),
                 ),
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row( 
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            // WidgetsFlutterBinding.ensureInitialized();
+                            showLoaderDialog(context);
+                            await Future.delayed(const Duration(seconds: 6));
+                            Navigator.pop(context);
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            String str = '';
+                            str = prefs.getString('newEvent') ?? '';
+                            Map<String, dynamic> jsonDetails = {};
+                            jsonDetails = jsonDecode(str);
+                            var newEvent1 = Events.fromJson(jsonDetails);
+
+                            List<EventImages> img = [];
+                            for (var i = 0; i < urlList.length; i++) {
+                              EventImages eventImages =
+                                  EventImages(url: urlList[i]);
+                              img.add(eventImages);
+                            }
+                            newEvent1.eventImages = img;
+                            print(newEvent1.eventImages!.length);
+                            await prefs.setString(
+                                'newEvent', jsonEncode(newEvent1));
+
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: containerColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12))),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 12, bottom: 12),
+                            child: ctext1('Save', primaryColor1, 18),
+                          )),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

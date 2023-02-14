@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:fluttericon/iconic_icons.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +9,6 @@ import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
-import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
@@ -332,16 +330,15 @@ class _AddEventPageState extends State<AddEventPage> {
         child: Column(
           children: [
             generalInfo(context),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             texteditorInfo(context),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             eventImageinfo(context),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             coordinatorInfo(context),
-            const SizedBox(height: 30),
-            ctext1(hello, containerColor, 19),
+            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(left: 18, right: 18),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: Row(
                 children: [
                   Expanded(
@@ -357,6 +354,45 @@ class _AddEventPageState extends State<AddEventPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 15, bottom: 15),
                           child: ctext1('Confirm', primaryColor, 16),
+                        )),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(
+                                    width: 1, color: containerColor))),
+                        onPressed: () async {
+                          showLoaderDialog(context);
+                          await Future.delayed(const Duration(seconds: 6));
+                          Navigator.pop(context);
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          String str = '';
+                          str = prefs.getString('newEvent') ?? '';
+                          Map<String, dynamic> jsonDetails = {};
+                          jsonDetails = jsonDecode(str);
+                          var newEvent1 = Events.fromJson(jsonDetails);
+                          print(newEvent1.eventCoordinators![0].name);
+                          print(newEvent1.eventImages![0].url);
+                          print(newEvent1.title);
+                          print(newEvent1.eventPrice);
+                          print(newEvent1.startTime);
+                          print(newEvent1.endTime);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          child: ctext1('Reset All', textcolor2, 16),
                         )),
                   ),
                 ],
@@ -667,177 +703,6 @@ class _AddEventPageState extends State<AddEventPage> {
             ],
           ),
         ));
-  }
-
-  Widget coordinatorDisplayContainer(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-            backgroundColor: textfieldColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(children: [
-              (total_coordinator >= 1)
-                  ? coordinatorListTile(context, 1)
-                  : const SizedBox(height: 0, width: 0),
-              (total_coordinator >= 2)
-                  ? coordinatorListTile(context, 2)
-                  : const SizedBox(height: 0, width: 0),
-              (total_coordinator >= 3)
-                  ? coordinatorListTile(context, 3)
-                  : const SizedBox(height: 0, width: 0),
-            ])));
-  }
-
-  Widget coordinatorListTile(BuildContext context, int ind) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              smbold('Coordinator $ind added !!'),
-            ],
-          ),
-          const SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
-
-  Widget coordinatorHeader(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-          backgroundColor: textfieldColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Add Coordinators',
-              style: TextStyle(
-                  color: textcolor5, fontSize: 15, fontWeight: FontWeight.bold),
-            ),
-            const Spacer(),
-            IconButton(
-                onPressed: () {
-                  if (total_coordinator >= 3) {
-                    showModalBottomSheet(
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        context: context,
-                        builder: (context) {
-                          return errorModal2(
-                              'Maximum Limit of 3 Coordinators already reached!',
-                              context);
-                        });
-                  } else {
-                    setState(() {
-                      showCoordinatorAdd = true;
-                    });
-                  }
-                },
-                icon: Icon(Iconic.plus_circle, color: textcolor2, size: 22))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget addCoordinatorContainer() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
-      child: Container(
-        decoration: BoxDecoration(
-            color: textfieldColor, borderRadius: BorderRadius.circular(8)),
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 5, bottom: 8, left: 10, right: 10),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        ctext1('Add Coordinator ${total_coordinator + 1}',
-                            textcolor5, 16),
-                        const Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                showCoordinatorAdd = false;
-                              });
-                            },
-                            icon: Icon(Iconic.cancel_circle,
-                                color: textcolor2, size: 22))
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              (total_coordinator == 0)
-                  ? tfield1(controller: nameCoordinator1, label: 'Name')
-                  : const SizedBox(height: 0, width: 0),
-              (total_coordinator == 1)
-                  ? tfield1(controller: nameCoordinator2, label: 'Name')
-                  : const SizedBox(height: 0, width: 0),
-              (total_coordinator == 2)
-                  ? tfield1(controller: nameCoordinator3, label: 'Name')
-                  : const SizedBox(height: 0, width: 0),
-              const SizedBox(height: 6),
-              (total_coordinator == 0)
-                  ? numfield1(controller: phoneCoordinator1, label: 'Phone')
-                  : const SizedBox(height: 0, width: 0),
-              (total_coordinator == 1)
-                  ? numfield1(controller: phoneCoordinator2, label: 'Phone')
-                  : const SizedBox(height: 0, width: 0),
-              (total_coordinator == 2)
-                  ? numfield1(controller: phoneCoordinator3, label: 'Phone')
-                  : const SizedBox(height: 0, width: 0),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            backgroundColor: primaryColor),
-                        onPressed: () {
-                          setState(() {
-                            total_coordinator++;
-                            cooIndex++;
-                            showCoordinatorAdd = false;
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: Text(
-                            'Add',
-                            style: TextStyle(
-                                color: textcolor2,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        )),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget eventTypeWidget(BuildContext context) {

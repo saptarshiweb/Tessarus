@@ -1,11 +1,19 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 
 import '../../../custom_widget/custom_text.dart';
 import '../../../custom_widget/custom_textfield.dart';
+import '../../../custom_widget/loader_widget.dart';
+import '../../../models/event_display_model.dart';
 
 class AddGeneralInfoEvent extends StatefulWidget {
   const AddGeneralInfoEvent({super.key});
@@ -137,6 +145,17 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
   String startTime = '';
   String endDate = '';
   String endTime = '';
+  errorPrompt(String s, TextEditingController c) {
+    if (c.text == '') {
+      showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) {
+            return errorModal2('$s cannot be empty.', context);
+          });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -146,6 +165,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: true,
       appBar: appbar1('Add General Info', context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Padding(
         padding:
             const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 22),
@@ -153,8 +173,6 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
           child: Column(
             children: [
               tfield1(controller: title, label: 'Event Title'),
-              const SizedBox(height: 12),
-
               const SizedBox(height: 12),
               tfield1(controller: tagLine, label: 'Event Tagline'),
               const SizedBox(height: 12),
@@ -174,8 +192,151 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
               const SizedBox(height: 12),
               numfield1(controller: eventPrice, label: 'Event Price'),
               const SizedBox(height: 12),
-              tfield1(controller: organiserClub, label: 'Organiser Club'),
-              const SizedBox(height: 12),
+              // tfield1(controller: organiserClub, label: 'Organiser Club'),
+              // const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            // WidgetsFlutterBinding.ensureInitialized();
+                            showLoaderDialog(context);
+                            String h1 = '', m1 = '';
+                            String s2 = _timeController.text;
+                            int ind = 0;
+                            for (int i = 0; i < s2.length; i++) {
+                              if (s2[i] == ':') {
+                                ind = i;
+                                break;
+                              }
+                            }
+
+                            h1 = s2.substring(0, ind - 1);
+                            m1 = s2.substring(ind + 1);
+                            if (h1.length == 1) h1 = '0$h1';
+                            if (m1.length == 1) m1 = '0$m1';
+                            startTime = "$h1:$m1:00";
+
+                            ind = 0;
+                            s2 = _timeController2.text;
+                            h1 = '';
+                            m1 = '';
+                            for (int i = 0; i < s2.length; i++) {
+                              if (s2[i] == ':') {
+                                ind = i;
+                                break;
+                              }
+                            }
+
+                            h1 = s2.substring(0, ind - 1);
+                            m1 = s2.substring(ind + 1);
+                            if (h1.length == 1) h1 = '0$h1';
+                            if (m1.length == 1) m1 = '0$m1';
+                            endTime = "$h1:$m1:00";
+
+                            String startTime2 = '', endTime2 = '';
+                            for (int i = 0; i < startTime.length; i++) {
+                              if (startTime[i] != ' ') {
+                                startTime2 += startTime[i];
+                              }
+                            }
+                            startTime = startTime2;
+                            for (int i = 0; i < endTime.length; i++) {
+                              if (endTime[i] != ' ') endTime2 += endTime[i];
+                            }
+                            endTime = endTime2;
+
+                            String year1 = _dateController.text.substring(6);
+                            String year2 = _dateController2.text.substring(6);
+
+                            String month1 =
+                                _dateController.text.substring(3, 5);
+                            String month2 =
+                                _dateController2.text.substring(3, 5);
+
+                            String day1 = _dateController.text.substring(0, 2);
+                            String day2 = _dateController2.text.substring(0, 2);
+
+                            startTime = '''$year1-$month1-$day1 $startTime''';
+                            endTime = '''$year2-$month2-$day2 $endTime''';
+                            await Future.delayed(const Duration(seconds: 2));
+                            print(startTime);
+                            print(endTime);
+                            Navigator.pop(context);
+                            DateTime dt1 = DateTime.parse(startTime);
+                            DateTime dt2 = DateTime.parse(endTime);
+                            if (dt1.compareTo(dt2) >= 0) {
+                              showModalBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  context: context,
+                                  builder: (context) {
+                                    return errorModal2(
+                                        'Star Time cannot be greater than End Time.',
+                                        context);
+                                  });
+                            } else if (title.text == '') {
+                              errorPrompt('Title', title);
+                            } else if (tagLine.text == '') {
+                              errorPrompt('Tagline', tagLine);
+                            } else if (eventVenue.text == '') {
+                              errorPrompt('Event Venue', eventVenue);
+                            } else if (eventMin.text == '') {
+                              errorPrompt('Min Participants', eventMin);
+                            } else if (eventMax.text == '') {
+                              errorPrompt('Max Participants', eventMax);
+                            } else if (eventPrice.text == '') {
+                              errorPrompt('Event Price', eventPrice);
+                            } else {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              String str = '';
+                              str = prefs.getString('newEvent') ?? '';
+                              Map<String, dynamic> jsonDetails = {};
+                              jsonDetails = jsonDecode(str);
+                              var newEvent1 = Events.fromJson(jsonDetails);
+                              newEvent1.title = title.text;
+                              newEvent1.tagLine = tagLine.text;
+                              newEvent1.eventVenue = eventVenue.text;
+                              newEvent1.startTime = startTime;
+                              newEvent1.endTime = endTime;
+                              newEvent1.eventType = eventtype.toLowerCase();
+
+                              newEvent1.eventMaxParticipants = int.parse(
+                                  eventMax.text == '' ? '0' : eventMax.text);
+                              newEvent1.eventMinParticipants = int.parse(
+                                  eventMin.text == '' ? '0' : eventMin.text);
+                              newEvent1.eventPrice = int.parse(
+                                  eventPrice.text == ''
+                                      ? '0'
+                                      : eventPrice.text);
+
+                              // List<EventImages> img = [];
+                              // for (var i = 0; i < urlList.length; i++) {
+                              //   EventImages eventImages =
+                              //       EventImages(url: urlList[i]);
+                              //   img.add(eventImages);
+                              // }
+                              // newEvent1.eventImages = img;
+                              // print(newEvent1.eventImages!.length);
+                              await prefs.setString(
+                                  'newEvent', jsonEncode(newEvent1));
+                              Navigator.pop(context);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: containerColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5))),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 12, bottom: 12),
+                            child: ctext1('Confirm', primaryColor1, 18),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

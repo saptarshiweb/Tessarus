@@ -40,7 +40,7 @@ Widget descfield1(
       controller: controller,
       obscureText: obscuretext,
       style: const TextStyle(
-          color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: 'Enter $label',
         labelText: 'Enter $label',
@@ -65,7 +65,7 @@ Widget datefield1(
       obscureText: obscuretext,
       keyboardType: TextInputType.datetime,
       style: const TextStyle(
-          color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: 'Enter $label',
         labelText: 'Enter $label',

@@ -9,6 +9,7 @@ import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_contr
 import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     title: 'Tessarus',
     theme: ThemeData(fontFamily: 'lato'),

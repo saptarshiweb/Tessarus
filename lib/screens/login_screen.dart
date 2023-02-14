@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
         auth = vol1.authToken!;
         profileImage = vol1.volunteer!.profileImageUrl!;
       }
-
+      WidgetsFlutterBinding.ensureInitialized();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool('signIn', true);
       await prefs.setString('Name', name);
@@ -66,7 +66,24 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('Auth', auth);
       await prefs.setString('DrawerItem', 'Dashboard');
       await prefs.setString('profileImage', profileImage);
-      Events event1 = Events();
+      Events event1 = Events(
+        title: '',
+        description: '',
+        tagLine: '',
+        startTime: '',
+        endTime: '',
+        eventVenue: '',
+        rules: '',
+        prizes: '',
+        eventImages: [],
+        eventType: '',
+        eventPrice: 0,
+        eventCoordinators: [],
+        eventMaxParticipants: 0,
+        eventMinParticipants: 0,
+        createdAt: '',
+        updatedAt: '',
+      );
       String newEvent = jsonEncode(event1);
       await prefs.setString('newEvent', newEvent);
 
