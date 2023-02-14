@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, prefer_typing_uninitialized_variables
+// ignore_for_file: use_build_context_synchronously, prefer_typing_uninitialized_variables, depend_on_referenced_packages, deprecated_member_use, avoid_print
 
 import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
@@ -14,8 +14,9 @@ import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
+import 'package:tessarus_volunteer/models/new_event_model.dart';
 import '../../../models/api_url.dart';
-import '../../../models/event_display_model.dart';
+
 
 class AddEventImage extends StatefulWidget {
   const AddEventImage({super.key});

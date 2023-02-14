@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unused_field, avoid_print
 
 import 'dart:convert';
 
@@ -9,11 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
+import 'package:tessarus_volunteer/models/new_event_model.dart';
 
 import '../../../custom_widget/custom_text.dart';
 import '../../../custom_widget/custom_textfield.dart';
 import '../../../custom_widget/loader_widget.dart';
-import '../../../models/event_display_model.dart';
 
 class AddGeneralInfoEvent extends StatefulWidget {
   const AddGeneralInfoEvent({super.key});

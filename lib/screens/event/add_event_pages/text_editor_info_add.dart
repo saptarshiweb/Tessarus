@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
-import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:tessarus_volunteer/models/new_event_model.dart';
 
 import '../../../custom_widget/loader_widget.dart';
 

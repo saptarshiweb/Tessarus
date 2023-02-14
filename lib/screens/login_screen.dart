@@ -1,8 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +11,8 @@ import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'dart:convert';
 import 'package:tessarus_volunteer/models/api_url.dart';
-import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:tessarus_volunteer/models/new_event_model.dart';
+
 import 'package:tessarus_volunteer/models/volunteer_model.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 
@@ -41,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'password': password,
       }),
     );
+    var responseval = json.decode(response.body);
     print(response.body);
     if (response.statusCode == 200) {
       String name = '';
@@ -81,14 +84,20 @@ class _LoginScreenState extends State<LoginScreen> {
         eventCoordinators: [],
         eventMaxParticipants: 0,
         eventMinParticipants: 0,
-        createdAt: '',
-        updatedAt: '',
       );
       String newEvent = jsonEncode(event1);
       await prefs.setString('newEvent', newEvent);
 
       Navigator.pop(context);
       easyNavigation(const DashboardMain(), context);
+    } else {
+      Navigator.pop(context);
+      showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) {
+            return errorModal2(responseval['message'], context);
+          });
     }
   }
 
@@ -97,7 +106,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(toolbarHeight: 0.0),
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: primaryColor,
+        ),
+        titleSpacing: 0,
+        elevation: 0,
+        backgroundColor: primaryColor,
+      ),
       body: Padding(
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: Column(

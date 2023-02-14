@@ -251,17 +251,6 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    // TextButton(
-                    //     onPressed: () {
-                    //       Navigator.pop(context);
-                    //     },
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.all(12.0),
-                    //       child: Text(
-                    //         'Cancel',
-                    //         style: TextStyle(fontSize: 18, color: textcolor3),
-                    //       ),
-                    //     ))
                   ],
                 ),
               )),

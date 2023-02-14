@@ -69,14 +69,14 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                       bottomRight: Radius.circular(6)),
                   color: primaryColor1),
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 25, top: 20),
+                padding: const EdgeInsets.only(bottom: 10, top: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     topbar(context),
                     const SizedBox(height: 18),
                     profileWidget(context),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     DrawerListItem(context, 'Dashboard', Elusive.group_circled,
                         const DashboardMain()),
                     DrawerListItem(
@@ -228,8 +228,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
       },
       title: Container(
         decoration: BoxDecoration(
-            color:
-                (dval == text) ? containerColor : textfieldColor,
+            color: (dval == text) ? containerColor : textfieldColor,
             borderRadius: BorderRadius.circular(14)),
         child: Padding(
           padding:
@@ -240,8 +239,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
               Icon(
                 icon,
                 size: 21,
-                color:
-                    (dval == text) ? textcolor2 : textcolor5,
+                color: (dval == text) ? textcolor2 : textcolor5,
               ),
               const SizedBox(width: 12),
               Text(
@@ -249,16 +247,14 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color:
-                      (dval == text) ? textcolor2 : textcolor5,
+                  color: (dval == text) ? textcolor2 : textcolor5,
                 ),
               ),
               const Spacer(),
               Icon(
                 WebSymbols.right_circle,
                 size: 24,
-                color:
-                    (dval == text) ? textcolor2 : textcolor5,
+                color: (dval == text) ? textcolor2 : textcolor5,
               ),
             ],
           ),

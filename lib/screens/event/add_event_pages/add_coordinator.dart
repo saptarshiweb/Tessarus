@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, deprecated_member_use, avoid_print, use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -12,9 +14,10 @@ import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
-import 'package:tessarus_volunteer/models/event_display_model.dart';
+
 import 'package:path/path.dart';
 import 'package:async/async.dart';
+import 'package:tessarus_volunteer/models/new_event_model.dart';
 
 class AddCoordinatorEvent extends StatefulWidget {
   const AddCoordinatorEvent({super.key});

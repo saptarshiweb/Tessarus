@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
-import 'package:lottie/lottie.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
@@ -118,7 +117,7 @@ Widget successModal2(String message, BuildContext context, Widget route) {
             color: textcolor2),
         const SizedBox(height: 6),
         Container(
-            height: 300,
+            height: 210,
             decoration: BoxDecoration(
                 color: modalbackColor2,
                 borderRadius: BorderRadius.circular(12)),
@@ -128,12 +127,22 @@ Widget successModal2(String message, BuildContext context, Widget route) {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                      height: 150,
-                      width: 150,
-                      child:
-                          Lottie.asset('assets/success.json', reverse: false)),
-                  ctext1(message, containerColor, 14),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(WebSymbols.ok, color: containerColor, size: 24),
+                      const SizedBox(width: 14),
+                      ctext1('Successfully Done!', containerColor, 24),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    message,
+                    style: TextStyle(
+                        color: textcolor5,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),

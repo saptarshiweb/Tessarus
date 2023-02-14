@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.5
   shared_preferences: ^2.0.17
-  flutter_zoom_drawer: ^3.0.3
+
   fluttericon: ^2.0.0
   simple_barcode_scanner: ^0.0.7
   pretty_qr_code: ^2.0.3
@@ -50,9 +50,8 @@ dependencies:
   html_editor_enhanced: ^2.5.1
   html: ^0.15.1
   dotted_border: ^2.0.0+3
-  image_picker: ^0.8.6+1
   path_provider: ^2.0.12
-  file_picker: ^5.2.5
+
   images_picker: ^1.2.11
   path: ^1.8.2
   

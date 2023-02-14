@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:tessarus_volunteer/color_constants.dart';

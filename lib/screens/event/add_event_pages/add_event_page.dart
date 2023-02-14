@@ -9,7 +9,8 @@ import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
-import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:tessarus_volunteer/models/new_event_model.dart';
+
 import 'package:tessarus_volunteer/screens/event/add_event_pages/add_coordinator.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_pages/add_event_image.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_pages/general_info_add.dart';
@@ -42,10 +43,19 @@ class _AddEventPageState extends State<AddEventPage> {
     Map<String, dynamic> jsonDetails = {};
     jsonDetails = jsonDecode(str);
     var newEvent1 = Events.fromJson(jsonDetails);
+    if (newEvent1.title == '') {
+      Navigator.pop(context);
+      showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) {
+            return errorModal2('Please add Info to add an Event.', context);
+          });
+    }
     print(newEvent1.title);
     var body = {
       'title': newEvent1.title,
-      'description': newEvent1.title,
+      'description': newEvent1.description,
       'tagLine': newEvent1.tagLine,
       'startTime': newEvent1.startTime,
       'endTime': newEvent1.endTime,
@@ -113,75 +123,95 @@ class _AddEventPageState extends State<AddEventPage> {
       backgroundColor: primaryColor,
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 22),
-        child: Column(
-          children: [
-            generalInfo(context),
-            const SizedBox(height: 20),
-            texteditorInfo(context),
-            const SizedBox(height: 20),
-            eventImageinfo(context),
-            const SizedBox(height: 20),
-            coordinatorInfo(context),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: containerColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          )),
-                      onPressed: () async {
-                        eventAdd();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15, bottom: 15),
-                        child: ctext1('Confirm', primaryColor, 16),
-                      )),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          shape: RoundedRectangleBorder(
+            const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              generalInfo(context),
+              const SizedBox(height: 14),
+              texteditorInfo(context),
+              const SizedBox(height: 14),
+              eventImageinfo(context),
+              const SizedBox(height: 14),
+              coordinatorInfo(context),
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: containerColor,
+                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              side:
-                                  BorderSide(width: 1, color: containerColor))),
-                      onPressed: () async {
-                        showLoaderDialog(context);
-                        await Future.delayed(const Duration(seconds: 6));
-                        Navigator.pop(context);
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        String str = '';
-                        str = prefs.getString('newEvent') ?? '';
-                        Map<String, dynamic> jsonDetails = {};
-                        jsonDetails = jsonDecode(str);
-                        var newEvent1 = Events.fromJson(jsonDetails);
-                        print(newEvent1.eventCoordinators![0].name);
-                        print(newEvent1.eventImages![0].url);
-                        print(newEvent1.title);
-                        print(newEvent1.eventPrice);
-                        print(newEvent1.startTime);
-                        print(newEvent1.endTime);
-                        print(newEvent1.description);
-                        print(newEvent1.rules);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15, bottom: 15),
-                        child: ctext1('Reset All', textcolor2, 16),
-                      )),
-                ),
-              ],
-            ),
-          ],
+                            )),
+                        onPressed: () async {
+                          eventAdd();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          child: ctext1('Confirm', primaryColor, 16),
+                        )),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(
+                                    width: 1, color: containerColor))),
+                        onPressed: () async {
+                          showLoaderDialog(context);
+                          await Future.delayed(const Duration(seconds: 6));
+                          Navigator.pop(context);
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          // String str = '';
+                          // str = prefs.getString('newEvent') ?? '';
+                          // Map<String, dynamic> jsonDetails = {};
+                          // jsonDetails = jsonDecode(str);
+                          // var newEvent1 = Events.fromJson(jsonDetails);
+                          // print(newEvent1.eventCoordinators![0].name);
+                          // print(newEvent1.eventImages![0].url);
+                          // print(newEvent1.title);
+                          // print(newEvent1.eventPrice);
+                          // print(newEvent1.startTime);
+                          // print(newEvent1.endTime);
+                          // print(newEvent1.description);
+                          // print(newEvent1.rules);
+                          Events event1 = Events(
+                            title: '',
+                            description: '',
+                            tagLine: '',
+                            startTime: '',
+                            endTime: '',
+                            eventVenue: '',
+                            rules: '',
+                            prizes: '',
+                            eventImages: [],
+                            eventType: '',
+                            eventPrice: 0,
+                            eventCoordinators: [],
+                            eventMaxParticipants: 0,
+                            eventMinParticipants: 0,
+                          );
+                          String newEvent = jsonEncode(event1);
+                          await prefs.setString('newEvent', newEvent);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          child: ctext1('Reset All', textcolor2, 16),
+                        )),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
