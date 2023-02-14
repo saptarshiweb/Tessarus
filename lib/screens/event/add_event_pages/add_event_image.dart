@@ -25,13 +25,14 @@ class AddEventImage extends StatefulWidget {
 class _AddEventImageState extends State<AddEventImage> {
   File? imageFile;
   List<String> urlList = [];
+  bool showImageList = false;
   String url = '';
   int urlInd = 1;
   String url1 = '';
   String url2 = '';
   String url3 = '';
 
-  uploadImage(BuildContext context) async {
+  Future uploadImage(BuildContext context) async {
     showLoaderDialog(context);
     var responseval;
     String urlVal = 'Error';
@@ -66,6 +67,9 @@ class _AddEventImageState extends State<AddEventImage> {
         urlList.add(urlVal.toString());
         urlInd++;
         print(urlList.length);
+        setState(() {
+          showImageList = true;
+        });
       });
     }).catchError((e) {
       print(e);
@@ -88,145 +92,103 @@ class _AddEventImageState extends State<AddEventImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      resizeToAvoidBottomInset: true,
       appBar: appbar1('Add Event Images', context),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 20, bottom: 10, right: 20, left: 20),
-        child: Column(
-          children: [
-            (urlList.isNotEmpty)
-                ? SizedBox(
-                    height: 300,
-                    child: ListView.builder(
-                        itemCount: urlList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: ctext1(urlList[index], textcolor2, 14),
-                          );
-                        }),
-                  )
-                : const SizedBox(height: 0, width: 0),
-            Container(
-              decoration: BoxDecoration(
-                  color: primaryColor1,
-                  borderRadius: BorderRadius.circular(14)),
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DottedBorder(
-                            color: containerColor,
-                            strokeWidth: 2,
-                            borderType: BorderType.RRect,
-                            radius: const Radius.circular(7),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 30, bottom: 30),
-                              child: Column(
-                                children: [
-                                  Center(
-                                      child: IconButton(
-                                    onPressed: () {
-                                      getImage();
-                                    },
-                                    icon: Icon(FontAwesome.upload,
-                                        color: containerColor, size: 22),
-                                  )),
-                                  const SizedBox(height: 15),
-                                  ctext1(
-                                      'Upload the Image', containerColor, 18),
-                                ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 20, bottom: 10, right: 20, left: 20),
+          child: Column(
+            children: [
+              (showImageList)
+                  ? Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 20, top: 20, left: 20, right: 20),
+                      child: SizedBox(
+                        height: 100,
+                        child: ListView.builder(
+                            // physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: urlList.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.network(
+                                      fit: BoxFit.cover,
+                                      urlList[index],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    )
+                  : const SizedBox(height: 0, width: 0),
+              Container(
+                decoration: BoxDecoration(
+                    color: primaryColor1,
+                    borderRadius: BorderRadius.circular(14)),
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DottedBorder(
+                              color: containerColor,
+                              strokeWidth: 2,
+                              borderType: BorderType.RRect,
+                              radius: const Radius.circular(7),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 30, bottom: 30),
+                                child: Column(
+                                  children: [
+                                    Center(
+                                        child: IconButton(
+                                      onPressed: () {
+                                        getImage();
+                                      },
+                                      icon: Icon(FontAwesome.upload,
+                                          color: containerColor, size: 22),
+                                    )),
+                                    const SizedBox(height: 15),
+                                    ctext1(
+                                        'Upload the Image', containerColor, 18),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        ctext1('Event Image $urlInd', textcolor2, 18),
-                        const Spacer(),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: containerColor,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12))),
-                            onPressed: () {
-                              uploadImage(context);
-                            },
-                            child: ctext1('Upload', primaryColor1, 12)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget imagePickerWidget(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: DottedBorder(
-                    color: containerColor,
-                    strokeWidth: 2,
-                    borderType: BorderType.RRect,
-                    radius: const Radius.circular(7),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 30),
-                      child: Column(
-                        children: [
-                          Center(
-                              child: IconButton(
-                            onPressed: () {
-                              getImage();
-                            },
-                            icon: Icon(FontAwesome.upload,
-                                color: containerColor, size: 22),
-                          )),
-                          const SizedBox(height: 15),
-                          ctext1('Upload the Image', containerColor, 18),
                         ],
                       ),
-                    ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          ctext1('Event Image $urlInd', textcolor2, 18),
+                          const Spacer(),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: containerColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12))),
+                              onPressed: () {
+                                uploadImage(context);
+                              },
+                              child: ctext1('Upload', primaryColor1, 12)),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                ctext1('Event Image $urlInd', textcolor2, 18),
-                const Spacer(),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: containerColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12))),
-                    onPressed: () {
-                      uploadImage(context);
-                    },
-                    child: ctext1('Upload', primaryColor1, 12)),
-              ],
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

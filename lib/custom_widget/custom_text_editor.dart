@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 
@@ -65,10 +67,6 @@ Widget CustomTextEditor(String title, String value, BuildContext context) {
                 onPressed: () async {
                   String v = await controller.getText();
                   print(v);
-
-                  setState() {
-                    value = v;
-                  }
 
                   Navigator.pop(context);
                 },
