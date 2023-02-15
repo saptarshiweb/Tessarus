@@ -37,9 +37,10 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-        'Authorization': 'Bearer $auth_val'
+        // 'Authorization': 'Bearer $auth_val'
       },
     );
+    print(response.body);
     var responseval = json.decode(response.body);
     var responseData = responseval['events']["documents"];
     List<Events> event1 = [];
@@ -150,7 +151,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
               children: [
                 Column(
                   children: [
-                    ctext1(month[m], textcolor2, 18),
+                    ctext1(month[m + 1], textcolor2, 18),
                     const SizedBox(height: 6),
                     ctext1(day, containerColor, 14),
                   ],
