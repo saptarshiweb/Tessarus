@@ -173,7 +173,9 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                         backgroundColor: containerColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14))),
-                    onPressed: () {},
+                    onPressed: () {
+                      normalNavigation(const EventDetailPage(), context);
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(
                           top: 12, bottom: 12, left: 0, right: 0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 
 class EventDetailPage extends StatefulWidget {
@@ -12,6 +13,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       appBar: appbar1('Event Details', context),
       body: Column(
         children: const [],
