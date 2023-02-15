@@ -228,10 +228,13 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
+                              onPressed: () async {
+                                showLoaderDialog(context);
+                                await Future.delayed(
+                                    const Duration(seconds: 2));
                                 deleteEvent(id.toString(), context);
                                 eventListUpcoming();
+                                Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: allcancel,

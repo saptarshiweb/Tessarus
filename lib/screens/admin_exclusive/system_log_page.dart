@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -150,11 +150,15 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
               buttonUnselectedForegroundColor: containerColor,
               buttonSelectedBackgroundColor: containerColor),
           numberPages: _numPages,
-          onPageChange: (int index) {
+          onPageChange: (int index) async {
+            showLoaderDialog(context);
+            await Future.delayed(const Duration(seconds: 1));
+
             setState(() {
               _currentPage = index;
             });
             LogsPrint();
+            Navigator.pop(context);
           },
         ),
       ),
@@ -164,12 +168,19 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   Widget logDisplayWidget(Documents l) {
     String createdAt = '';
     createdAt = l.createdAt ?? '';
+    String updatedAt = '';
+    updatedAt = l.updatedAt ?? '';
 
     String date = createdAt.substring(0, 10);
     String time = "${createdAt.substring(11, 16)}:00";
     createdAt = "$date $time";
+    date = updatedAt.substring(0, 10);
+    time = "${updatedAt.substring(11, 16)}:00";
+    updatedAt = "$date $time";
     var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(createdAt, true);
     var dateLocal = dateTime.toLocal();
+    dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(updatedAt, true);
+    var dateLocal1 = dateTime.toLocal();
 
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -193,6 +204,9 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
               const SizedBox(height: 8),
               ctext1('Created At  ${dateLocal.toString().substring(0, 16)}',
                   textcolor5, 12),
+              const SizedBox(height: 8),
+              ctext1('Updated At  ${dateLocal1.toString().substring(0, 16)}',
+                  textcolor5, 12),
             ],
           ),
         ),
@@ -208,7 +222,7 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
             itemBuilder: (context, item, isSelected) {
               return ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     isSelected = true;
                     logtype = item;
@@ -237,18 +251,24 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
           ),
         ),
         onSaved: (value) async {
+          showLoaderDialog(context);
+          await Future.delayed(const Duration(seconds: 1));
           setState(() {
             logtype = value!;
             _currentPage = 0;
           });
           LogsPrint();
+          Navigator.pop(context);
         },
         onChanged: (value) async {
+          showLoaderDialog(context);
+          await Future.delayed(const Duration(seconds: 1));
           setState(() {
             logtype = value!;
             _currentPage = 0;
           });
           LogsPrint();
+          Navigator.pop(context);
         },
         selectedItem: logtype,
       ),
