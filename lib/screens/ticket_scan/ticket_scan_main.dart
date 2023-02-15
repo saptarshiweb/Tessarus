@@ -35,7 +35,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
   String ticket_id = '';
   String ticket_qr_value = 'Sample';
 
-  Future checkInFunctio() async {
+  Future checkInFunction() async {
     showLoaderDialog(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
@@ -55,8 +55,11 @@ class _TicketScanMainState extends State<TicketScanMain> {
 
     // print(response.body);
     var responseval = json.decode(response.body);
+    print(response.body);
+    await Future.delayed(const Duration(seconds: 2));
     Navigator.pop(context);
-    successModal2(responseval.message, context, const TicketScanMain());
+    showSuccessMessage(
+        'Successfully Checked In!!', context, const TicketScanMain());
   }
 
   Future fetchTicketDetails() async {
@@ -107,7 +110,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
     String name = "";
     name = selectedTicket.team!.name!;
     return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 15),
+      padding: const EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,7 +143,11 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     ),
                   ],
                 )
-              : checkinButton(context),
+              : Row(
+                  children: [
+                    Expanded(child: checkinButton(context)),
+                  ],
+                ),
           // const SizedBox(height: 12),
           Row(
             children: [
@@ -191,29 +198,18 @@ class _TicketScanMainState extends State<TicketScanMain> {
 
   Widget checkinButton(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(backgroundColor: containerColor),
-      onPressed: () async {
-        var res = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const SimpleBarcodeScannerPage(
-                scanType: ScanType.qr,
-                centerTitle: true,
-                appBarTitle: 'Scan User Profile',
-                lineColor: '#FFA500',
-              ),
-            ));
-        setState(() {
-          if (res is String) {
-            // qrvalue = res;
-            ticket_id = res;
-            fetchTicketDetails();
-          }
-        });
+      style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+              side: BorderSide(color: containerColor, width: 1.4)),
+          backgroundColor: primaryColor),
+      onPressed: () {
+        checkInFunction();
+        fetchTicketDetails();
       },
       child: Padding(
         padding: const EdgeInsets.all(14.0),
-        child: smbold1('Scan New User'),
+        child: ctext1('Check In', textcolor2, 14),
       ),
     );
   }
@@ -222,31 +218,28 @@ class _TicketScanMainState extends State<TicketScanMain> {
     return Container(
       decoration: BoxDecoration(
           color: primaryColor, borderRadius: BorderRadius.circular(18)),
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: textfieldColor),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ctext('ESPEKTRO', containerColor),
-                    )),
-                const Spacer(),
-                ctext1(selectedTicket.ticketNumber ?? '', textcolor2, 14),
-              ],
-            ),
-            const SizedBox(height: 10),
-            teamWidget(),
-            const SizedBox(height: 10),
-            eventWidget()
-          ],
-        ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: textfieldColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ctext('ESPEKTRO', containerColor),
+                  )),
+              const Spacer(),
+              ctext1(selectedTicket.ticketNumber ?? '', textcolor2, 14),
+            ],
+          ),
+          const SizedBox(height: 10),
+          teamWidget(),
+          const SizedBox(height: 10),
+          eventWidget()
+        ],
       ),
     );
   }
@@ -401,7 +394,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: smbold1('Open Scanner'),
+                    child: ctext1('Open Scanner', primaryColor1, 14),
                   ),
                 ),
               ),

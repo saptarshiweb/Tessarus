@@ -55,8 +55,10 @@ class _AddCoinsState extends State<AddCoins> {
       addcoinwidgetshow = false;
     });
 
-    Navigator.pop(context);
     fetchUserDetails();
+    await Future.delayed(const Duration(seconds: 3));
+    Navigator.pop(context);
+    print(response.body);
   }
 
   Future fetchUserDetails() async {
@@ -104,7 +106,7 @@ class _AddCoinsState extends State<AddCoins> {
 
   Widget userSelectedWidget(BuildContext context, User user1) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12, right: 12, top: 35),
+      padding: const EdgeInsets.only(left: 12, right: 12, top: 20),
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,18 +118,25 @@ class _AddCoinsState extends State<AddCoins> {
               Expanded(child: userProfileWidget(context, user1)),
             ],
           ),
-          (addcoinwidgetshow == true)
-              ? addCoinModalWidget(context)
-              : const SizedBox(height: 0, width: 0),
+          const SizedBox(height: 15),
+          Row(
+            children: [
+              Expanded(child: userProfileWidget1(context, user1)),
+            ],
+          ),
+          // (addcoinwidgetshow == true)
+          //     ? addCoinModalWidget(context)
+          //     : const SizedBox(height: 0, width: 0),
           const SizedBox(height: 30),
           Row(
             children: [
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: containerColor,
+                      backgroundColor: primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14))),
+                          side: BorderSide(color: containerColor, width: 1.4),
+                          borderRadius: BorderRadius.circular(4))),
                   onPressed: () async {
                     var res = await Navigator.push(
                         context,
@@ -198,12 +207,143 @@ class _AddCoinsState extends State<AddCoins> {
     );
   }
 
+  Widget userProfileWidget1(BuildContext context, User user1) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: containerColor, width: 1.5),
+          color: primaryColor,
+          borderRadius: BorderRadius.circular(4)),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 18, bottom: 8, left: 15, right: 15),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ctext1('Espektro ID ', textcolor5, 15),
+                const Spacer(),
+                ctext1(user1.espektroId ?? '', textcolor5, 14),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                ctext1('Your Wallet', textcolor5, 16),
+                const Spacer(),
+                Icon(FontAwesome5.magento, color: textcolor2, size: 16),
+                const SizedBox(width: 6),
+                ctext1(user1.coins.toString(), textcolor5, 14),
+              ],
+            ),
+            const SizedBox(height: 12),
+            (addcoinwidgetshow == true)
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: numfield1(
+                        controller: addCoincontroller, label: 'Coins'),
+                  )
+                : const SizedBox(height: 0, width: 0),
+            (addcoinwidgetshow == false)
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: containerColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4))),
+                          onPressed: () {
+                            setState(() {
+                              addcoinwidgetshow = true;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8, bottom: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ctext1('Add Coin ', primaryColor1, 14),
+                                Icon(Iconic.plus_circle,
+                                    color: primaryColor1, size: 18)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: Colors.lightGreenAccent.shade100,
+                                        width: 1.4),
+                                    borderRadius: BorderRadius.circular(4))),
+                            onPressed: () async {
+                              addCoinFunction();
+                              setState(() {
+                                addcoinwidgetshow = false;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: ctext1('Confirm', textcolor2, 14),
+                            )),
+                      ),
+                    ],
+                  ),
+            const SizedBox(height: 6),
+            (addcoinwidgetshow == true)
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Colors.redAccent.shade400,
+                                      width: 1.4,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4))),
+                            onPressed: () {
+                              setState(() {
+                                addcoinwidgetshow = false;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 4, bottom: 4),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    FontAwesome.left,
+                                    color: textcolor2,
+                                    size: 22,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  ctext1('Cancel', textcolor2, 14)
+                                ],
+                              ),
+                            )),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget userProfileWidget(BuildContext context, User user1) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: containerColor, width: 1),
+          border: Border.all(color: containerColor, width: 1.5),
           color: primaryColor,
-          borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.circular(4)),
       child: Padding(
         padding:
             const EdgeInsets.only(top: 18, bottom: 18, left: 15, right: 15),
@@ -211,62 +351,42 @@ class _AddCoinsState extends State<AddCoins> {
           children: [
             Row(
               children: [
-                ctext1(user1.name ?? '', textcolor2, 18),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ctext1(user1.name ?? '', textcolor2, 18),
+                    const SizedBox(height: 10),
+                    ctext1(user1.email ?? '', textcolor5, 12),
+                  ],
+                ),
                 const Spacer(), //Image Show
-                Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(14)),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
                   child: Image(
                       fit: BoxFit.cover,
-                      height: 50,
-                      width: 50,
+                      height: 80,
+                      width: 80,
                       image: NetworkImage(user1.profileImageUrl ?? '')),
                 )
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Row(
               children: [
-                ctext1(user1.email ?? '', textcolor5, 12),
+                ctext1(user1.degree ?? '', textcolor5, 15),
+                const SizedBox(width: 5),
+                ctext1(user1.stream ?? '', textcolor5, 15),
+                const SizedBox(width: 5),
+                ctext1(user1.year ?? '', textcolor5, 15),
+                ctext1('rd Year', textcolor5, 15),
               ],
             ),
-            const SizedBox(height: 12),
             Row(
               children: [
                 ctext1(user1.college ?? '', textcolor5, 15),
               ],
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                ctext1('Espektro ID ', textcolor5, 15),
-                ctext1(user1.espektroId ?? '', containerColor, 14),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                ctext1('Coins ', textcolor5, 16),
-                const SizedBox(width: 9),
-                Icon(FontAwesome5.magento, color: containerColor, size: 16),
-                const SizedBox(width: 6),
-                ctext1(user1.coins.toString(), textcolor5, 14),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      addcoinwidgetshow = true;
-                    });
-                  },
-                  child: Row(
-                    children: [
-                      ctext1('Add Coin ', textcolor2, 14),
-                      Icon(Iconic.plus_circle, color: containerColor, size: 18)
-                    ],
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),
@@ -317,17 +437,20 @@ class _AddCoinsState extends State<AddCoins> {
                             lineColor: '#FFA500',
                           ),
                         ));
-                    setState(() {
+                    setState(() async {
                       if (res is String) {
                         // qrvalue = res;
                         user_id = res;
+                        showLoaderDialog(context);
                         fetchUserDetails();
+                        await Future.delayed(const Duration(seconds: 2));
+                        Navigator.pop(context);
                       }
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: smbold1('Open Scanner'),
+                    padding: const EdgeInsets.only(top: 12, bottom: 12),
+                    child: ctext1('Open Scanner', primaryColor1, 14),
                   ),
                 ),
               ),
@@ -340,76 +463,37 @@ class _AddCoinsState extends State<AddCoins> {
 
   Widget addCoinModalWidget(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(width: 1, color: containerColor),
-            color: primaryColor,
-            borderRadius: BorderRadius.circular(14)),
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 6),
-          child: Column(
-            children: [
-              numfield1(controller: addCoincontroller, label: 'Coins'),
-              const SizedBox(height: 6),
-              Row(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(FontAwesome.cancel_circled),
+              iconSize: 22,
+              color: textcolor2),
+          const SizedBox(height: 6),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            decoration: BoxDecoration(
+                color: modalbackColor2,
+                borderRadius: BorderRadius.circular(12)),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 6, bottom: 4, left: 10, right: 10),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: containerColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                        onPressed: () async {
-                          addCoinFunction();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: ctext1('Confirm', textcolor5, 14),
-                        )),
-                  ),
+                  numfield1(controller: addCoincontroller, label: 'Coins'),
+                  const SizedBox(height: 6),
+                  const SizedBox(height: 0),
                 ],
               ),
-              const SizedBox(height: 0),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.transparent),
-                        onPressed: () {
-                          setState(() {
-                            addcoinwidgetshow = false;
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                FontAwesome.left,
-                                color: allcancel,
-                                size: 22,
-                              ),
-                              const SizedBox(width: 12),
-                              Text(
-                                'Cancel',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: allcancel),
-                              )
-                            ],
-                          ),
-                        )),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

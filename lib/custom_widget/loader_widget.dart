@@ -4,7 +4,7 @@ import 'package:tessarus_volunteer/color_constants.dart';
 Widget loadingwidget() {
   return CircularProgressIndicator(
     color: containerColor,
-    backgroundColor: primaryColor1,
+    backgroundColor: Colors.purpleAccent.shade700,
   );
 }
 

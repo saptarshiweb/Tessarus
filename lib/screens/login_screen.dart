@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
@@ -121,6 +122,19 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  FontAwesome5.empire,
+                  color: containerColor,
+                  size: 42,
+                ),
+                const SizedBox(width: 5),
+                ctext1('Tessarus', containerColor, 40),
+              ],
+            ),
+            const SizedBox(height: 50),
             tfield1(controller: email_controller, label: 'your Email'),
             const SizedBox(height: 10),
             tfield1(
@@ -128,32 +142,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: 'your Password',
                 obscuretext: true),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            backgroundColor: containerColor),
-                        onPressed: () {
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus &&
-                              currentFocus.focusedChild != null) {
-                            currentFocus.focusedChild!.unfocus();
-                          }
-                          LoginRequest(
-                              email_controller.text, password_controller.text);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: ctext1('Login', primaryColor1, 16),
-                        )),
-                  ),
-                ],
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              side:
+                                  BorderSide(width: 1.4, color: containerColor),
+                              borderRadius: BorderRadius.circular(6)),
+                          backgroundColor: primaryColor),
+                      onPressed: () {
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        if (!currentFocus.hasPrimaryFocus &&
+                            currentFocus.focusedChild != null) {
+                          currentFocus.focusedChild!.unfocus();
+                        }
+                        LoginRequest(
+                            email_controller.text, password_controller.text);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: ctext1('Login', textcolor2, 16),
+                      )),
+                ),
+              ],
             )
           ],
         ),

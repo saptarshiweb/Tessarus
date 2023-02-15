@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_element
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_element, unused_local_variable
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -22,6 +22,8 @@ class UpcomingEvents extends StatefulWidget {
 }
 
 class _UpcomingEventsState extends State<UpcomingEvents> {
+  int selectedEventIndex = 1;
+  List<String> eventTypeList = ['My Events', 'All Events', 'GDSC-KGEC'];
   String auth_val = '';
   Future<List<Events>> eventListUpcoming() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -94,6 +96,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     String startTime = event.startTime!;
     int m = int.parse(startTime.substring(4, 6));
     String day = startTime.substring(8, 10);
+
     List<String> month = [
       'Jan',
       'Feb',
@@ -186,6 +189,24 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget typeofEventBar(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: eventTypeList.length,
+          itemBuilder: (context, index) {
+            return ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12))),
+                onPressed: () {},
+                child: ctext1(eventTypeList[index], textcolor2, 12));
+          }),
     );
   }
 
