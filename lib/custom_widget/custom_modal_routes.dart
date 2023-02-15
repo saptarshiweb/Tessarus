@@ -5,6 +5,24 @@ import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 
+showSuccessMessage(String message, BuildContext context, Widget route) {
+  showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return successModal2(message, context, route);
+      });
+}
+
+showErrorMessage(String message, BuildContext context) {
+  showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return errorModal2(message, context);
+      });
+}
+
 Widget errorModal2(String message, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
@@ -45,6 +63,7 @@ Widget errorModal2(String message, BuildContext context) {
                     const SizedBox(height: 15),
                     Text(
                       message,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: textcolor5,
                           fontSize: 18,
@@ -138,6 +157,7 @@ Widget successModal2(String message, BuildContext context, Widget route) {
                   const SizedBox(height: 10),
                   Text(
                     message,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: textcolor5,
                         fontSize: 18,

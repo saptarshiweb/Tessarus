@@ -17,7 +17,6 @@ import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/new_event_model.dart';
 import '../../../models/api_url.dart';
 
-
 class AddEventImage extends StatefulWidget {
   const AddEventImage({super.key});
 
@@ -124,7 +123,7 @@ class _AddEventImageState extends State<AddEventImage> {
                       padding: const EdgeInsets.only(
                           bottom: 20, top: 20, left: 20, right: 20),
                       child: SizedBox(
-                        height: 100,
+                        height: 150,
                         child: ListView.builder(
                             // physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: urlList.length,
@@ -134,9 +133,10 @@ class _AddEventImageState extends State<AddEventImage> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
                                   height: 100,
-                                  width: 100,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(4),
                                     child: Image.network(
                                       fit: BoxFit.cover,
                                       urlList[index],
@@ -196,7 +196,7 @@ class _AddEventImageState extends State<AddEventImage> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: containerColor,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12))),
+                                      borderRadius: BorderRadius.circular(14))),
                               onPressed: () {
                                 uploadImage(context);
                               },
@@ -208,49 +208,46 @@ class _AddEventImageState extends State<AddEventImage> {
                 ),
               ),
               const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Row( 
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            // WidgetsFlutterBinding.ensureInitialized();
-                            showLoaderDialog(context);
-                            await Future.delayed(const Duration(seconds: 6));
-                            Navigator.pop(context);
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            String str = '';
-                            str = prefs.getString('newEvent') ?? '';
-                            Map<String, dynamic> jsonDetails = {};
-                            jsonDetails = jsonDecode(str);
-                            var newEvent1 = Events.fromJson(jsonDetails);
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          // WidgetsFlutterBinding.ensureInitialized();
+                          showLoaderDialog(context);
+                          await Future.delayed(const Duration(seconds: 6));
+                          Navigator.pop(context);
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          String str = '';
+                          str = prefs.getString('newEvent') ?? '';
+                          Map<String, dynamic> jsonDetails = {};
+                          jsonDetails = jsonDecode(str);
+                          var newEvent1 = Events.fromJson(jsonDetails);
 
-                            List<EventImages> img = [];
-                            for (var i = 0; i < urlList.length; i++) {
-                              EventImages eventImages =
-                                  EventImages(url: urlList[i]);
-                              img.add(eventImages);
-                            }
-                            newEvent1.eventImages = img;
-                            print(newEvent1.eventImages!.length);
-                            await prefs.setString(
-                                'newEvent', jsonEncode(newEvent1));
+                          List<EventImages> img = [];
+                          for (var i = 0; i < urlList.length; i++) {
+                            EventImages eventImages =
+                                EventImages(url: urlList[i]);
+                            img.add(eventImages);
+                          }
+                          newEvent1.eventImages = img;
+                          print(newEvent1.eventImages!.length);
+                          await prefs.setString(
+                              'newEvent', jsonEncode(newEvent1));
 
-                            Navigator.pop(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: containerColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12))),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 12, bottom: 12),
-                            child: ctext1('Save', primaryColor1, 18),
-                          )),
-                    ),
-                  ],
-                ),
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: containerColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4))),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 12, bottom: 12),
+                          child: ctext1('Save', primaryColor1, 18),
+                        )),
+                  ),
+                ],
               )
             ],
           ),

@@ -142,13 +142,13 @@ class _AddEventPageState extends State<AddEventPage> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: containerColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(4),
                             )),
                         onPressed: () async {
                           eventAdd();
                         },
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          padding: const EdgeInsets.only(top: 12, bottom: 12),
                           child: ctext1('Confirm', primaryColor, 16),
                         )),
                   ),
@@ -162,28 +162,16 @@ class _AddEventPageState extends State<AddEventPage> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(6),
                                 side: BorderSide(
                                     width: 1, color: containerColor))),
                         onPressed: () async {
                           showLoaderDialog(context);
                           await Future.delayed(const Duration(seconds: 6));
-                          Navigator.pop(context);
+
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-                          // String str = '';
-                          // str = prefs.getString('newEvent') ?? '';
-                          // Map<String, dynamic> jsonDetails = {};
-                          // jsonDetails = jsonDecode(str);
-                          // var newEvent1 = Events.fromJson(jsonDetails);
-                          // print(newEvent1.eventCoordinators![0].name);
-                          // print(newEvent1.eventImages![0].url);
-                          // print(newEvent1.title);
-                          // print(newEvent1.eventPrice);
-                          // print(newEvent1.startTime);
-                          // print(newEvent1.endTime);
-                          // print(newEvent1.description);
-                          // print(newEvent1.rules);
+
                           Events event1 = Events(
                             title: '',
                             description: '',
@@ -202,6 +190,9 @@ class _AddEventPageState extends State<AddEventPage> {
                           );
                           String newEvent = jsonEncode(event1);
                           await prefs.setString('newEvent', newEvent);
+                          Navigator.pop(context);
+                          showSuccessMessage('Event Entry Data all Deleted!',
+                              context, const EventPage());
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 15, bottom: 15),

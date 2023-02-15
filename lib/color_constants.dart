@@ -11,7 +11,7 @@ Color allcancel = Colors.red;
 // Color primaryColor = const Color.fromARGB(255, 120, 37, 229);
 
 Color primaryColor1 = const Color.fromARGB(255, 28, 0, 64);
-Color primaryColor = const Color.fromARGB(255, 6, 0, 14);
+Color primaryColor = const Color.fromARGB(255, 12, 0, 27);
 Color secondaryColor = Colors.deepPurpleAccent.shade700;
 Color containerColor = const Color.fromARGB(255, 248, 153, 80);
 Color textcol = Colors.black;
@@ -33,4 +33,4 @@ Color textcolor4 = Colors.grey.shade900;
 
 //drawer Colors
 Color textcolor5 = Colors.grey.shade300;
-Color textfieldColor = textcolor2.withOpacity(0.1);
+Color textfieldColor = textcolor2.withOpacity(0.05);

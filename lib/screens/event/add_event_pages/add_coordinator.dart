@@ -10,6 +10,7 @@ import 'package:images_picker/images_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
@@ -79,6 +80,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
     }).catchError((e) {
       print(e);
     });
+    await Future.delayed(const Duration(seconds: 3));
 
     Navigator.pop(context);
   }
@@ -108,37 +110,52 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
               children: [
                 tfield1(controller: clubName, label: 'Organizing Club'),
                 const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: DottedBorder(
-                        color: containerColor,
-                        strokeWidth: 2,
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(7),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 20),
-                          child: Column(
-                            children: [
-                              Center(
-                                  child: IconButton(
-                                onPressed: () {
-                                  getImage();
-                                },
-                                icon: Icon(FontAwesome.upload,
-                                    color: containerColor, size: 22),
-                              )),
-                              const SizedBox(height: 15),
-                              ctext1(
-                                  'Upload the Club Image', containerColor, 18),
-                            ],
+                (showClubimage == false)
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: DottedBorder(
+                              color: containerColor,
+                              strokeWidth: 2,
+                              borderType: BorderType.RRect,
+                              radius: const Radius.circular(7),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 20),
+                                child: Column(
+                                  children: [
+                                    Center(
+                                        child: IconButton(
+                                      onPressed: () {
+                                        getImage();
+                                      },
+                                      icon: Icon(FontAwesome.upload,
+                                          color: containerColor, size: 22),
+                                    )),
+                                    const SizedBox(height: 15),
+                                    ctext1('Upload the Club Image',
+                                        containerColor, 18),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Center(
+                        child: SizedBox(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              clubImageUrl,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 8),
                 Row(
                   children: [
                     Expanded(
@@ -148,13 +165,25 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                               shape: RoundedRectangleBorder(
                                   side: BorderSide(
                                       width: 1, color: containerColor),
-                                  borderRadius: BorderRadius.circular(12))),
-                          onPressed: () {
-                            uploadImage(context);
+                                  borderRadius: BorderRadius.circular(4))),
+                          onPressed: () async {
+                            if (showClubimage == false) {
+                              uploadImage(context);
+                            } else {
+                              showLoaderDialog(context);
+                              setState(() {
+                                showClubimage = false;
+                              });
+                              await Future.delayed(const Duration(seconds: 2));
+                              Navigator.pop(context);
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 12, bottom: 12),
-                            child: ctext1('Upload', textcolor2, 15),
+                            child: ctext1(
+                                (showClubimage == false) ? 'Upload' : 'Delete',
+                                textcolor2,
+                                15),
                           )),
                     ),
                   ],
@@ -231,32 +260,38 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                       width: 1, color: containerColor),
                                   borderRadius: BorderRadius.circular(4))),
                           onPressed: () async {
-                            showLoaderDialog(context);
-                            await Future.delayed(const Duration(seconds: 6));
-                            Navigator.pop(context);
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            String str = '';
-                            str = prefs.getString('newEvent') ?? '';
-                            Map<String, dynamic> jsonDetails = {};
-                            jsonDetails = jsonDecode(str);
-                            var newEvent1 = Events.fromJson(jsonDetails);
-                            EventOrganiserClub club1 = EventOrganiserClub(
-                                name: clubName.text, image: clubImageUrl);
-                            newEvent1.eventOrganiserClub = club1;
-                            print(newEvent1.eventOrganiserClub!.name);
+                            if (clubName.text == '' || cName.isEmpty) {
+                              showErrorMessage(
+                                  'Club Name and Coordinator Names need to be added.',
+                                  context);
+                            } else {
+                              showLoaderDialog(context);
+                              await Future.delayed(const Duration(seconds: 6));
+                              Navigator.pop(context);
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              String str = '';
+                              str = prefs.getString('newEvent') ?? '';
+                              Map<String, dynamic> jsonDetails = {};
+                              jsonDetails = jsonDecode(str);
+                              var newEvent1 = Events.fromJson(jsonDetails);
+                              EventOrganiserClub club1 = EventOrganiserClub(
+                                  name: clubName.text, image: clubImageUrl);
+                              newEvent1.eventOrganiserClub = club1;
+                              print(newEvent1.eventOrganiserClub!.name);
 
-                            for (int i = 0; i < cName.length; i++) {
-                              EventCoordinators c = EventCoordinators(
-                                  name: cName[i], phone: cPhone[i]);
-                              newEvent1.eventCoordinators!.add(c);
+                              for (int i = 0; i < cName.length; i++) {
+                                EventCoordinators c = EventCoordinators(
+                                    name: cName[i], phone: cPhone[i]);
+                                newEvent1.eventCoordinators!.add(c);
+                              }
+                              // print(newEvent1.eventCoordinators![0].name);
+                              // print(newEvent1.eventCoordinators![0].phone);
+                              await prefs.setString(
+                                  'newEvent', jsonEncode(newEvent1));
+
+                              Navigator.pop(context);
                             }
-                            print(newEvent1.eventCoordinators![0].name);
-                            print(newEvent1.eventCoordinators![0].phone);
-                            await prefs.setString(
-                                'newEvent', jsonEncode(newEvent1));
-
-                            Navigator.pop(context);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 12, bottom: 12),

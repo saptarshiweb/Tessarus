@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_local_variable
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -40,7 +39,7 @@ class _AddCoinsState extends State<AddCoins> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
-    var body = {'amount': addCoincontroller.text, 'userId': user_id};
+    var body = {'amount': addCoincontroller.text, 'userId': selectedUser.sId};
     final response = await http.post(Uri.parse(add_coin),
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -150,8 +149,7 @@ class _AddCoinsState extends State<AddCoins> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: ctext1(
-                        'Scan New User', textcolor5, 15),
+                    child: ctext1('Scan New User', textcolor5, 15),
                   ),
                 ),
               ),
@@ -368,8 +366,7 @@ class _AddCoinsState extends State<AddCoins> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
-                          child: ctext1(
-                              'Confirm', textcolor5, 14),
+                          child: ctext1('Confirm', textcolor5, 14),
                         )),
                   ),
                 ],

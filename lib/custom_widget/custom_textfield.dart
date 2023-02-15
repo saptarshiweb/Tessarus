@@ -9,7 +9,7 @@ Widget tfield1(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
         backgroundColor: textfieldColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
     child: TextFormField(
       controller: controller,
       obscureText: obscuretext,
@@ -33,7 +33,7 @@ Widget descfield1(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
         backgroundColor: textfieldColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
     child: TextFormField(
       minLines: 1,
       maxLines: 4,
@@ -59,7 +59,7 @@ Widget datefield1(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
         backgroundColor: textfieldColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
     child: TextFormField(
       controller: controller,
       obscureText: obscuretext,
@@ -84,13 +84,13 @@ Widget numfield1(
     onPressed: () {},
     style: ElevatedButton.styleFrom(
         backgroundColor: textfieldColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
     child: TextFormField(
       controller: controller,
       obscureText: obscuretext,
       keyboardType: TextInputType.number,
-      style: const TextStyle(
-          color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+      style: TextStyle(
+          color: textcolor2, fontSize: 14, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         hintText: 'Enter $label',
         labelText: 'Enter $label',

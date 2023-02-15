@@ -147,8 +147,8 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
           controller: NumberPaginatorController(),
           config: NumberPaginatorUIConfig(
               height: 40,
-              buttonUnselectedForegroundColor: alltemp,
-              buttonSelectedBackgroundColor: alltemp),
+              buttonUnselectedForegroundColor: containerColor,
+              buttonSelectedBackgroundColor: containerColor),
           numberPages: _numPages,
           onPageChange: (int index) {
             setState(() {
@@ -175,7 +175,9 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-            color: primaryColor1, borderRadius: BorderRadius.circular(8)),
+            border: Border.all(width: 1.4, color: containerColor),
+            color: primaryColor,
+            borderRadius: BorderRadius.circular(6)),
         child: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(
@@ -189,7 +191,7 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
               const SizedBox(height: 8),
               ctext1(l.description ?? '', textcolor5, 14),
               const SizedBox(height: 8),
-              ctext1('Created At: ${dateLocal.toString().substring(0, 16)}',
+              ctext1('Created At  ${dateLocal.toString().substring(0, 16)}',
                   textcolor5, 12),
             ],
           ),
@@ -205,7 +207,7 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
             //change text color in popupWidget
             itemBuilder: (context, item, isSelected) {
               return ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: textcolor1),
+                style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
                 onPressed: () {
                   setState(() {
                     isSelected = true;
@@ -221,7 +223,7 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
               );
             },
             showSelectedItems: true,
-            menuProps: MenuProps(backgroundColor: textcolor1)),
+            menuProps: MenuProps(backgroundColor: primaryColor)),
         items: items,
         dropdownDecoratorProps: DropDownDecoratorProps(
           baseStyle: TextStyle(color: textcolor2),

@@ -145,6 +145,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
   String startTime = '';
   String endDate = '';
   String endTime = '';
+
   errorPrompt(String s, TextEditingController c) {
     if (c.text == '') {
       showModalBottomSheet(
@@ -262,8 +263,8 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                             startTime = '''$year1-$month1-$day1 $startTime''';
                             endTime = '''$year2-$month2-$day2 $endTime''';
                             await Future.delayed(const Duration(seconds: 2));
-                            print(startTime);
-                            print(endTime);
+                            // print(startTime);
+                            // print(endTime);
                             Navigator.pop(context);
                             DateTime dt1 = DateTime.parse(startTime);
                             DateTime dt2 = DateTime.parse(endTime);
@@ -273,7 +274,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                                   context: context,
                                   builder: (context) {
                                     return errorModal2(
-                                        'Star Time cannot be greater than End Time.',
+                                        'Start Time cannot be after End Time.',
                                         context);
                                   });
                             } else if (title.text == '') {
@@ -288,6 +289,11 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                               errorPrompt('Max Participants', eventMax);
                             } else if (eventPrice.text == '') {
                               errorPrompt('Event Price', eventPrice);
+                            } else if (int.parse(eventMin.text) >
+                                int.parse(eventMax.text)) {
+                              showErrorMessage(
+                                  'Min Participants must be smaller than Max Participants.',
+                                  context);
                             } else {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
@@ -409,6 +415,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   flex: 3,
@@ -426,7 +433,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                   child: TextFormField(
                     style: TextStyle(
                         color: textcolor5,
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,
@@ -450,7 +457,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                   child: TextFormField(
                     style: TextStyle(
                         color: textcolor5,
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,
@@ -570,7 +577,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                   child: TextFormField(
                     style: TextStyle(
                         color: textcolor5,
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,
@@ -594,7 +601,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                   child: TextFormField(
                     style: TextStyle(
                         color: textcolor5,
-                        fontSize: 15,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                     enabled: false,

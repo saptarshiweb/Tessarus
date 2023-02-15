@@ -1,9 +1,8 @@
 // ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
-import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/iconic_icons.dart';
 import 'package:fluttericon/octicons_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
@@ -69,9 +68,9 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                       bottomRight: Radius.circular(6)),
                   color: primaryColor1),
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 10, top: 20),
+                padding: const EdgeInsets.only(bottom: 10, top: 30),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     topbar(context),
                     const SizedBox(height: 18),
@@ -92,7 +91,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                         ? DrawerListItem(context, 'Add Coins',
                             FontAwesome5.rupee_sign, const AddCoins())
                         : const SizedBox(),
-                    (userlevel >= 3)
+                    (userlevel == 4)
                         ? DrawerListItem(context, 'Volunteer Control',
                             RpgAwesome.heavy_shield, const VolunteerControl())
                         : const SizedBox(),
@@ -108,7 +107,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                         ? DrawerListItem(context, 'Contact', Icons.contact_page,
                             const ContactUs())
                         : const SizedBox(),
-                    const Spacer(),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: logoutButton(context),
@@ -130,7 +129,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Icon(
-            Entypo.qq,
+            FontAwesome5.empire,
             color: containerColor,
             size: 34,
           ),
@@ -149,7 +148,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                 Navigator.pop(context);
               },
               icon: Icon(
-                FontAwesome.cancel_circled,
+                Iconic.left_circle,
                 color: containerColor,
               ))
         ],

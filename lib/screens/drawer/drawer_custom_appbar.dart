@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/iconic_icons.dart';
@@ -8,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_pages/add_event_page.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/add_new_volunteer.dart';
-
 import '../../color_constants.dart';
 
 AppBar customAppBar(String text, Color col) {
@@ -50,7 +48,7 @@ AppBar eventsPageAppBar(String text, Color col) {
     title: FutureBuilder(
         future: decideAddEvent(),
         builder: ((context, snapshot) {
-          if (userLevel == 4) {
+          if (userLevel >= 3) {
             return Row(
               children: [
                 Text(

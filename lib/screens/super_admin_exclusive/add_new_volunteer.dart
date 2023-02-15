@@ -3,7 +3,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/rpg_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
@@ -88,7 +89,8 @@ class _AddVolunteerState extends State<AddVolunteer> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Icon(FontAwesome.user_plus, color: containerColor, size: 120),
+              // Icon(FontAwesome.user_plus, color: containerColor, size: 120),
+              volunteerIDCard(),
               const SizedBox(height: 40),
               tfield1(controller: volunteer_name, label: 'Name'),
               const SizedBox(height: 12),
@@ -112,9 +114,9 @@ class _AddVolunteerState extends State<AddVolunteer> {
                       backgroundColor: primaryColor,
                       shape: RoundedRectangleBorder(
                           side: BorderSide(width: 1, color: containerColor),
-                          borderRadius: BorderRadius.circular(14))),
+                          borderRadius: BorderRadius.circular(4))),
                   child: Padding(
-                    padding: const EdgeInsets.all(18.0),
+                    padding: const EdgeInsets.only(top: 15, bottom: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -127,6 +129,41 @@ class _AddVolunteerState extends State<AddVolunteer> {
                   ))
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget volunteerIDCard() {
+    return Container(
+      decoration: BoxDecoration(
+        color: primaryColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(width: 1, color: containerColor),
+      ),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 12, bottom: 12, left: 12, right: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(FontAwesome5.user_circle, color: containerColor, size: 22),
+                const SizedBox(width: 10),
+                ctext1('Volunteer ID', containerColor, 20),
+                const Spacer(),
+                Icon(RpgAwesome.bolt_shield, color: containerColor, size: 38),
+              ],
+            ),
+            // const SizedBox(height: 20),
+            // ctext1(
+            //     volunteer_name.text == ''
+            //         ? 'Volunteer Name'
+            //         : volunteer_name.text,
+            //     textcolor2,
+            //     12),
+          ],
         ),
       ),
     );

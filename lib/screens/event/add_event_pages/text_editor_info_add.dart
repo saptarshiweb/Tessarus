@@ -48,7 +48,7 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(4),
                                 side: BorderSide(
                                     width: 1, color: containerColor))),
                         onPressed: () async {
