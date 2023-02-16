@@ -204,7 +204,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
           backgroundColor: primaryColor),
       onPressed: () {
         checkInFunction();
-        fetchTicketDetails();
+        // fetchTicketDetails();
       },
       child: Padding(
         padding: const EdgeInsets.all(14.0),
