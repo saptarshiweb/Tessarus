@@ -80,10 +80,12 @@ Widget errorModal2(String message, BuildContext context) {
                                   Navigator.pop(context);
                                 },
                                 style: TextButton.styleFrom(
-                                    backgroundColor: containerColor,
+                                    backgroundColor: modalbackColor2,
                                     shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color: containerColor, width: 1.4),
                                         borderRadius:
-                                            BorderRadius.circular(14))),
+                                            BorderRadius.circular(4))),
                                 child: Padding(
                                   padding:
                                       const EdgeInsets.only(top: 8, bottom: 8),
@@ -92,7 +94,7 @@ Widget errorModal2(String message, BuildContext context) {
                                     children: [
                                       Icon(
                                         FontAwesome.left,
-                                        color: primaryColor1,
+                                        color: textcolor2,
                                         size: 22,
                                       ),
                                       const SizedBox(width: 14),
@@ -101,7 +103,7 @@ Widget errorModal2(String message, BuildContext context) {
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
-                                          color: primaryColor1,
+                                          color: textcolor2,
                                         ),
                                       ),
                                     ],
@@ -171,9 +173,11 @@ Widget successModal2(String message, BuildContext context, Widget route) {
                           normalNavigation(route, context);
                         },
                         style: TextButton.styleFrom(
-                            backgroundColor: containerColor,
+                            backgroundColor: modalbackColor2,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14))),
+                                side: BorderSide(
+                                    color: containerColor, width: 1.4),
+                                borderRadius: BorderRadius.circular(4))),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 8, bottom: 8),
                           child: Row(
@@ -181,7 +185,7 @@ Widget successModal2(String message, BuildContext context, Widget route) {
                             children: [
                               Icon(
                                 FontAwesome.left,
-                                color: primaryColor1,
+                                color: textcolor2,
                                 size: 22,
                               ),
                               const SizedBox(width: 14),
@@ -190,7 +194,7 @@ Widget successModal2(String message, BuildContext context, Widget route) {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: primaryColor1,
+                                  color: textcolor2,
                                 ),
                               ),
                             ],

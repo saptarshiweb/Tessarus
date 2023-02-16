@@ -7,12 +7,14 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:tessarus_volunteer/screens/event/event_detail_page.dart';
+import 'package:tessarus_volunteer/screens/event/event_page.dart';
 
 class UpcomingEvents extends StatefulWidget {
   const UpcomingEvents({super.key});
@@ -40,7 +42,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
         // 'Authorization': 'Bearer $auth_val'
       },
     );
-    print(response.body);
+    // print(response.body);
     var responseval = json.decode(response.body);
     var responseData = responseval['events']["documents"];
     List<Events> event1 = [];
@@ -55,6 +57,42 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       BuildContext context) async {
     setState(() {});
     return eventListUpcoming();
+  }
+
+  deleteEvent(String id, BuildContext context) async {
+    print(id);
+    // showLoaderDialog(context);
+    // await Future.delayed(const Duration(seconds: 1));
+    String authVal = '';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? auth = prefs.getString("Auth");
+    authVal = auth!;
+
+    print(delete_event + id);
+    final response = await http.delete(
+      Uri.parse("$delete_event$id"),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+        'Authorization': 'Bearer $authVal'
+      },
+    );
+
+    print(response.body);
+    var responseval = json.decode(response.body);
+    print(responseval);
+    // Navigator.pop(context);
+    eventListUpcoming();
+    if (responseval['statusCode'] == 200) {
+      showSuccessMessage(
+          'Event Deleted Successfully.', context, const EventPage());
+    } else {
+      showErrorMessage(responseval['message'].toString(), context);
+    }
   }
 
   @override
@@ -127,6 +165,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                 const Spacer(),
                 IconButton(
                     onPressed: () {
+                      print(event.sId);
                       showModalBottomSheet(
                           backgroundColor: Colors.transparent,
                           context: context,
@@ -253,12 +292,14 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                         Expanded(
                           child: ElevatedButton(
                               onPressed: () async {
-                                showLoaderDialog(context);
-                                await Future.delayed(
-                                    const Duration(seconds: 2));
                                 deleteEvent(id.toString(), context);
-                                eventListUpcoming();
                                 Navigator.pop(context);
+                                // showLoaderDialog(context);
+                                // await Future.delayed(
+                                //     const Duration(seconds: 2));
+
+                                // // eventListUpcoming();
+                                // Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: allcancel,
