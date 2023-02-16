@@ -71,21 +71,21 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('DrawerItem', 'Dashboard');
       await prefs.setString('profileImage', profileImage);
       Events event1 = Events(
-        title: '',
-        description: '',
-        tagLine: '',
-        startTime: '',
-        endTime: '',
-        eventVenue: '',
-        rules: '',
-        prizes: '',
-        eventImages: [],
-        eventType: '',
-        eventPrice: 0,
-        eventCoordinators: [],
-        eventMaxParticipants: 0,
-        eventMinParticipants: 0,
-      );
+          title: '',
+          description: '',
+          tagLine: '',
+          startTime: '',
+          endTime: '',
+          eventVenue: '',
+          rules: '',
+          prizes: '',
+          eventImages: [],
+          eventType: '',
+          eventPrice: 0,
+          eventCoordinators: [],
+          eventMaxParticipants: 0,
+          eventMinParticipants: 0,
+          eventOrganiserClub: EventOrganiserClub(name: '', image: ''));
       String newEvent = jsonEncode(event1);
       await prefs.setString('newEvent', newEvent);
 

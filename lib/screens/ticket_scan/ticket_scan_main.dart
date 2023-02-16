@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_barcode_scanner/enum.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
@@ -28,6 +29,7 @@ class TicketScanMain extends StatefulWidget {
 
 class _TicketScanMainState extends State<TicketScanMain> {
   bool addcoinwidgetshow = false;
+  bool successCheckIn = false;
   Tickets selectedTicket = Tickets();
   Events event1 = Events();
   String auth_val = '';
@@ -36,6 +38,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
 
   Future checkInFunction() async {
     showLoaderDialog(context);
+    await Future.delayed(const Duration(seconds: 1));
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
@@ -51,17 +55,33 @@ class _TicketScanMainState extends State<TicketScanMain> {
       },
       // body: jsonEncode(<String, String>),
     );
+    print(checkIn_ticket_url + ticket_id);
 
-    // print(response.body);
-    var responseval = json.decode(response.body);
     print(response.body);
-    await Future.delayed(const Duration(seconds: 1));
+    var responseval = json.decode(response.body);
     Navigator.pop(context);
+    if (responseval['statusCode'] == 200) {
+      setState(() {
+        ticket_qr_value = 'Sample';
+        ticket_id = '';
+        selectedTicket = Tickets();
+        event1 = Events();
+      });
+
+      showSuccessMessage(
+          'User Checked In Successfully.', context, const TicketScanMain());
+    } else {
+      showErrorMessage(
+          'Could not Check In the User.Probably you have already checked In. Try Again',
+          context);
+    }
+    print(response.body);
+
     // showSuccessMessage(
     //     'Successfully Checked In!!', context, const TicketScanMain());
   }
 
-  Future fetchTicketDetails() async {
+  fetchTicketDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
@@ -202,9 +222,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
               borderRadius: BorderRadius.circular(4),
               side: BorderSide(color: containerColor, width: 1.4)),
           backgroundColor: primaryColor),
-      onPressed: () {
+      onPressed: () async {
         checkInFunction();
-        // fetchTicketDetails();
       },
       child: Padding(
         padding: const EdgeInsets.all(14.0),

@@ -32,6 +32,8 @@ class _AddEventPageState extends State<AddEventPage> {
 
   Future eventAdd() async {
     //organiser club
+    String clubName = '';
+    String clubImage = '';
     showLoaderDialog(context);
     await Future.delayed(const Duration(seconds: 6));
 
@@ -43,6 +45,9 @@ class _AddEventPageState extends State<AddEventPage> {
     Map<String, dynamic> jsonDetails = {};
     jsonDetails = jsonDecode(str);
     var newEvent1 = Events.fromJson(jsonDetails);
+    clubName = newEvent1.eventOrganiserClub!.name!;
+    clubImage = newEvent1.eventOrganiserClub!.name!;
+
     if (newEvent1.title == '') {
       Navigator.pop(context);
       showModalBottomSheet(
@@ -51,66 +56,76 @@ class _AddEventPageState extends State<AddEventPage> {
           builder: (context) {
             return errorModal2('Please add Info to add an Event.', context);
           });
-    }
-    print(newEvent1.title);
-    var body = {
-      'title': newEvent1.title,
-      'description': newEvent1.description,
-      'tagLine': newEvent1.tagLine,
-      'startTime': newEvent1.startTime,
-      'endTime': newEvent1.endTime,
-      'eventVenue': newEvent1.eventVenue,
-      'rules': newEvent1.rules,
-      'prizes': newEvent1.prizes,
-      'eventImages': newEvent1.eventImages,
-      'eventType': newEvent1.eventType,
-      'eventMaxParticipants': newEvent1.eventMaxParticipants,
-      'eventMinParticipants': newEvent1.eventMinParticipants,
-      'eventPrice': newEvent1.eventPrice,
-      'eventOrganiserClub': {
-        'name': newEvent1.eventOrganiserClub!.name,
-        'image': newEvent1.eventOrganiserClub!.image
-      },
-      'eventCoordinators': newEvent1.eventCoordinators
-    };
-    final response = await http.post(Uri.parse(add_event),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          // 'Accept': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': 'true',
-          'Access-Control-Allow-Headers': 'Content-Type',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-          'Authorization': 'Bearer $auth_val'
-        },
-        // body: jsonEncode(<String, String>),
-
-        body: json.encode(body));
-
-    var responseval = json.decode(response.body);
-    Navigator.pop(context);
-    if (responseval['message'] != 'Event added successfully') {
-      showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          context: context,
-          builder: (context) {
-            return errorModal2(responseval['message'], context);
-          });
+    } else if (newEvent1.description == '') {
+      Navigator.pop(context);
+      showErrorMessage(
+          'Please add Description from Comprehensive Info.', context);
+    } else if (clubName == '' || clubImage == '') {
+      Navigator.pop(context);
+      showErrorMessage(
+          'Organising Club Details need to be added from Coordinator Info.',
+          context);
     } else {
-      showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          context: context,
-          builder: (context) {
-            return successModal2(
-                responseval['message'], context, const EventPage());
-          });
-    }
+      print(newEvent1.title);
+      var body = {
+        'title': newEvent1.title,
+        'description': newEvent1.description,
+        'tagLine': newEvent1.tagLine,
+        'startTime': newEvent1.startTime,
+        'endTime': newEvent1.endTime,
+        'eventVenue': newEvent1.eventVenue,
+        'rules': newEvent1.rules,
+        'prizes': newEvent1.prizes,
+        'eventImages': newEvent1.eventImages,
+        'eventType': newEvent1.eventType,
+        'eventMaxParticipants': newEvent1.eventMaxParticipants,
+        'eventMinParticipants': newEvent1.eventMinParticipants,
+        'eventPrice': newEvent1.eventPrice,
+        'eventOrganiserClub': {
+          'name': newEvent1.eventOrganiserClub!.name,
+          'image': newEvent1.eventOrganiserClub!.image
+        },
+        'eventCoordinators': newEvent1.eventCoordinators
+      };
+      final response = await http.post(Uri.parse(add_event),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            // 'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+            'Authorization': 'Bearer $auth_val'
+          },
+          // body: jsonEncode(<String, String>),
 
-    print(response.body);
+          body: json.encode(body));
+
+      var responseval = json.decode(response.body);
+      Navigator.pop(context);
+      if (responseval['message'] != 'Event added successfully') {
+        showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            context: context,
+            builder: (context) {
+              return errorModal2(responseval['message'], context);
+            });
+      } else {
+        showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            context: context,
+            builder: (context) {
+              return successModal2(
+                  responseval['message'], context, const EventPage());
+            });
+      }
+
+      print(response.body);
+    }
   }
 
   //coordinator Space
