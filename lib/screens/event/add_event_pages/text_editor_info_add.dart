@@ -20,11 +20,37 @@ class TextEditorInfo extends StatefulWidget {
 }
 
 class _TextEditorInfoState extends State<TextEditorInfo> {
+  HtmlEditorController ruleController = HtmlEditorController();
+  HtmlEditorController prizesController = HtmlEditorController();
+  HtmlEditorController descController = HtmlEditorController();
+
+  // getPreviousInfo() async {
+  //   showLoaderDialog(context);
+  //   await Future.delayed(const Duration(seconds: 2));
+
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String str = '';
+  //   str = prefs.getString('newEvent') ?? '';
+  //   Map<String, dynamic> jsonDetails = {};
+  //   jsonDetails = jsonDecode(str);
+  //   var newEvent1 = Events.fromJson(jsonDetails);
+  //   String d1 = '';
+  //   d1 = newEvent1.description!;
+  //   descController.setText(d1);
+
+  //   print(d1);
+  //   d1 = newEvent1.rules!;
+  //   ruleController.setText(d1);
+  //   print(d1);
+  //   d1 = newEvent1.prizes!;
+  //   prizesController.setText(d1);
+  //   print(d1);
+
+  //   Navigator.pop(context);
+  // }
+
   @override
   Widget build(BuildContext context) {
-    HtmlEditorController ruleController = HtmlEditorController();
-    HtmlEditorController prizesController = HtmlEditorController();
-    HtmlEditorController descController = HtmlEditorController();
     return Scaffold(
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: true,
@@ -134,8 +160,10 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
               border: const Border.fromBorderSide(BorderSide.none),
               borderRadius: BorderRadius.circular(6))),
       controller: controller,
-      htmlEditorOptions:
-          HtmlEditorOptions(darkMode: true, hint: 'Enter your $s'),
+      htmlEditorOptions: HtmlEditorOptions(
+        darkMode: true,
+        hint: 'Enter your $s',
+      ),
     );
   }
 }

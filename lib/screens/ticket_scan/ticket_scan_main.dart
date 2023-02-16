@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_barcode_scanner/enum.dart';
 import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
-import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
@@ -56,17 +55,17 @@ class _TicketScanMainState extends State<TicketScanMain> {
     // print(response.body);
     var responseval = json.decode(response.body);
     print(response.body);
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     Navigator.pop(context);
-    showSuccessMessage(
-        'Successfully Checked In!!', context, const TicketScanMain());
+    // showSuccessMessage(
+    //     'Successfully Checked In!!', context, const TicketScanMain());
   }
 
   Future fetchTicketDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
-
+    event1 = Events();
     final response = await http.get(
       Uri.parse(fetch_ticket_url + ticket_id),
       headers: <String, String>{

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_element, unused_local_variable
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_element, unused_local_variable, avoid_print
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';

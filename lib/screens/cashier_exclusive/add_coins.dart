@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_local_variable
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_local_variable, avoid_print
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
