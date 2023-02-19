@@ -64,8 +64,8 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
             child: Container(
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(6),
-                      bottomRight: Radius.circular(6)),
+                      topRight: Radius.circular(20),
+                      bottomRight: Radius.circular(20)),
                   color: primaryColor1),
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10, top: 30),
@@ -210,6 +210,13 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
     );
   }
 
+  BoxDecoration dec1() {
+    return BoxDecoration(
+        color: textfieldColor,
+        // color: const Color.fromARGB(255, 53, 21, 81),
+        borderRadius: BorderRadius.circular(14));
+  }
+
   Widget DrawerListItem(
       BuildContext context, String text, IconData icon, Widget route) {
     return ListTile(
@@ -219,9 +226,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
         easyNavigation(route, context);
       },
       title: Container(
-        decoration: BoxDecoration(
-            color: (dval == text) ? containerColor : textfieldColor,
-            borderRadius: BorderRadius.circular(14)),
+        decoration: (dval == text) ? dec1() : const BoxDecoration(),
         child: Padding(
           padding:
               const EdgeInsets.only(left: 15, right: 14, top: 14, bottom: 14),
@@ -237,15 +242,16 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
               Text(
                 text,
                 style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
+                  fontSize: (dval == text) ? 16 : 14,
+                  fontWeight:
+                      (dval == text) ? FontWeight.bold : FontWeight.normal,
                   color: (dval == text) ? textcolor2 : textcolor5,
                 ),
               ),
               const Spacer(),
               Icon(
                 WebSymbols.right_circle,
-                size: 24,
+                size: 20,
                 color: (dval == text) ? textcolor2 : textcolor5,
               ),
             ],

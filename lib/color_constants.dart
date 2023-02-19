@@ -10,8 +10,8 @@ Color allcancel = Colors.red;
 
 // Color primaryColor = const Color.fromARGB(255, 120, 37, 229);
 
-Color primaryColor1 = const Color.fromARGB(255, 28, 0, 64);
-Color primaryColor = const Color.fromARGB(255, 12, 0, 27);
+Color primaryColor = Color.fromARGB(255, 33, 0, 58);
+Color primaryColor1 = Color.fromARGB(255, 20, 0, 41);
 Color secondaryColor = Colors.deepPurpleAccent.shade700;
 Color containerColor = const Color.fromARGB(255, 248, 153, 80);
 Color textcol = Colors.black;

@@ -15,7 +15,7 @@ void main() {
     title: 'Tessarus',
     theme: ThemeData(fontFamily: 'lato'),
     debugShowCheckedModeBanner: false,
-    home: SplashScreen1(const StartScreen(), 8),
+    home: SplashScreen1(const StartScreen(), 7),
   ));
 }
 

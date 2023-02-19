@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: textfieldColor,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6))),
+                      borderRadius: BorderRadius.circular(10))),
               child: TextFormField(
                 controller: password_controller,
                 obscureText: !showPassword,
