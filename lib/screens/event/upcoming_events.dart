@@ -17,7 +17,8 @@ import 'package:tessarus_volunteer/screens/event/event_detail_page.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 
 class UpcomingEvents extends StatefulWidget {
-  const UpcomingEvents({super.key});
+  UpcomingEvents(this.val, {super.key});
+  String val;
 
   @override
   State<UpcomingEvents> createState() => _UpcomingEventsState();
@@ -48,7 +49,22 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     List<Events> event1 = [];
     for (int i = 0; i < responseData.length; i++) {
       Events eventfile = Events.fromJson(responseData[i]);
-      event1.add(eventfile);
+      DateTime dt1 = DateTime.parse(eventfile.startTime!);
+      DateTime dt3 = DateTime.parse(eventfile.endTime!);
+      DateTime dt2 = DateTime.now();
+
+      if (dt1.compareTo(dt2) > 0 && widget.val == 'upcoming') {
+        print('upcoming');
+        event1.add(eventfile);
+      } else if (widget.val == 'ongoing' &&
+          dt1.compareTo(dt2) < 0 &&
+          dt3.compareTo(dt2) > 0) {
+        print('ongoing');
+        event1.add(eventfile);
+      } else if (widget.val == 'past' && dt3.compareTo(dt2) < 0) {
+        event1.add(eventfile);
+        print('past');
+      }
     }
     return event1;
   }
@@ -85,14 +101,15 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     print(response.body);
     var responseval = json.decode(response.body);
     print(responseval);
-    // Navigator.pop(context);
-    eventListUpcoming();
-    if (responseval['statusCode'] == 200) {
-      showSuccessMessage(
-          'Event Deleted Successfully.', context, const EventPage());
+    Navigator.pop(context);
+    String statusCode = responseval['statusCode'].toString();
+    if (statusCode == '200') {
+      showSuccessMessage(responseval['message'], context, const EventPage());
     } else {
-      showErrorMessage(responseval['message'].toString(), context);
+      showErrorMessage(responseval['message'], context);
     }
+    eventListUpcoming();
+    
   }
 
   @override
@@ -293,13 +310,6 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                           child: ElevatedButton(
                               onPressed: () async {
                                 deleteEvent(id.toString(), context);
-                                Navigator.pop(context);
-                                // showLoaderDialog(context);
-                                // await Future.delayed(
-                                //     const Duration(seconds: 2));
-
-                                // // eventListUpcoming();
-                                // Navigator.pop(context);
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: allcancel,

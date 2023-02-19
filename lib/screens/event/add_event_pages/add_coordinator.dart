@@ -311,8 +311,10 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                     context);
                               }
                             } else {
-                              cName.add(name.text);
-                              cPhone.add(phone.text);
+                              // cName.add(name.text);
+                              // cPhone.add(phone.text);
+                              cName.insert(0, name.text);
+                              cPhone.insert(0, phone.text);
                               setState(() {
                                 ind++;
                                 name.text = '';
@@ -340,10 +342,15 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                       width: 1, color: containerColor),
                                   borderRadius: BorderRadius.circular(4))),
                           onPressed: () async {
-                            if (clubName.text == '' || cName.isEmpty) {
+                            if (clubName.text == '' ||
+                                clubImageUrl == '' ||
+                                cName.isEmpty) {
                               if (clubName.text == '') {
                                 showErrorMessage(
                                     'Club Name need to be added.', context);
+                              } else if (clubImageUrl == '') {
+                                showErrorMessage(
+                                    'Club Image Must be Uploaded.', context);
                               } else {
                                 showErrorMessage(
                                     'Atleast one coordinator need to be added.',

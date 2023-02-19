@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
-import 'package:tessarus_volunteer/screens/event/ongoing_events.dart';
-import 'package:tessarus_volunteer/screens/event/past_events.dart';
 import 'package:tessarus_volunteer/screens/event/upcoming_events.dart';
-
 class EventTabbar extends StatelessWidget {
   const EventTabbar({super.key});
 
@@ -34,10 +31,13 @@ class EventTabbar extends StatelessWidget {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             flex: 8,
-            child: TabBarView(
-                children: [UpcomingEvents(), OngoingEvents(), PastEvents()]),
+            child: TabBarView(children: [
+              UpcomingEvents('upcoming'),
+              UpcomingEvents('ongoing'),
+              UpcomingEvents('past')
+            ]),
           ),
         ],
       ),

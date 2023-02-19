@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 
@@ -70,49 +71,23 @@ Widget errorModal2(String message, BuildContext context) {
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 14),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Row(
+                    ebutton3(
+                      fun: () {
+                        Navigator.pop(context);
+                      },
+                      t: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: TextButton.styleFrom(
-                                    backgroundColor: modalbackColor2,
-                                    shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                            color: containerColor, width: 1.4),
-                                        borderRadius:
-                                            BorderRadius.circular(4))),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 8, bottom: 8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        FontAwesome.left,
-                                        color: textcolor2,
-                                        size: 22,
-                                      ),
-                                      const SizedBox(width: 14),
-                                      Text(
-                                        'Try Again',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: textcolor2,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                          Icon(
+                            FontAwesome.left,
+                            color: textcolor2,
+                            size: 22,
                           ),
+                          const SizedBox(width: 14),
+                          ctext1('Try Again', textcolor2, 20)
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               )),

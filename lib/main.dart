@@ -5,6 +5,7 @@ import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tessarus_volunteer/screens/splash_screens/splash1.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_control.dart';
 import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
 
@@ -14,7 +15,7 @@ void main() {
     title: 'Tessarus',
     theme: ThemeData(fontFamily: 'lato'),
     debugShowCheckedModeBanner: false,
-    home: const StartScreen(),
+    home: SplashScreen1(const StartScreen(), 8),
   ));
 }
 

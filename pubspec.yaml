@@ -55,6 +55,8 @@ dependencies:
   images_picker: ^1.2.11
   path: ^1.8.2
   expandable: ^5.0.1
+  animated_text_kit: ^4.2.2
+  loading_animation_widget: ^1.2.0+4
   
   
   
@@ -102,6 +104,10 @@ flutter:
     - family: lato
       fonts:
         - asset: assets/fonts/Lato-Regular.ttf
+    
+    - family: cas
+      fonts:
+        - asset: assets/fonts/CascadiaMono.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

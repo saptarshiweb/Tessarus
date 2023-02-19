@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
@@ -27,6 +28,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
+  bool showPassword = false;
 
   Future LoginRequest(String email, String password) async {
     showLoaderDialog(context);
@@ -87,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
           eventType: '',
           eventPrice: 0,
           eventCoordinators: [],
-          eventMaxParticipants: 0,
-          eventMinParticipants: 0,
+          eventMaxParticipants: 1,
+          eventMinParticipants: 1,
           eventOrganiserClub: EventOrganiserClub(name: '', image: ''));
       String newEvent = jsonEncode(event1);
       await prefs.setString('newEvent', newEvent);
@@ -141,37 +143,59 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 50),
             tfield1(controller: email_controller, label: 'your Email'),
             const SizedBox(height: 10),
-            tfield1(
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: textfieldColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6))),
+              child: TextFormField(
                 controller: password_controller,
-                label: 'your Password',
-                obscuretext: true),
-            const SizedBox(height: 30),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              side:
-                                  BorderSide(width: 1.4, color: containerColor),
-                              borderRadius: BorderRadius.circular(6)),
-                          backgroundColor: primaryColor),
+                obscureText: !showPassword,
+                style: TextStyle(
+                    color: textcolor2,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
                       onPressed: () {
-                        FocusScopeNode currentFocus = FocusScope.of(context);
-                        if (!currentFocus.hasPrimaryFocus &&
-                            currentFocus.focusedChild != null) {
-                          currentFocus.focusedChild!.unfocus();
-                        }
-                        LoginRequest(
-                            email_controller.text, password_controller.text);
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: ctext1('Login', textcolor2, 16),
-                      )),
+                      icon: Icon(
+                          (showPassword == false)
+                              ? FontAwesome5.eye
+                              : FontAwesome5.eye_slash,
+                          color: containerColor,
+                          size: 20)),
+                  hintText: 'Enter your Password',
+                  labelText: 'Enter your Password',
+                  labelStyle: TextStyle(
+                      color: textcolor5,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
                 ),
-              ],
-            )
+              ),
+            ),
+            const SizedBox(height: 30),
+            ebutton3(
+                fun: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus &&
+                      currentFocus.focusedChild != null) {
+                    currentFocus.focusedChild!.unfocus();
+                  }
+                  LoginRequest(email_controller.text, password_controller.text);
+                },
+                t: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ctext1('Login', textcolor2, 20),
+                    const SizedBox(width: 12),
+                    nextIc()
+                  ],
+                ))
           ],
         ),
       ),

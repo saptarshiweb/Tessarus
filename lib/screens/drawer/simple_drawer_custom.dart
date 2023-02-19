@@ -168,22 +168,13 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setBool('signIn', false);
         },
-        t: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.logout_rounded),
-              const SizedBox(width: 8),
-              Text(
-                'Logout',
-                style: TextStyle(
-                    color: textcolor5,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
+        t: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.logout_rounded),
+            const SizedBox(width: 8),
+            ctext1('Logout', textcolor5, 16)
+          ],
         ));
   }
 

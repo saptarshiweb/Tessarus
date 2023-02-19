@@ -60,14 +60,12 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
     return Scaffold(
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: true,
+      extendBody: true,
       appBar: appbar1('Comprehensive Info', context),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(
-              top: 10,
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              right: 20,
-              left: 20),
+          padding:
+              const EdgeInsets.only(top: 10, bottom: 60, right: 20, left: 20),
           child: Column(
             children: [
               editorCustom(context, descController, 'Description', descInitial),

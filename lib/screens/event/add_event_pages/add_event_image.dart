@@ -63,7 +63,7 @@ class _AddEventImageState extends State<AddEventImage> {
         responseval = json.decode(value);
         urlVal = responseval['images'][0].toString();
         print(urlVal);
-        urlList.add(urlVal.toString());
+        urlList.insert(0, urlVal.toString());
         urlInd++;
         print(urlList.length);
         setState(() {
@@ -94,7 +94,7 @@ class _AddEventImageState extends State<AddEventImage> {
     Map<String, dynamic> jsonDetails = {};
     jsonDetails = jsonDecode(str);
     var newEvent1 = Events.fromJson(jsonDetails);
-    String d1 = '';
+    // String d1 = '';
 
     setState(() {
       int imgAll = newEvent1.eventImages!.length;
@@ -132,6 +132,7 @@ class _AddEventImageState extends State<AddEventImage> {
                       child: SizedBox(
                         height: 150,
                         child: ListView.builder(
+
                             // physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: urlList.length,
                             scrollDirection: Axis.horizontal,
@@ -155,63 +156,58 @@ class _AddEventImageState extends State<AddEventImage> {
                       ),
                     )
                   : const SizedBox(height: 0, width: 0),
-              Container(
-                decoration: BoxDecoration(
-                    color: primaryColor1,
-                    borderRadius: BorderRadius.circular(14)),
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: DottedBorder(
-                              color: containerColor,
-                              strokeWidth: 2,
-                              borderType: BorderType.RRect,
-                              radius: const Radius.circular(7),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 30, bottom: 30),
-                                child: Column(
-                                  children: [
-                                    Center(
-                                        child: IconButton(
-                                      onPressed: () {
-                                        getImage();
-                                      },
-                                      icon: Icon(FontAwesome.upload,
-                                          color: containerColor, size: 22),
-                                    )),
-                                    const SizedBox(height: 15),
-                                    ctext1(
-                                        'Upload the Image', containerColor, 18),
-                                  ],
-                                ),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DottedBorder(
+                            color: containerColor,
+                            strokeWidth: 2,
+                            borderType: BorderType.RRect,
+                            radius: const Radius.circular(7),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 30, bottom: 30),
+                              child: Column(
+                                children: [
+                                  Center(
+                                      child: IconButton(
+                                    onPressed: () {
+                                      getImage();
+                                    },
+                                    icon: Icon(FontAwesome.upload,
+                                        color: containerColor, size: 22),
+                                  )),
+                                  const SizedBox(height: 15),
+                                  ctext1(
+                                      'Upload the Image', containerColor, 18),
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          ctext1('Event Image $urlInd', textcolor2, 18),
-                          const Spacer(),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: containerColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14))),
-                              onPressed: () {
-                                uploadImage(context);
-                              },
-                              child: ctext1('Upload', primaryColor1, 12)),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        ctext1('Event Image $urlInd', textcolor2, 18),
+                        const Spacer(),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: containerColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14))),
+                            onPressed: () {
+                              uploadImage(context);
+                            },
+                            child: ctext1('Upload', primaryColor1, 12)),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 30),

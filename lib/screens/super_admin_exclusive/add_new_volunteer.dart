@@ -9,6 +9,7 @@ import 'package:fluttericon/typicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
@@ -100,33 +101,26 @@ class _AddVolunteerState extends State<AddVolunteer> {
               const SizedBox(height: 12),
               tfield1(controller: volunteer_accessLevel, label: 'Access Level'),
               const SizedBox(height: 24),
+              ebutton3(
+                fun: () async {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus &&
+                      currentFocus.focusedChild != null) {
+                    currentFocus.focusedChild!.unfocus();
+                  }
+                  volunteer_add(context);
+                },
+                t: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ctext1('Confirm', textcolor5, 18),
+                    const SizedBox(width: 14),
+                    Icon(Typicons.user_add_outline,
+                        color: textcolor5, size: 18),
+                  ],
+                ),
+              ),
               //confirm add
-              ElevatedButton(
-                  onPressed: () async {
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus &&
-                        currentFocus.focusedChild != null) {
-                      currentFocus.focusedChild!.unfocus();
-                    }
-                    volunteer_add(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1, color: containerColor),
-                          borderRadius: BorderRadius.circular(4))),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15, bottom: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ctext1('Confirm', textcolor5, 16),
-                        const SizedBox(width: 14),
-                        Icon(Typicons.user_add_outline,
-                            color: textcolor5, size: 16),
-                      ],
-                    ),
-                  ))
             ],
           ),
         ),

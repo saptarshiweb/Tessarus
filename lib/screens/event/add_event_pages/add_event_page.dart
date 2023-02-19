@@ -202,8 +202,8 @@ class _AddEventPageState extends State<AddEventPage> {
                             eventType: '',
                             eventPrice: 0,
                             eventCoordinators: [],
-                            eventMaxParticipants: 0,
-                            eventMinParticipants: 0,
+                            eventMaxParticipants: 1,
+                            eventMinParticipants: 1,
                           );
                           String newEvent = jsonEncode(event1);
                           await prefs.setString('newEvent', newEvent);
