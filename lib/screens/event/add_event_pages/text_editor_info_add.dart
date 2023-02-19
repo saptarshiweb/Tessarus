@@ -1,13 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
+import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/new_event_model.dart';
 
 import '../../../custom_widget/loader_widget.dart';
@@ -23,31 +23,37 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
   HtmlEditorController ruleController = HtmlEditorController();
   HtmlEditorController prizesController = HtmlEditorController();
   HtmlEditorController descController = HtmlEditorController();
+  String descInitial = '';
+  String ruleInitial = '';
+  String prizeInitial = '';
+  String? sumval;
 
-  // getPreviousInfo() async {
-  //   showLoaderDialog(context);
-  //   await Future.delayed(const Duration(seconds: 2));
+  Future getPreviousInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String str = '';
+    str = prefs.getString('newEvent') ?? '';
+    Map<String, dynamic> jsonDetails = {};
+    jsonDetails = jsonDecode(str);
+    var newEvent1 = Events.fromJson(jsonDetails);
+    String d1 = '';
 
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String str = '';
-  //   str = prefs.getString('newEvent') ?? '';
-  //   Map<String, dynamic> jsonDetails = {};
-  //   jsonDetails = jsonDecode(str);
-  //   var newEvent1 = Events.fromJson(jsonDetails);
-  //   String d1 = '';
-  //   d1 = newEvent1.description!;
-  //   descController.setText(d1);
+    setState(() {
+      d1 = newEvent1.description!;
+      descInitial = d1;
 
-  //   print(d1);
-  //   d1 = newEvent1.rules!;
-  //   ruleController.setText(d1);
-  //   print(d1);
-  //   d1 = newEvent1.prizes!;
-  //   prizesController.setText(d1);
-  //   print(d1);
+      d1 = newEvent1.rules!;
+      ruleInitial = d1;
 
-  //   Navigator.pop(context);
-  // }
+      d1 = newEvent1.prizes!;
+      prizeInitial = d1;
+    });
+  }
+
+  @override
+  void initState() {
+    getPreviousInfo();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +61,20 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: true,
       appBar: appbar1('Comprehensive Info', context),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(top: 10, bottom: 10, right: 20, left: 20),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+              top: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+              right: 20,
+              left: 20),
           child: Column(
             children: [
-              editorCustom(context, descController, 'Description'),
+              editorCustom(context, descController, 'Description', descInitial),
               const SizedBox(height: 10),
-              editorCustom(context, ruleController, 'Rules'),
+              editorCustom(context, ruleController, 'Rules', ruleInitial),
               const SizedBox(height: 10),
-              editorCustom(context, prizesController, 'Prizes'),
+              editorCustom(context, prizesController, 'Prizes', prizeInitial),
               const SizedBox(height: 10),
               Row(
                 children: [
@@ -78,27 +87,46 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
                                 side: BorderSide(
                                     width: 1, color: containerColor))),
                         onPressed: () async {
+                          shiftFocus(context);
                           showLoaderDialog(context);
                           String description = await descController.getText();
                           String rules = await ruleController.getText();
                           String prizes = await prizesController.getText();
-                          await Future.delayed(const Duration(seconds: 6));
+                          await Future.delayed(const Duration(seconds: 3));
                           Navigator.pop(context);
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          String str = '';
-                          str = prefs.getString('newEvent') ?? '';
-                          Map<String, dynamic> jsonDetails = {};
-                          jsonDetails = jsonDecode(str);
-                          var newEvent1 = Events.fromJson(jsonDetails);
 
-                          newEvent1.description = description;
-                          newEvent1.rules = rules;
-                          newEvent1.prizes = prizes;
+                          if (rules == '' ||
+                              description == '' ||
+                              prizes == '') {
+                            if (rules == '') {
+                              showErrorMessage(
+                                  'Rules is not Allowed to be empty.', context);
+                            } else if (description == '') {
+                              showErrorMessage(
+                                  'Description is not Allowed to be empty.',
+                                  context);
+                            } else {
+                              showErrorMessage(
+                                  'Prizes is not Allowed to be empty.',
+                                  context);
+                            }
+                          } else {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            String str = '';
+                            str = prefs.getString('newEvent') ?? '';
+                            Map<String, dynamic> jsonDetails = {};
+                            jsonDetails = jsonDecode(str);
+                            var newEvent1 = Events.fromJson(jsonDetails);
 
-                          await prefs.setString(
-                              'newEvent', jsonEncode(newEvent1));
-                          Navigator.pop(context);
+                            newEvent1.description = description;
+                            newEvent1.rules = rules;
+                            newEvent1.prizes = prizes;
+
+                            await prefs.setString(
+                                'newEvent', jsonEncode(newEvent1));
+                            Navigator.pop(context);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -114,8 +142,8 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
     );
   }
 
-  Widget editorCustom(
-      BuildContext context, HtmlEditorController controller, String s) {
+  Widget editorCustom(BuildContext context, HtmlEditorController controller,
+      String s, String initial) {
     return HtmlEditor(
       htmlToolbarOptions: HtmlToolbarOptions(
           dropdownBoxDecoration: BoxDecoration(color: textcolor5),
@@ -156,11 +184,13 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
             const ListButtons(listStyles: false),
           ]),
       otherOptions: OtherOptions(
+          height: 500,
           decoration: BoxDecoration(
               border: const Border.fromBorderSide(BorderSide.none),
               borderRadius: BorderRadius.circular(6))),
       controller: controller,
       htmlEditorOptions: HtmlEditorOptions(
+        initialText: initial,
         darkMode: true,
         hint: 'Enter your $s',
       ),

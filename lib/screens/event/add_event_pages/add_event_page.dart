@@ -35,7 +35,7 @@ class _AddEventPageState extends State<AddEventPage> {
     String clubName = '';
     String clubImage = '';
     showLoaderDialog(context);
-    await Future.delayed(const Duration(seconds: 6));
+    await Future.delayed(const Duration(seconds: 2));
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
@@ -45,27 +45,28 @@ class _AddEventPageState extends State<AddEventPage> {
     Map<String, dynamic> jsonDetails = {};
     jsonDetails = jsonDecode(str);
     var newEvent1 = Events.fromJson(jsonDetails);
-    clubName = newEvent1.eventOrganiserClub!.name!;
-    clubImage = newEvent1.eventOrganiserClub!.name!;
-
-    if (newEvent1.title == '') {
+    if (newEvent1.eventOrganiserClub == null) {
+      Navigator.pop(context);
+      showErrorMessage('Club Details Must be added.', context);
+    } else if (newEvent1.title == '') {
       Navigator.pop(context);
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,
           builder: (context) {
-            return errorModal2('Please add Info to add an Event.', context);
+            return errorModal2(
+                'Please Visit General Info and Add the necessary Details.',
+                context);
           });
     } else if (newEvent1.description == '') {
       Navigator.pop(context);
       showErrorMessage(
-          'Please add Description from Comprehensive Info.', context);
-    } else if (clubName == '' || clubImage == '') {
-      Navigator.pop(context);
-      showErrorMessage(
-          'Organising Club Details need to be added from Coordinator Info.',
+          'Please visit Comprehensive Info and add the necessary details.',
           context);
     } else {
+      Navigator.pop(context);
+      clubName = newEvent1.eventOrganiserClub!.name!;
+      clubImage = newEvent1.eventOrganiserClub!.image!;
       print(newEvent1.title);
       var body = {
         'title': newEvent1.title,
@@ -77,7 +78,7 @@ class _AddEventPageState extends State<AddEventPage> {
         'rules': newEvent1.rules,
         'prizes': newEvent1.prizes,
         'eventImages': newEvent1.eventImages,
-        'eventType': newEvent1.eventType,
+        'eventType': newEvent1.eventType!.toLowerCase(),
         'eventMaxParticipants': newEvent1.eventMaxParticipants,
         'eventMinParticipants': newEvent1.eventMinParticipants,
         'eventPrice': newEvent1.eventPrice,
@@ -102,7 +103,7 @@ class _AddEventPageState extends State<AddEventPage> {
           body: json.encode(body));
 
       var responseval = json.decode(response.body);
-      Navigator.pop(context);
+
       if (responseval['message'] != 'Event added successfully') {
         showModalBottomSheet(
             backgroundColor: Colors.transparent,
@@ -123,6 +124,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   responseval['message'], context, const EventPage());
             });
       }
+      print(newEvent1.eventType);
 
       print(response.body);
     }
@@ -182,7 +184,7 @@ class _AddEventPageState extends State<AddEventPage> {
                                     width: 1, color: containerColor))),
                         onPressed: () async {
                           showLoaderDialog(context);
-                          await Future.delayed(const Duration(seconds: 6));
+                          await Future.delayed(const Duration(seconds: 2));
 
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
@@ -224,129 +226,123 @@ class _AddEventPageState extends State<AddEventPage> {
   }
 
   Widget texteditorInfo(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
-      child: Padding(
-        padding:
-            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ctext1('Comprehensive Info', textcolor2, 22),
-                const SizedBox(height: 10),
-                ctext1('Event description, rules, prizes etc.', textcolor5, 12)
-              ],
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                normalNavigation(const TextEditorInfo(), context);
-              },
-              icon: const Icon(FontAwesome.right_open),
-              iconSize: 22,
-              color: textcolor2,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        normalNavigation(const TextEditorInfo(), context);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ctext1('Comprehensive Info', textcolor2, 22),
+                  const SizedBox(height: 10),
+                  ctext1(
+                      'Event description, rules, prizes etc.', textcolor5, 12)
+                ],
+              ),
+              const Spacer(),
+              Icon(FontAwesome.right_open, color: textcolor2, size: 22),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget eventImageinfo(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
-      child: Padding(
-        padding:
-            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ctext1('Event Images', textcolor2, 22),
-                const SizedBox(height: 10),
-                ctext1(
-                    'Add images by simply picking from gallery', textcolor5, 12)
-              ],
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                normalNavigation(const AddEventImage(), context);
-              },
-              icon: const Icon(FontAwesome.right_open),
-              iconSize: 22,
-              color: textcolor2,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        normalNavigation(const AddEventImage(), context);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ctext1('Event Images', textcolor2, 22),
+                  const SizedBox(height: 10),
+                  ctext1('Add images by simply picking from gallery',
+                      textcolor5, 12)
+                ],
+              ),
+              const Spacer(),
+              Icon(FontAwesome.right_open, color: textcolor2, size: 22),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget coordinatorInfo(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
-      child: Padding(
-        padding:
-            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ctext1('Coordinator Info', textcolor2, 22),
-                const SizedBox(height: 10),
-                ctext1('Coordinator name, phone etc.', textcolor5, 12)
-              ],
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                normalNavigation(const AddCoordinatorEvent(), context);
-              },
-              icon: const Icon(FontAwesome.right_open),
-              iconSize: 22,
-              color: textcolor2,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        normalNavigation(const AddCoordinatorEvent(), context);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ctext1('Coordinator Info', textcolor2, 22),
+                  const SizedBox(height: 10),
+                  ctext1('Organizing Club, Coordinator Details etc.',
+                      textcolor5, 12)
+                ],
+              ),
+              const Spacer(),
+              Icon(FontAwesome.right_open, color: textcolor2, size: 22),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget generalInfo(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
-      child: Padding(
-        padding:
-            const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ctext1('General Info', textcolor2, 22),
-                const SizedBox(height: 10),
-                ctext1('Event name, date, time etc.', textcolor5, 12)
-              ],
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                normalNavigation(const AddGeneralInfoEvent(), context);
-              },
-              icon: const Icon(FontAwesome.right_open),
-              iconSize: 22,
-              color: textcolor2,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        normalNavigation(const AddGeneralInfoEvent(), context);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ctext1('General Info', textcolor2, 22),
+                  const SizedBox(height: 10),
+                  ctext1('Event name, date, time etc.', textcolor5, 12)
+                ],
+              ),
+              const Spacer(),
+              Icon(FontAwesome.right_open, color: textcolor2, size: 22),
+            ],
+          ),
         ),
       ),
     );

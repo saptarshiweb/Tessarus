@@ -30,27 +30,6 @@ class _AddEventImageState extends State<AddEventImage> {
   bool showImageList = false;
   String url = '';
   int urlInd = 1;
-  String url1 = '';
-  String url2 = '';
-  String url3 = '';
-
-  getEventImageInfo() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Map<String, dynamic> jsonDetails = jsonDecode(prefs.getString('newEvent')!);
-    // var newEvent1 = Events.fromJson(jsonDetails);
-    // if (jsonDetails.isNotEmpty) {
-    //   print(newEvent1.title);
-    //   setState(() {
-    //     if (newEvent1.eventImages!.isNotEmpty) {
-    //       var img = newEvent1.eventImages!;
-    //       for (int i = 0; i < img.length; i++) {
-    //         urlList.add(img[i].url!);
-    //       }
-    //     }
-    //     if (urlList.length > 1) showImageList = true;
-    //   });
-    // }
-  }
 
   Future uploadImage(BuildContext context) async {
     showLoaderDialog(context);
@@ -106,6 +85,34 @@ class _AddEventImageState extends State<AddEventImage> {
     setState(() {
       imageFile = File(res![0].path);
     });
+  }
+
+  Future getPreviousEventImageInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String str = '';
+    str = prefs.getString('newEvent') ?? '';
+    Map<String, dynamic> jsonDetails = {};
+    jsonDetails = jsonDecode(str);
+    var newEvent1 = Events.fromJson(jsonDetails);
+    String d1 = '';
+
+    setState(() {
+      int imgAll = newEvent1.eventImages!.length;
+      if (imgAll > 0) {
+        for (int i = 0; i < imgAll; i++) {
+          urlList.add(newEvent1.eventImages![i].url!);
+        }
+        if (urlList.isNotEmpty) showImageList = true;
+      }
+      urlInd = urlList.length + 1;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getPreviousEventImageInfo();
+    super.initState();
   }
 
   @override

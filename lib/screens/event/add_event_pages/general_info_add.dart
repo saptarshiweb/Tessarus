@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, unused_field, avoid_print
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
@@ -123,6 +122,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
     _dateController2.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
 
     _timeController2.text = '$h:$m';
+    getPreviousGeneralInfo();
 
     super.initState();
   }
@@ -157,6 +157,57 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
     }
   }
 
+  Future getPreviousGeneralInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String str = '';
+    str = prefs.getString('newEvent') ?? '';
+    Map<String, dynamic> jsonDetails = {};
+    jsonDetails = jsonDecode(str);
+    var newEvent1 = Events.fromJson(jsonDetails);
+    String d1 = '';
+    setState(() {
+      d1 = newEvent1.title!;
+      title.text = d1;
+      d1 = newEvent1.tagLine!;
+      tagLine.text = d1;
+      d1 = newEvent1.eventVenue!;
+      eventVenue.text = d1;
+      d1 = newEvent1.eventType!;
+      eventtype = d1;
+      print(eventtype);
+      if (eventtype == 'Solo' || eventtype == 'solo') {
+        solo = true;
+        eventtype = 'Solo';
+      } else {
+        solo = false;
+        eventtype = 'Group';
+      }
+      d1 = newEvent1.eventMinParticipants.toString();
+      eventMin.text = d1;
+      d1 = newEvent1.eventMaxParticipants.toString();
+      eventMax.text = d1;
+      d1 = newEvent1.eventPrice.toString();
+      eventPrice.text = d1;
+      d1 = '';
+      d1 = newEvent1.startTime!;
+      if (d1 != '') {
+        String time1 = '';
+        String date1 = '';
+        date1 =
+            "${d1.substring(8, 10)}/${d1.substring(5, 7)}/${d1.substring(0, 4)}";
+        time1 = "${d1.substring(11, 13)}:${d1.substring(14, 16)}";
+        _dateController.text = date1;
+        _timeController.text = time1;
+        d1 = newEvent1.endTime!;
+        date1 =
+            "${d1.substring(8, 10)}/${d1.substring(5, 7)}/${d1.substring(0, 4)}";
+        time1 = "${d1.substring(11, 13)}:${d1.substring(14, 16)}";
+        _dateController2.text = date1;
+        _timeController2.text = time1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
@@ -171,6 +222,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
         padding:
             const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 22),
         child: SingleChildScrollView(
+          reverse: true,
           child: Column(
             children: [
               tfield1(controller: title, label: 'Event Title'),
@@ -187,10 +239,14 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
               const SizedBox(height: 12),
               eventTypeWidget(context),
               const SizedBox(height: 12),
-              numfield1(controller: eventMin, label: 'Min Participants'),
+              (solo == false)
+                  ? numfield1(controller: eventMin, label: 'Min Participants')
+                  : const SizedBox(),
               const SizedBox(height: 12),
-              numfield1(controller: eventMax, label: 'Max Participants'),
-              const SizedBox(height: 12),
+              (solo == false)
+                  ? numfield1(controller: eventMax, label: 'Max Participants')
+                  : const SizedBox(),
+              (solo == false) ? const SizedBox(height: 12) : const SizedBox(),
               numfield1(controller: eventPrice, label: 'Event Price'),
               const SizedBox(height: 12),
               // tfield1(controller: organiserClub, label: 'Organiser Club'),
@@ -308,11 +364,17 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                               newEvent1.startTime = startTime;
                               newEvent1.endTime = endTime;
                               newEvent1.eventType = eventtype.toLowerCase();
+                              print('Event type $eventtype');
 
                               newEvent1.eventMaxParticipants = int.parse(
                                   eventMax.text == '' ? '0' : eventMax.text);
                               newEvent1.eventMinParticipants = int.parse(
                                   eventMin.text == '' ? '0' : eventMin.text);
+                              if (solo == true) {
+                                newEvent1.eventMaxParticipants = 1;
+                                newEvent1.eventMinParticipants = 1;
+                              }
+
                               newEvent1.eventPrice = int.parse(
                                   eventPrice.text == ''
                                       ? '0'

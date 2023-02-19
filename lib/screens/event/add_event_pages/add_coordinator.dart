@@ -96,6 +96,39 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
   }
 
   @override
+  void initState() {
+    getPreviousCoordinatorInfo();
+    super.initState();
+  }
+
+  Future getPreviousCoordinatorInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String str = '';
+    str = prefs.getString('newEvent') ?? '';
+    Map<String, dynamic> jsonDetails = {};
+    jsonDetails = jsonDecode(str);
+    var newEvent1 = Events.fromJson(jsonDetails);
+    String d1 = '';
+
+    setState(() {
+      d1 = newEvent1.eventOrganiserClub!.name!;
+      clubName.text = d1;
+      d1 = newEvent1.eventOrganiserClub!.image!;
+      clubImageUrl = d1;
+      if (clubImageUrl != '') showClubimage = true;
+      cName = [];
+      cPhone = [];
+      int coo = newEvent1.eventCoordinators!.length;
+      for (int i = 0; i < coo; i++) {
+        cName.add(newEvent1.eventCoordinators![i].name!);
+        cPhone.add(newEvent1.eventCoordinators![i].phone!);
+      }
+      if (cName.isNotEmpty) showcList = true;
+      ind = cName.length + 1;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
@@ -173,6 +206,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                               showLoaderDialog(context);
                               setState(() {
                                 showClubimage = false;
+                                clubImageUrl = '';
                               });
                               await Future.delayed(const Duration(seconds: 2));
                               Navigator.pop(context);
@@ -193,7 +227,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                     ? Padding(
                         padding: const EdgeInsets.only(bottom: 4),
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.12,
+                          height: MediaQuery.of(context).size.height * 0.22,
                           child: ListView.builder(
                               itemCount: cName.length,
                               scrollDirection: Axis.horizontal,
@@ -201,14 +235,50 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10, top: 8, bottom: 8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ctext1(cName[index], textcolor2, 14),
-                                      const SizedBox(height: 10),
-                                      ctext1(cPhone[index], textcolor2, 14),
-                                    ],
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: primaryColor,
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                            width: 1, color: containerColor)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15,
+                                          right: 15,
+                                          top: 10,
+                                          bottom: 10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              ctext1('Coordinator ${index + 1}',
+                                                  textcolor2, 16),
+                                              const SizedBox(width: 20),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      cName.removeAt(index);
+                                                      cPhone.removeAt(index);
+                                                      ind--;
+                                                    });
+                                                    if (cName.isEmpty) {
+                                                      showcList = false;
+                                                    }
+                                                  },
+                                                  icon: Icon(Icons.delete,
+                                                      color: allcancel,
+                                                      size: 18))
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          ctext1(cName[index], textcolor2, 14),
+                                          const SizedBox(height: 10),
+                                          ctext1(cPhone[index], textcolor2, 14),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 );
                               }),
@@ -230,16 +300,26 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(7))),
                           onPressed: () {
-                            showLoaderDialog(context);
-                            cName.add(name.text);
-                            cPhone.add(phone.text);
-                            setState(() {
-                              ind++;
-                              name.text = '';
-                              phone.text = '';
-                              showcList = true;
-                            });
-                            Navigator.pop(context);
+                            if (name.text == '' || phone.text == '') {
+                              if (name.text == '') {
+                                showErrorMessage(
+                                    'Coordinator Name cannot be empty',
+                                    context);
+                              } else {
+                                showErrorMessage(
+                                    'Coordinator Phone cannot be empty',
+                                    context);
+                              }
+                            } else {
+                              cName.add(name.text);
+                              cPhone.add(phone.text);
+                              setState(() {
+                                ind++;
+                                name.text = '';
+                                phone.text = '';
+                                showcList = true;
+                              });
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 12, bottom: 12),
@@ -261,9 +341,14 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                   borderRadius: BorderRadius.circular(4))),
                           onPressed: () async {
                             if (clubName.text == '' || cName.isEmpty) {
-                              showErrorMessage(
-                                  'Club Name and Coordinator Names need to be added.',
-                                  context);
+                              if (clubName.text == '') {
+                                showErrorMessage(
+                                    'Club Name need to be added.', context);
+                              } else {
+                                showErrorMessage(
+                                    'Atleast one coordinator need to be added.',
+                                    context);
+                              }
                             } else {
                               showLoaderDialog(context);
                               await Future.delayed(const Duration(seconds: 6));
@@ -279,6 +364,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                   name: clubName.text, image: clubImageUrl);
                               newEvent1.eventOrganiserClub = club1;
                               print(newEvent1.eventOrganiserClub!.name);
+                              newEvent1.eventCoordinators!.clear();
 
                               for (int i = 0; i < cName.length; i++) {
                                 EventCoordinators c = EventCoordinators(

@@ -70,6 +70,10 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('Auth', auth);
       await prefs.setString('DrawerItem', 'Dashboard');
       await prefs.setString('profileImage', profileImage);
+      await prefs.setBool('genInfoComplete', false);
+      await prefs.setBool('comInfoComplete', false);
+      await prefs.setBool('imgInfoComplete', false);
+      await prefs.setBool('coordinatorInfoComplete', false);
       Events event1 = Events(
           title: '',
           description: '',
