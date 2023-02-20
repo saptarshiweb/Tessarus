@@ -1,6 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -10,9 +11,9 @@ import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/main.dart';
 
 class SplashScreen1 extends StatefulWidget {
-  SplashScreen1(this.widget, this.time, {super.key});
-  int time;
-  Widget widget;
+  const SplashScreen1(this.widget, this.time, {super.key});
+  final int time;
+  final Widget widget;
 
   @override
   State<SplashScreen1> createState() => _SplashScreen1State();
@@ -42,6 +43,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
+        elevation: 0,
         toolbarHeight: 0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: primaryColor,
@@ -55,40 +57,25 @@ class _SplashScreen1State extends State<SplashScreen1> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-            FontAwesome5.empire,
-            color: containerColor,
-            size: 34,
-          ),
+                FontAwesome5.empire,
+                color: containerColor,
+                size: 34,
+              ),
               const SizedBox(width: 8),
               ctext1('Tessarus', textcolor2, 20),
             ],
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-          Lottie.asset('assets/gdsc-logo.json'),
+          Lottie.asset('assets/gdsc-logo.json',
+          repeat: false
+          ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ctext1('Powered By', containerColor, 20),
-              const SizedBox(width: 20),
-              AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'GDSC',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                  ColorizeAnimatedText(
-                    'KGEC',
-                    textStyle: colorizeTextStyle,
-                    colors: colorizeColors,
-                  ),
-                ],
-                isRepeatingAnimation: true,
-                onTap: () {
-                  print("Tap Event");
-                },
-              ),
+              ctext1('Powered By', textcolor2, 20),
+              const SizedBox(width: 10),
+              ctext1('GDSC KGEC', textcolor2, 20),
             ],
           )
 

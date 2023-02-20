@@ -110,7 +110,6 @@ class _AddEventImageState extends State<AddEventImage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getPreviousEventImageInfo();
     super.initState();
   }
@@ -127,8 +126,7 @@ class _AddEventImageState extends State<AddEventImage> {
             children: [
               (showImageList)
                   ? Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 20, top: 20, left: 20, right: 20),
+                      padding: const EdgeInsets.only(bottom: 20, top: 20),
                       child: SizedBox(
                         height: 150,
                         child: ListView.builder(
@@ -140,13 +138,14 @@ class _AddEventImageState extends State<AddEventImage> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
-                                  height: 100,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.3,
                                   width:
-                                      MediaQuery.of(context).size.width * 0.3,
+                                      MediaQuery.of(context).size.width * 0.4,
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(4),
+                                    borderRadius: BorderRadius.circular(18),
                                     child: Image.network(
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                       urlList[index],
                                     ),
                                   ),

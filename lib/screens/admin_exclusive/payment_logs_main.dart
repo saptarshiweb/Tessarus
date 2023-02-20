@@ -1,67 +1,43 @@
-// ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
-import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
-import 'package:tessarus_volunteer/models/system_logs_model.dart';
-import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
-import '../../color_constants.dart';
 
-class SystemLogsPage extends StatefulWidget {
-  const SystemLogsPage({super.key});
+import '../../custom_widget/loader_widget.dart';
+import '../drawer/drawer_custom_appbar.dart';
+import 'payment_logs_model.dart';
+
+class PaymentLogsMain extends StatefulWidget {
+  const PaymentLogsMain({super.key});
 
   @override
-  State<SystemLogsPage> createState() => _SystemLogsPageState();
+  State<PaymentLogsMain> createState() => _PaymentLogsMainState();
 }
 
-class _SystemLogsPageState extends State<SystemLogsPage> {
+class _PaymentLogsMainState extends State<PaymentLogsMain> {
   final int _numPages = 10;
   int _currentPage = 0;
   String logtype = 'All Logs';
-  // List<Documents> log1 = [];
-
-  var items = [
-    "All Logs",
-    "USER_SIGNUP",
-    "USER_VERIFIED",
-    "USER_LOGIN",
-    "USER_UPDATED",
-    "USER_PASSWORD_RESET",
-    "EVENT_CREATED",
-    "EVENT_UPDATED",
-    "EVENT_DELETED",
-    "EVENT_REGISTERED",
-    "CHECKED_IN",
-    "PAYMENT",
-    "COINS_UPDATED",
-    "EMAIL_SENT",
-    "VOLUNTEER_CREATED",
-    "VOLUNTEER_UPDATED",
-    "VOLUNTEER_DELETED",
-    "VOLUNTEER_LOGIN",
-    "OTP_SENT",
-    "OTP_VERIFIED",
-  ];
-  
-
+  var items = ["All Logs", "COINS_ADDED", "COINS_USED"];
   String auth_val = '';
-  String log_url = all_logs;
-  int dpp = 20;
+  String log_url = payment_logs;
+  int dpp = 10;
   Future<List<Documents>> LogsPrint() async {
     List<Documents> log1 = [];
 
     print(log_url);
     var queryParams = (logtype != 'All Logs')
-        ? {'dpp': 20, 'logType': logtype, 'page': _currentPage + 1}
-        : {'dpp': 20, 'page': _currentPage + 1};
+        ? {'dpp': 10, 'logType': logtype, 'page': _currentPage + 1}
+        : {'dpp': 10, 'page': _currentPage + 1};
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
@@ -139,7 +115,7 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
     return Scaffold(
       backgroundColor: primaryColor,
       drawer: const SimpleDrawerCustom(),
-      appBar: customAppBar('System Logs', Colors.orange),
+      appBar: customAppBar('Payment Logs', Colors.orange),
       body: pages[_currentPage],
       // card for elevation
       bottomNavigationBar: Padding(
@@ -167,22 +143,6 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
   }
 
   Widget logDisplayWidget(Documents l) {
-    String createdAt = '';
-    createdAt = l.createdAt ?? '';
-    String updatedAt = '';
-    updatedAt = l.updatedAt ?? '';
-
-    String date = createdAt.substring(0, 10);
-    String time = "${createdAt.substring(11, 16)}:00";
-    createdAt = "$date $time";
-    date = updatedAt.substring(0, 10);
-    time = "${updatedAt.substring(11, 16)}:00";
-    updatedAt = "$date $time";
-    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(createdAt, true);
-    var dateLocal = dateTime.toLocal();
-    dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(updatedAt, true);
-    var dateLocal1 = dateTime.toLocal();
-
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Container(
@@ -198,8 +158,6 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
               Row(
                 children: [
                   ctext1(l.logType ?? '', textcolor2, 18),
-                  const Spacer(),
-                  ctext1(dateLocal.toString().substring(0, 16), textcolor5, 12),
                 ],
               ),
               const SizedBox(height: 8),

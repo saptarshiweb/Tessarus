@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unused_element, unused_local_variable, avoid_print
 import 'dart:async';
 import 'dart:convert';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -17,8 +18,8 @@ import 'package:tessarus_volunteer/screens/event/event_detail_page.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 
 class UpcomingEvents extends StatefulWidget {
-  UpcomingEvents(this.val, {super.key});
-  String val;
+  const UpcomingEvents(this.val, {super.key});
+  final String val;
 
   @override
   State<UpcomingEvents> createState() => _UpcomingEventsState();
@@ -26,14 +27,25 @@ class UpcomingEvents extends StatefulWidget {
 
 class _UpcomingEventsState extends State<UpcomingEvents> {
   int selectedEventIndex = 1;
-  List<String> eventTypeList = ['My Events', 'All Events', 'GDSC-KGEC'];
+
   String auth_val = '';
+  String volId = '';
   Future<List<Events>> eventListUpcoming() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
+    final String? vId = prefs.getString("VolID");
     auth_val = auth!;
+    volId = vId!;
+    String event_url_custom = '$all_event_url?';
+
+    if (eventType != 'All Events' && eventType != 'My Events') {
+      event_url_custom =
+          '${event_url_custom}eventOrganiserClub.name=$eventType';
+    } else if (eventType == 'My Events') {
+      event_url_custom = '${event_url_custom}createdBy=$volId';
+    }
     final response = await http.get(
-      Uri.parse(all_event_url),
+      Uri.parse(event_url_custom),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -109,34 +121,117 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       showErrorMessage(responseval['message'], context);
     }
     eventListUpcoming();
-    
   }
 
+  var eventTypeList = [
+    'All Events',
+    'My Events',
+    'GDSC KGEC',
+    'KGEC RS',
+    'SAC KGEC'
+  ];
+  String eventType = 'All Events';
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () => _refreshUpcomingEvents(context),
-      child: FutureBuilder(
-          future: eventListUpcoming(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: Center(child: loadingwidget()),
-              );
-            } else {
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data.length,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 10, top: 10, left: 8, right: 8),
-                        child: EventCardDisplay(context, snapshot.data[index]));
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: dropDownWidgetEventType(context),
+        ),
+        const SizedBox(height: 10),
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () => _refreshUpcomingEvents(context),
+            child: FutureBuilder(
+                future: eventListUpcoming(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == null) {
+                    return Center(child: loadingwidget());
+                  } else if (snapshot.data.length == 0) {
+                    return Center(
+                        child: ctext1('No events found!', textcolor2, 20));
+                  } else {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 10, top: 10, left: 8, right: 8),
+                              child: EventCardDisplay(
+                                  context, snapshot.data[index]));
+                        });
+                  }
+                }),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget dropDownWidgetEventType(BuildContext context) {
+    return SingleChildScrollView(
+      child: DropdownSearch<String>(
+        popupProps: PopupProps.menu(
+            //change text color in popupWidget
+            itemBuilder: (context, item, isSelected) {
+              return ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                onPressed: () async {
+                  setState(() {
+                    isSelected = true;
+                    eventType = item;
+                    // logtype = item;
                   });
-            }
-          }),
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ctext1(item, textcolor2, 16),
+                  ],
+                ),
+              );
+            },
+            showSelectedItems: true,
+            menuProps: MenuProps(backgroundColor: primaryColor)),
+        items: eventTypeList,
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          baseStyle: TextStyle(color: textcolor2),
+          dropdownSearchDecoration: InputDecoration(
+            labelStyle: TextStyle(color: textcolor2),
+            hintStyle: TextStyle(color: textcolor2),
+            suffixIconColor: textcolor2,
+            prefixStyle: TextStyle(color: textcolor2),
+            labelText: "Select Event Type",
+            hintText: "Event Type",
+          ),
+        ),
+        onSaved: (value) async {
+          showLoaderDialog(context);
+          await Future.delayed(const Duration(seconds: 2));
+          setState(() {
+            eventType = value!;
+          });
+          // LogsPrint();
+          eventListUpcoming();
+          Navigator.pop(context);
+        },
+        onChanged: (value) async {
+          showLoaderDialog(context);
+          await Future.delayed(const Duration(seconds: 2));
+          setState(() {
+            eventType = value!;
+            // logtype = value!;
+            // _currentPage = 0;
+          });
+          // LogsPrint();
+          eventListUpcoming();
+          Navigator.pop(context);
+        },
+        selectedItem: eventType,
+      ),
     );
   }
 

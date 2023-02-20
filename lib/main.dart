@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/screens/admin_exclusive/payment_logs_main.dart';
 import 'package:tessarus_volunteer/screens/admin_exclusive/system_log_page.dart';
 import 'package:tessarus_volunteer/screens/cashier_exclusive/add_coins.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
@@ -15,7 +16,7 @@ void main() {
     title: 'Tessarus',
     theme: ThemeData(fontFamily: 'lato'),
     debugShowCheckedModeBanner: false,
-    home: SplashScreen1(const StartScreen(), 7),
+    home: const SplashScreen1(StartScreen(), 5),
   ));
 }
 
@@ -64,6 +65,9 @@ class _StartScreenState extends State<StartScreen> {
 
                 case 'System Logs':
                   return const SystemLogsPage();
+
+                case 'Payment Logs':
+                  return const PaymentLogsMain();
                 default:
                   return const EventPage();
               }

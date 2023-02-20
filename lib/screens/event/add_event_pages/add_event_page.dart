@@ -1,4 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, avoid_print, use_build_context_synchronously, unused_field
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -35,7 +36,7 @@ class _AddEventPageState extends State<AddEventPage> {
     String clubName = '';
     String clubImage = '';
     showLoaderDialog(context);
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 5));
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
@@ -184,7 +185,7 @@ class _AddEventPageState extends State<AddEventPage> {
                                     width: 1, color: containerColor))),
                         onPressed: () async {
                           showLoaderDialog(context);
-                          await Future.delayed(const Duration(seconds: 2));
+                          await Future.delayed(const Duration(seconds: 3));
 
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
@@ -228,7 +229,11 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget texteditorInfo(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        normalNavigation(const TextEditorInfo(), context);
+        showLoaderDialog(context);
+        Timer(const Duration(seconds: 2), () {
+          Navigator.pop(context);
+          normalNavigation(const TextEditorInfo(), context);
+        });
       },
       child: Container(
         decoration: BoxDecoration(

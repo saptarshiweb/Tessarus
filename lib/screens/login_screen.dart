@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String email = '';
       String auth = '';
       String profileImage = '';
+      String volId = '';
 
       VolunteerLogin vol1 = VolunteerLogin.fromJson(jsonDecode(response.body));
       if (vol1.volunteer?.name != null) {
@@ -62,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
         email = vol1.volunteer!.email!;
         auth = vol1.authToken!;
         profileImage = vol1.volunteer!.profileImageUrl!;
+        volId = vol1.volunteer!.sId!;
       }
       WidgetsFlutterBinding.ensureInitialized();
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -70,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setInt('Level', level);
       await prefs.setString('Email', email);
       await prefs.setString('Auth', auth);
+      await prefs.setString('VolID', volId);
       await prefs.setString('DrawerItem', 'Dashboard');
       await prefs.setString('profileImage', profileImage);
       await prefs.setBool('genInfoComplete', false);

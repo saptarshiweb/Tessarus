@@ -15,9 +15,9 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> {
   final List<Widget> _eventTabs = [
-    UpcomingEvents('upcoming'),
-    UpcomingEvents('ongoing'),
-    UpcomingEvents('past'),
+    const UpcomingEvents('upcoming'),
+    const UpcomingEvents('ongoing'),
+    const UpcomingEvents('past'),
   ];
 
   @override

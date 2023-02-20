@@ -8,10 +8,8 @@ Color drawer_back = Colors.purple.shade900;
 Color alltemp = Colors.orange;
 Color allcancel = Colors.red;
 
-// Color primaryColor = const Color.fromARGB(255, 120, 37, 229);
-
-Color primaryColor = Color.fromARGB(255, 33, 0, 58);
-Color primaryColor1 = Color.fromARGB(255, 20, 0, 41);
+Color primaryColor1 = const Color.fromARGB(255, 33, 1, 58);
+Color primaryColor = const Color.fromARGB(255, 19, 0, 38);
 Color secondaryColor = Colors.deepPurpleAccent.shade700;
 Color containerColor = const Color.fromARGB(255, 248, 153, 80);
 Color textcol = Colors.black;

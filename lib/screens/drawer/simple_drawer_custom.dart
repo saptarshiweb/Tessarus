@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/iconic_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/octicons_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
-import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
+import 'package:tessarus_volunteer/screens/admin_exclusive/payment_logs_main.dart';
 import 'package:tessarus_volunteer/screens/admin_exclusive/system_log_page.dart';
 import 'package:tessarus_volunteer/screens/cashier_exclusive/add_coins.dart';
 import 'package:tessarus_volunteer/screens/contact_us.dart';
@@ -19,6 +19,7 @@ import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import 'package:tessarus_volunteer/screens/help_page.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
+import 'package:tessarus_volunteer/screens/splash_screens/splash1.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_control.dart';
 import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
 
@@ -100,6 +101,10 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                           ? DrawerListItem(context, 'System Logs',
                               Typicons.cog_outline, const SystemLogsPage())
                           : const SizedBox(),
+                          (userlevel >= 3)
+                          ? DrawerListItem(context, 'Payment Logs',
+                              FontAwesome.rupee, const PaymentLogsMain())
+                          : const SizedBox(),
                       (userlevel <= 2)
                           ? DrawerListItem(
                               context, 'Help', Icons.help, const HelpPage())
@@ -126,7 +131,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
 
   Widget topbar(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 8),
+      padding: const EdgeInsets.only(left: 20, right: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -145,36 +150,49 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
             ),
           ),
           const Spacer(),
-          IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Iconic.left_circle,
-                color: containerColor,
-              ))
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: containerColor, width: 0.8),
+                    borderRadius: BorderRadius.circular(5)),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    FontAwesome5.arrow_left,
+                    color: containerColor,
+                    size: 14,
+                  ),
+                )),
+          )
         ],
       ),
     );
   }
 
   Widget logoutButton(BuildContext context) {
-    return ebutton3(
-        fun: () async {
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-              (Route<dynamic> route) => false);
-
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: containerColor,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(9))),
+        onPressed: () async {
+          easyNavigation(const SplashScreen1(LoginScreen(), 5), context);
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setBool('signIn', false);
         },
-        t: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.logout_rounded),
-            const SizedBox(width: 8),
-            ctext1('Logout', textcolor5, 16)
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(FontAwesome5.sign_out_alt, color: primaryColor1, size: 20),
+              const SizedBox(width: 8),
+              ctext1('Logout', primaryColor1, 16)
+            ],
+          ),
         ));
   }
 
