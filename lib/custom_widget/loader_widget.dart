@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:tessarus_volunteer/color_constants.dart';
 
 Widget loadingwidget() {
-  return Lottie.asset('assets/loading.json', fit: BoxFit.contain);
+  return CircularProgressIndicator(
+    color: containerColor,
+    backgroundColor: Colors.purpleAccent.shade700,
+    strokeWidth: 5,
+  );
 }
 
 showLoaderDialog(BuildContext context) {

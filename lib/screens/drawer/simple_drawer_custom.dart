@@ -101,7 +101,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                           ? DrawerListItem(context, 'System Logs',
                               Typicons.cog_outline, const SystemLogsPage())
                           : const SizedBox(),
-                          (userlevel >= 3)
+                      (userlevel >= 3)
                           ? DrawerListItem(context, 'Payment Logs',
                               FontAwesome.rupee, const PaymentLogsMain())
                           : const SizedBox(),
@@ -131,7 +131,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
 
   Widget topbar(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 4),
+      padding: const EdgeInsets.only(left: 20, right: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

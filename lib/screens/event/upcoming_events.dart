@@ -241,7 +241,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       eventID = event.sId!;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('specificEvent', eventID);
-      normalNavigation(const EventDetailPage(), context);
+      normalNavigation(EventDetailPage(event), context);
     }
 
     String startTime = event.startTime!;
@@ -329,7 +329,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14))),
                     onPressed: () {
-                      normalNavigation(const EventDetailPage(), context);
+                      normalNavigation(EventDetailPage(event), context);
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(

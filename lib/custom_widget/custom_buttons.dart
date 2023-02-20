@@ -74,3 +74,24 @@ Widget nextIc() {
     ),
   );
 }
+
+Widget ebutton1(BuildContext context, Widget widget, Function fun) {
+  return Row(
+    children: [
+      Expanded(
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: containerColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(9))),
+            onPressed: () {
+              fun();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 12),
+              child: widget,
+            )),
+      ),
+    ],
+  );
+}

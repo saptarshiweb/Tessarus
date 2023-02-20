@@ -1,84 +1,335 @@
+// ignore_for_file: must_be_immutable, non_constant_identifier_names, unused_local_variable, use_build_context_synchronously, avoid_print
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
+import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
+import 'package:tessarus_volunteer/models/api_url.dart';
+import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:tessarus_volunteer/screens/event/upcoming_events.dart';
+
+import '../../custom_widget/custom_modal_routes.dart';
+import '../../models/volunteer_display_model.dart';
 
 class EventDetailPage extends StatefulWidget {
-  const EventDetailPage({super.key});
+  EventDetailPage(this.event1, {super.key});
+  Events event1;
 
   @override
   State<EventDetailPage> createState() => _EventDetailPageState();
 }
 
 class _EventDetailPageState extends State<EventDetailPage> {
+  var imgList = [];
+  bool showVol = false;
+  String auth_val = '';
+  String clubImageurl = '';
+  loadImages(BuildContext context) async {
+    setState(() {
+      clubImageurl = widget.event1.eventOrganiserClub!.image!;
+      for (int i = 0; i < widget.event1.eventImages!.length; i++) {
+        imgList.add(widget.event1.eventImages![i].url);
+      }
+    });
+  }
+
+  Future volunteer_edit(BuildContext context, String name, String volID) async {
+    showLoaderDialog(context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? auth = prefs.getString("Auth");
+    auth_val = auth!;
+
+    var val1 = {
+      'name': name,
+      'events': [widget.event1.sId.toString()]
+    };
+    print(edit_volunteer + widget.event1.sId!);
+    final response = await http.put(Uri.parse(edit_volunteer + volID),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+          'Authorization': 'Bearer $auth_val'
+        },
+        // body: jsonEncode(<String, String>{
+
+        // }),
+        body: jsonEncode(val1));
+    var responseval = json.decode(response.body);
+    print(response.body);
+    Navigator.pop(context); //stop loading widget
+    if (responseval['statusCode'] != 200) {
+      showErrorMessage(responseval['message'], context);
+    } else {
+      showSuccessMessage2(
+          responseval['message'], context);
+    }
+  }
+
+  Future<List<VolunteerDisplayModel>> volunteer_detail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? auth = prefs.getString("Auth");
+    auth_val = auth!;
+    final response = await http.get(
+      Uri.parse(all_volunteer),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+        'Authorization': 'Bearer $auth_val'
+      },
+    );
+    var responseval = json.decode(response.body);
+    var responseData = responseval["volunteers"];
+    List<VolunteerDisplayModel> volunteer1 = [];
+    for (int i = 0; i < responseData.length; i++) {
+      VolunteerDisplayModel volunteer =
+          VolunteerDisplayModel.fromJson(responseData[i]);
+
+      volunteer1.add(volunteer);
+    }
+
+    print(volunteer1.length);
+    return volunteer1;
+  }
+
+  @override
+  void initState() {
+    loadImages(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: appbar1('Event Details', context),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Row(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            imageShowWidget(),
+            const SizedBox(height: 10),
+            primaryInfo(),
+            const SizedBox(height: 10),
+            ebutton1(context, ctext1('Add CheckIn Access', primaryColor1, 18),
+                () {
+              setState(() {
+                showVol = true;
+              });
+            }),
+            const SizedBox(height: 10),
+            (showVol == true) ? volunteerSelect(context) : const SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget volunteerSelect(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            ctext1('Check In Access', textcolor2, 14),
+            const Spacer(),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    showVol = false;
+                  });
+                },
+                icon: const Icon(FontAwesome.cancel_circled),
+                iconSize: 22,
+                color: textcolor2),
+          ],
+        ),
+        SizedBox(
+          height: 400,
+          child: FutureBuilder(
+              future: volunteer_detail(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.data == null) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      loadingwidget(),
+                    ],
+                  );
+                } else {
+                  return ListView.builder(
+                      // shrinkWrap: true,
+
+                      itemCount: snapshot.data.length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                            padding: const EdgeInsets.only(bottom: 10, top: 10),
+                            child: volunteerDisplay(
+                                context, snapshot.data[index]));
+                      });
+                }
+              }),
+        ),
+      ],
+    );
+  }
+
+  Widget volunteerDisplay(BuildContext context, VolunteerDisplayModel v) {
+    String vol(String access) {
+      if (access == '4') {
+        return 'Super Admin';
+      } else if (access == '3') {
+        return 'Admin';
+      } else if (access == '2') {
+        return 'Cashier';
+      }
+      return 'Volunteer';
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Container(
+        decoration: BoxDecoration(
+            color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(20)),
-                      color: alltemp),
-                  height: 600,
-                  width: 100,
-                  child: Column(
+              Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [headtext("TITLE"), headtext("ID")],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: subtitletext(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: smbold1("tagline : checkmate"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: smbold("time : 00:00 to 00:00"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: smbold("venue : administrative building"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: smbold("Event cordinator : name"),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            smbold("max participants"),
-                            smbold("min participants")
-                          ],
-                        ),
-                      ),
+                      ctext1(v.name ?? '', textcolor2, 18),
+                      const SizedBox(height: 12),
+                      ctext1(v.email ?? '', textcolor5, 12)
                     ],
                   ),
-                ),
+                  const Spacer(),
+                  (v.profileImageUrl == '')
+                      ? Icon(
+                          Typicons.user,
+                          color: textcolor4,
+                          size: 38,
+                        )
+                      : SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.network(v.profileImageUrl!)),
+                        ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  ctext1(vol(v.accessLevel.toString()), containerColor, 22),
+                  const Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      volunteer_edit(context, v.name!, v.sId!);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: containerColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14))),
+                    child: ctext1('Give Access', primaryColor1, 12),
+                  )
+                ],
               ),
             ],
-          )
-        ],
+          ),
+        ),
       ),
+    );
+  }
+
+  Widget primaryInfo() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12), color: primaryColor1),
+      child: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ctext1(widget.event1.title!, textcolor2, 20),
+                const SizedBox(height: 10),
+                ctext1(
+                    'Organized By ${widget.event1.eventOrganiserClub!.name!}',
+                    textcolor2,
+                    18),
+                const SizedBox(height: 10),
+                ctext1(widget.event1.tagLine!, textcolor2, 20),
+              ],
+            ),
+            const Spacer(),
+            (clubImageurl != '')
+                ? SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        clubImageurl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget imageShowWidget() {
+    return Container(
+      child: (imgList.isEmpty)
+          ? Container()
+          : SizedBox(
+              height: MediaQuery.of(context).size.height * 0.25,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: imgList.length,
+                  itemBuilder: (context, index) {
+                    return SizedBox(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          imgList[index],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  }),
+            ),
     );
   }
 }

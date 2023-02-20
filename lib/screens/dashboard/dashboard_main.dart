@@ -22,6 +22,7 @@ class DashboardMain extends StatefulWidget {
 }
 
 class _DashboardMainState extends State<DashboardMain> {
+  Color dashboardcol1 = textcolor1;
   int userlevel = 1;
   String username = '';
   String useremail = '';
@@ -83,7 +84,7 @@ class _DashboardMainState extends State<DashboardMain> {
 
   Future changeCoinPeriod(int val) async {
     showLoaderDialog(context);
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 1), () {
       setState(() {
         period = val;
       });
@@ -104,16 +105,16 @@ class _DashboardMainState extends State<DashboardMain> {
         builder: (context, snapshot) {
           return Padding(
             padding:
-                const EdgeInsets.only(top: 15, left: 20, right: 20, bottom: 10),
+                const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: displayCard(),
-                ),
-                const SizedBox(height: 14),
-                ctext1('Hello, ', textcolor2, 18),
-                helloWidget(),
+                // Center(
+                //   child: displayCard(),
+                // ),
+                // const SizedBox(height: 14),
+                // ctext1('Hello, ', textcolor2, 18),
+                // helloWidget(),
                 const SizedBox(height: 10),
                 graph(price, '23'),
               ],
@@ -179,10 +180,6 @@ class _DashboardMainState extends State<DashboardMain> {
     );
   }
 
-  Widget userbase() {
-    return Container();
-  }
-
   Widget graph(var price, String v) {
     List<ChartData> data = [];
 
@@ -196,13 +193,13 @@ class _DashboardMainState extends State<DashboardMain> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor1,
+          backgroundColor: dashboardcol1,
           foregroundColor: primaryColor1,
           surfaceTintColor: primaryColor1,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(22))),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 14, bottom: 18),
         child: Column(
           children: [
             Padding(
@@ -237,7 +234,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            // const SizedBox(height: 10),
             SizedBox(
               height: 170,
               width: double.infinity,
@@ -264,18 +261,6 @@ class _DashboardMainState extends State<DashboardMain> {
             graphBar(context)
           ],
         ),
-      ),
-    );
-  }
-
-  Widget displayCard() {
-    return Container(
-      decoration: BoxDecoration(
-        color: containerColor,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Column(
-        children: const [],
       ),
     );
   }

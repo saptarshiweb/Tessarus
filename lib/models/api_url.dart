@@ -20,7 +20,7 @@ String add_coin = '''${server}api/volunteers/addcoins'''; //POST
 
 String single_volunteer = '''${server}api/volunteers/[volunteer id]'''; //GET
 String remove_volunteer = '''${server}api/volunteers/'''; //DELETE
-String edit_volunteer = '''${server}api/volunteers/[volunteer_id]'''; //PUT
+String edit_volunteer = '''${server}api/volunteers/'''; //PUT
 
 //with token---------------------
 

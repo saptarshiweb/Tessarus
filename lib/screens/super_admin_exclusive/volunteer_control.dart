@@ -24,6 +24,7 @@ class VolunteerControl extends StatefulWidget {
 
 class _VolunteerControlState extends State<VolunteerControl> {
   String auth_val = '';
+  
   TextEditingController search_volunteer = TextEditingController();
   Future deleteVolunteer(String id) async {
     String authVal = '';

@@ -330,7 +330,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                                   context: context,
                                   builder: (context) {
                                     return errorModal2(
-                                        'Start Time cannot be after End Time.',
+                                        'Start Time cannot be equal to or greater than End Time.',
                                         context);
                                   });
                             } else if (title.text == '') {
