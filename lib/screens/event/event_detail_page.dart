@@ -14,7 +14,7 @@ import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:tessarus_volunteer/screens/event/upcoming_events.dart';
+import 'package:tessarus_volunteer/screens/event/event_custom_containers.dart';
 
 import '../../custom_widget/custom_modal_routes.dart';
 import '../../models/volunteer_display_model.dart';
@@ -62,9 +62,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
           'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
           'Authorization': 'Bearer $auth_val'
         },
-        // body: jsonEncode(<String, String>{
-
-        // }),
         body: jsonEncode(val1));
     var responseval = json.decode(response.body);
     print(response.body);
@@ -72,8 +69,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
     if (responseval['statusCode'] != 200) {
       showErrorMessage(responseval['message'], context);
     } else {
-      showSuccessMessage2(
-          responseval['message'], context);
+      showSuccessMessage2(responseval['message'], context);
     }
   }
 
@@ -107,6 +103,10 @@ class _EventDetailPageState extends State<EventDetailPage> {
     return volunteer1;
   }
 
+  bool geninfo = true;
+  bool desinfo = false;
+  bool cooinfo = false;
+
   @override
   void initState() {
     loadImages(context);
@@ -116,77 +116,253 @@ class _EventDetailPageState extends State<EventDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: primaryColor,
       appBar: appbar1('Event Details', context),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 2, left: 15, right: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            imageShowWidget(),
-            const SizedBox(height: 10),
-            primaryInfo(),
-            const SizedBox(height: 10),
-            ebutton1(context, ctext1('Add CheckIn Access', primaryColor1, 18),
-                () {
-              setState(() {
-                showVol = true;
-              });
-            }),
-            const SizedBox(height: 10),
-            (showVol == true) ? volunteerSelect(context) : const SizedBox(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              imageShowWidget(),
+              const SizedBox(height: 15),
+              primaryInfo(),
+              const SizedBox(height: 15),
+              ebutton1(context, ctext1('Add CheckIn Access', primaryColor1, 18),
+                  () {
+                showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      return FractionallySizedBox(
+                        heightFactor: 0.9,
+                        child: volunteerSelect(context),
+                      );
+                    });
+              }),
+              const SizedBox(height: 25),
+              selectDetailType(context),
+              const SizedBox(height: 20),
+              (geninfo == true)
+                  ? geninfoDisplay(context, widget.event1)
+                  : const SizedBox(),
+              (desinfo == true)
+                  ? desinfoDisplay(context, widget.event1)
+                  : const SizedBox(),
+              (cooinfo == true)
+                  ? cooinfoDisplay(context, widget.event1)
+                  : const SizedBox(),
+              const SizedBox(height: 15)
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  BoxDecoration selected1() {
+    return BoxDecoration(
+        color: containerColor, borderRadius: BorderRadius.circular(14));
+  }
+
+  Widget selectDetailType(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () async {
+            setState(() {
+              geninfo = true;
+              desinfo = false;
+              cooinfo = false;
+            });
+          },
+          child: Container(
+            decoration: (geninfo == true) ? selected1() : const BoxDecoration(),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+              child: ctext1('General Info',
+                  (geninfo == true) ? primaryColor1 : Colors.grey, 14),
+            ),
+          ),
+        ), //1 week
+        GestureDetector(
+          onTap: () async {
+            setState(() {
+              geninfo = false;
+              desinfo = true;
+              cooinfo = false;
+            });
+          },
+          child: Container(
+            decoration: (desinfo == true) ? selected1() : const BoxDecoration(),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+              child: ctext1('Rules and Prizes',
+                  (desinfo == true) ? primaryColor1 : Colors.grey, 14),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () async {
+            setState(() {
+              geninfo = false;
+              desinfo = false;
+              cooinfo = true;
+            });
+          },
+          child: Container(
+            decoration: (cooinfo == true) ? selected1() : const BoxDecoration(),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+              child: ctext1('Coordinators',
+                  (cooinfo == true) ? primaryColor1 : Colors.grey, 14),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget primaryInfo() {
+    int m = int.parse(widget.event1.startTime!.substring(4, 6));
+    String day = widget.event1.startTime!.substring(8, 10);
+
+    List<String> month = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'June',
+      'July',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    return Row(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width * 0.2,
+          height: MediaQuery.of(context).size.height * 0.12,
+          decoration: BoxDecoration(
+              // border: Border.all(color: containerColor, width: 1.4),
+              borderRadius: BorderRadius.circular(12),
+              color: primaryColor1),
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ctext1(month[m + 1], textcolor2, 18),
+                const SizedBox(height: 6),
+                ctext1(day, containerColor, 16),
+              ],
+            ),
+          ),
+        ),
+        const Spacer(),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.12,
+          width: MediaQuery.of(context).size.width * 0.7,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12), color: primaryColor1),
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        ctext1(widget.event1.title!, containerColor, 20),
+                        // const Spacer(),
+                        // ctext1(widget.event1.tagLine!, containerColor, 20),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    ctext1(
+                        'Organized By ${widget.event1.eventOrganiserClub!.name!}',
+                        textcolor5,
+                        14),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+                const Spacer(),
+                Container(
+                  // width: MediaQuery.of(context).size.width * 0.2,
+                  decoration: BoxDecoration(
+                      // border: Border.all(color: containerColor, width: 1.4),
+                      borderRadius: BorderRadius.circular(12),
+                      color: containerColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Icon(FontAwesome.star, color: textcolor2, size: 20),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget volunteerSelect(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            ctext1('Check In Access', textcolor2, 14),
-            const Spacer(),
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    showVol = false;
-                  });
-                },
-                icon: const Icon(FontAwesome.cancel_circled),
-                iconSize: 22,
-                color: textcolor2),
-          ],
+        IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(FontAwesome.cancel_circled),
+            iconSize: 22,
+            color: textcolor2),
+        const SizedBox(height: 20),
+        Expanded(
+          child: Container(
+            color: primaryColor,
+            // height: MediaQuery.of(context).size.height,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FutureBuilder(
+                  future: volunteer_detail(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          loadingwidget(),
+                        ],
+                      );
+                    } else {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 10, top: 10),
+                                child: volunteerDisplay(
+                                    context, snapshot.data[index]));
+                          });
+                    }
+                  }),
+            ),
+          ),
         ),
-        SizedBox(
-          height: 400,
-          child: FutureBuilder(
-              future: volunteer_detail(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      loadingwidget(),
-                    ],
-                  );
-                } else {
-                  return ListView.builder(
-                      // shrinkWrap: true,
-
-                      itemCount: snapshot.data.length,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                            padding: const EdgeInsets.only(bottom: 10, top: 10),
-                            child: volunteerDisplay(
-                                context, snapshot.data[index]));
-                      });
-                }
-              }),
-        ),
+        const SizedBox(height: 10)
       ],
     );
   }
@@ -265,48 +441,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
     );
   }
 
-  Widget primaryInfo() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: primaryColor1),
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ctext1(widget.event1.title!, textcolor2, 20),
-                const SizedBox(height: 10),
-                ctext1(
-                    'Organized By ${widget.event1.eventOrganiserClub!.name!}',
-                    textcolor2,
-                    18),
-                const SizedBox(height: 10),
-                ctext1(widget.event1.tagLine!, textcolor2, 20),
-              ],
-            ),
-            const Spacer(),
-            (clubImageurl != '')
-                ? SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        clubImageurl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget imageShowWidget() {
     return Container(
       child: (imgList.isEmpty)
@@ -314,17 +448,21 @@ class _EventDetailPageState extends State<EventDetailPage> {
           : SizedBox(
               height: MediaQuery.of(context).size.height * 0.25,
               child: ListView.builder(
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: imgList.length,
                   itemBuilder: (context, index) {
-                    return SizedBox(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          imgList[index],
-                          fit: BoxFit.cover,
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: SizedBox(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            imgList[index],
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     );

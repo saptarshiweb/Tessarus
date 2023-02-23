@@ -156,6 +156,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
             },
             child: Container(
                 decoration: BoxDecoration(
+                    color: primaryColor1,
                     border: Border.all(color: containerColor, width: 0.8),
                     borderRadius: BorderRadius.circular(5)),
                 child: Padding(

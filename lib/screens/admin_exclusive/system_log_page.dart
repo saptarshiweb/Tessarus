@@ -50,7 +50,6 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
     "OTP_SENT",
     "OTP_VERIFIED",
   ];
-  
 
   String auth_val = '';
   String log_url = all_logs;
@@ -197,9 +196,9 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
             children: [
               Row(
                 children: [
-                  ctext1(l.logType ?? '', textcolor2, 18),
+                  ctext1(l.logType ?? '', containerColor, 15),
                   const Spacer(),
-                  ctext1(dateLocal.toString().substring(0, 16), textcolor5, 12),
+                  ctext1(dateLocal.toString().substring(0, 16), textcolor6, 12),
                 ],
               ),
               const SizedBox(height: 8),

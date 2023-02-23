@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -236,26 +237,30 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10, top: 8, bottom: 8),
                                   child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.65,
                                     decoration: BoxDecoration(
-                                        color: primaryColor,
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(
-                                            width: 1, color: containerColor)),
+                                      color: primaryColor1,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
                                     child: Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 15,
-                                          right: 15,
-                                          top: 10,
-                                          bottom: 10),
+                                        left: 15,
+                                        right: 15,
+                                      ),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Row(
                                             children: [
-                                              ctext1('Coordinator ${index + 1}',
-                                                  textcolor2, 16),
-                                              const SizedBox(width: 20),
+                                              ctext1(
+                                                  'Coordinator No. ${index + 1}',
+                                                  textcolor6,
+                                                  18),
+                                              const Spacer(),
                                               IconButton(
                                                   onPressed: () {
                                                     setState(() {
@@ -267,15 +272,34 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                                       showcList = false;
                                                     }
                                                   },
-                                                  icon: Icon(Icons.delete,
+                                                  icon: Icon(
+                                                      FontAwesome5.trash_alt,
                                                       color: allcancel,
-                                                      size: 18))
+                                                      size: 22))
                                             ],
                                           ),
                                           const SizedBox(height: 10),
-                                          ctext1(cName[index], textcolor2, 14),
-                                          const SizedBox(height: 10),
-                                          ctext1(cPhone[index], textcolor2, 14),
+                                          Row(
+                                            children: [
+                                              Icon(FontAwesome5.user_circle,
+                                                  color: containerColor,
+                                                  size: 20),
+                                              const SizedBox(width: 15),
+                                              ctext1(
+                                                  cName[index], textcolor2, 17),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Row(
+                                            children: [
+                                              Icon(FontAwesome5.phone_alt,
+                                                  color: containerColor,
+                                                  size: 20),
+                                              const SizedBox(width: 15),
+                                              ctext1(cPhone[index], textcolor2,
+                                                  16),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ),

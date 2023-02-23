@@ -35,6 +35,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
   String auth_val = '';
   String ticket_id = '';
   String ticket_qr_value = 'Sample';
+  bool solo = false;
 
   Future checkInFunction() async {
     showLoaderDialog(context);
@@ -99,13 +100,18 @@ class _TicketScanMainState extends State<TicketScanMain> {
     );
 
     var responseval = json.decode(response.body);
-    print(responseval);
+
     if (responseval['message'] == 'Ticket fetched successfully') {
       setState(() {
         ticket_qr_value = ticket_id;
         var responseData = responseval['ticket'];
+
         var responseData2 = responseval['event'];
+
         selectedTicket = Tickets.fromJson(responseData);
+        if (selectedTicket.team!.members![0].name == null) {
+          solo = true;
+        }
         event1 = Events.fromJson(responseData2);
       });
     }
@@ -330,16 +336,19 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Icon(Typicons.user, color: containerColor, size: 20),
-                      const SizedBox(width: 7),
-                      ctext1(selectedTicket.team!.members![0].name!, textcolor5,
-                          14),
-                      const Spacer(),
-                      ctext1('Team Leader', textcolor5, 12)
-                    ],
-                  ),
+                  (solo == false)
+                      ? Row(
+                          children: [
+                            Icon(Typicons.user,
+                                color: containerColor, size: 20),
+                            const SizedBox(width: 7),
+                            ctext1(selectedTicket.team!.members![0].name!,
+                                textcolor5, 14),
+                            const Spacer(),
+                            ctext1('Team Leader', textcolor5, 12)
+                          ],
+                        )
+                      : const SizedBox(),
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -402,6 +411,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                             lineColor: '#FFA500',
                           ),
                         ));
+                    print(res.toString());
                     setState(() {
                       if (res is String) {
                         // qrvalue = res;

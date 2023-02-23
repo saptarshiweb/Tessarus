@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
@@ -56,19 +55,11 @@ class _SplashScreen1State extends State<SplashScreen1> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                FontAwesome5.empire,
-                color: containerColor,
-                size: 34,
-              ),
-              const SizedBox(width: 8),
-              ctext1('Tessarus', textcolor2, 20),
+              ctext1('Tessarus', textcolor2, 26),
             ],
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-          Lottie.asset('assets/gdsc-logo.json',
-          repeat: false
-          ),
+          Lottie.asset('assets/gdsc-logo.json', repeat: false),
           SizedBox(height: MediaQuery.of(context).size.height * 0.10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -78,51 +69,6 @@ class _SplashScreen1State extends State<SplashScreen1> {
               ctext1('GDSC KGEC', textcolor2, 20),
             ],
           )
-
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     SizedBox(
-          //       height: MediaQuery.of(context).size.height * 0.30,
-          //       width: MediaQuery.of(context).size.width * 0.40,
-          //       // height: 50, width: 50,
-          //       // height: MediaQuery.of(context).size.height * 30,
-          //       // width: MediaQuery.of(context).size.width * 35,
-          //       child: Lottie.asset('assets/gdsc-text.json'),
-          //     ),
-          //     SizedBox(width: 30),
-          //     AnimatedTextKit(animatedTexts: [
-          //       RotateAnimatedText('KGEC',
-          //           textStyle: TextStyle(
-          //               fontWeight: FontWeight.bold,
-          //               color: textcolor2,
-          //               fontSize: 40)),
-          //     ])
-          //   ],
-          // )
-          // // AnimatedTextKit(
-          // //   animatedTexts: [
-          // //     ColorizeAnimatedText(
-          // //       'Larry Page',
-          // //       textStyle: colorizeTextStyle,
-          // //       colors: colorizeColors,
-          // //     ),
-          // //     ColorizeAnimatedText(
-          // //       'Bill Gates',
-          // //       textStyle: colorizeTextStyle,
-          // //       colors: colorizeColors,
-          // //     ),
-          // //     ColorizeAnimatedText(
-          // //       'Steve Jobs',
-          // //       textStyle: colorizeTextStyle,
-          // //       colors: colorizeColors,
-          // //     ),
-          // //   ],
-          // //   isRepeatingAnimation: true,
-          // //   onTap: () {
-          // //     print("Tap Event");
-          // //   },
-          // // ),
         ],
       ),
     );

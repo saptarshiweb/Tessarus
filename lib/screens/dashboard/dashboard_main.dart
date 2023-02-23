@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
@@ -34,19 +33,6 @@ class _DashboardMainState extends State<DashboardMain> {
     34,
     35,
     80,
-    34,
-    67,
-    14,
-    60,
-    14,
-    50,
-    43,
-    65,
-    86,
-    38,
-    98,
-    45,
-    56,
     76,
     87,
     100,
@@ -83,16 +69,20 @@ class _DashboardMainState extends State<DashboardMain> {
   }
 
   Future changeCoinPeriod(int val) async {
-    showLoaderDialog(context);
-    Timer(const Duration(seconds: 1), () {
-      setState(() {
-        period = val;
-      });
-      Navigator.pop(context);
+    // showLoaderDialog(context);
+    // Timer(const Duration(seconds: 1), () {
+    //   setState(() {
+    //     period = val;
+    //   });
+    //   Navigator.pop(context);
+    // });
+
+    setState(() {
+      period = val;
     });
   }
 
-  int period = 100;
+  int period = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -109,12 +99,6 @@ class _DashboardMainState extends State<DashboardMain> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Center(
-                //   child: displayCard(),
-                // ),
-                // const SizedBox(height: 14),
-                // ctext1('Hello, ', textcolor2, 18),
-                // helloWidget(),
                 const SizedBox(height: 10),
                 graph(price, '23'),
               ],
@@ -136,15 +120,15 @@ class _DashboardMainState extends State<DashboardMain> {
       children: [
         GestureDetector(
           onTap: () async {
-            changeCoinPeriod(100);
+            changeCoinPeriod(60);
           },
           child: Container(
-            decoration: (period == 100) ? selected1() : const BoxDecoration(),
+            decoration: (period == 60) ? selected1() : const BoxDecoration(),
             child: Padding(
               padding:
                   const EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
-              child: ctext1('Overview',
-                  (period == 100) ? primaryColor1 : Colors.grey, 14),
+              child: ctext1(
+                  'Overview', (period == 60) ? primaryColor1 : Colors.grey, 14),
             ),
           ),
         ), //1 week
@@ -193,13 +177,13 @@ class _DashboardMainState extends State<DashboardMain> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-          backgroundColor: dashboardcol1,
+          backgroundColor: primaryColor1,
           foregroundColor: primaryColor1,
           surfaceTintColor: primaryColor1,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(22))),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       child: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 14, bottom: 18),
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 14),
         child: Column(
           children: [
             Padding(
@@ -208,7 +192,7 @@ class _DashboardMainState extends State<DashboardMain> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ctext1('User Footfall', textcolor2, 18),
+                  ctext1('User Footfall', textcolor6, 18),
                   const Spacer(),
                   Icon(Typicons.chart_outline, color: textcolor2, size: 24),
                 ],
@@ -230,13 +214,13 @@ class _DashboardMainState extends State<DashboardMain> {
                         fontFamily: 'lato',
                         fontWeight: FontWeight.bold),
                   ),
-                  ctext1('  Users', textcolor2, 20),
+                  ctext1('  Users', textcolor6, 17),
                 ],
               ),
             ),
             // const SizedBox(height: 10),
             SizedBox(
-              height: 170,
+              height: MediaQuery.of(context).size.height * 0.11,
               width: double.infinity,
               child: SfCartesianChart(
                   plotAreaBorderWidth: 0,
@@ -257,25 +241,11 @@ class _DashboardMainState extends State<DashboardMain> {
                         yValueMapper: (ChartData data, _) => data.val2)
                   ]),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             graphBar(context)
           ],
         ),
       ),
-    );
-  }
-
-  Widget helloWidget() {
-    return Row(
-      children: [
-        ctext1(username, textcolor2, 22),
-        const SizedBox(width: 10),
-        SizedBox(
-          height: 50,
-          width: 50,
-          child: Lottie.asset('assets/waving_hand.json', fit: BoxFit.contain),
-        )
-      ],
     );
   }
 }

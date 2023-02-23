@@ -157,7 +157,7 @@ class _PaymentLogsMainState extends State<PaymentLogsMain> {
             children: [
               Row(
                 children: [
-                  ctext1(l.logType ?? '', textcolor2, 18),
+                  ctext1(l.logType ?? '', containerColor, 15),
                 ],
               ),
               const SizedBox(height: 8),
