@@ -182,7 +182,7 @@ class _AddEventImageState extends State<AddEventImage> {
                                   )),
                                   const SizedBox(height: 15),
                                   ctext1(
-                                      'Upload the Image', containerColor, 18),
+                                      'Select the Image', containerColor, 18),
                                 ],
                               ),
                             ),

@@ -167,7 +167,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                           color: containerColor, size: 22),
                                     )),
                                     const SizedBox(height: 15),
-                                    ctext1('Upload the Club Image',
+                                    ctext1('Select the Club Image',
                                         containerColor, 18),
                                   ],
                                 ),

@@ -245,7 +245,8 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     }
 
     String startTime = event.startTime!;
-    int m = int.parse(startTime.substring(4, 6));
+    int m = int.parse(startTime.substring(5, 7));
+    print('$m  ${event.title!}');
     String day = startTime.substring(8, 10);
 
     List<String> month = [
@@ -302,7 +303,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
               children: [
                 Column(
                   children: [
-                    ctext1(month[m + 1], textcolor2, 18),
+                    ctext1(month[m - 1], textcolor2, 18),
                     const SizedBox(height: 6),
                     ctext1(day, containerColor, 14),
                   ],

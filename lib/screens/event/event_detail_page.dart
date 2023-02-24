@@ -230,7 +230,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
   }
 
   Widget primaryInfo() {
-    int m = int.parse(widget.event1.startTime!.substring(4, 6));
+    int m = int.parse(widget.event1.startTime!.substring(5, 7));
     String day = widget.event1.startTime!.substring(8, 10);
 
     List<String> month = [
@@ -261,7 +261,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ctext1(month[m + 1], textcolor2, 18),
+                ctext1(month[m - 1], textcolor2, 18),
                 const SizedBox(height: 6),
                 ctext1(day, containerColor, 16),
               ],
