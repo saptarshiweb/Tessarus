@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttericon/iconic_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
@@ -63,7 +63,8 @@ AppBar eventsPageAppBar(String text, Color col) {
                     onPressed: () {
                       normalNavigation(const AddEventPage(), context);
                     },
-                    icon: Icon(Iconic.plus_circle, color: textcolor2, size: 26))
+                    icon: Icon(EvaIcons.plusCircleOutline,
+                        color: textcolor2, size: 26))
               ],
             );
           } else {

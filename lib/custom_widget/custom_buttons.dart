@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/typicons_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
+
+Widget ebutton4({required fun, required Widget t}) {
+  return Row(
+    children: [
+      Expanded(
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: containerColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    side: BorderSide(color: containerColor, width: 1))),
+            onPressed: () {
+              fun();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 12),
+              child: t,
+            )),
+      ),
+    ],
+  );
+}
 
 Widget ebutton3({required fun, required Widget t}) {
   return Row(
@@ -62,18 +84,7 @@ ElevatedButton ebutton2({required fun, required String text}) {
       ));
 }
 
-Widget nextIc() {
-  return Container(
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      border: Border.all(width: 2, color: textcolor2),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Icon(Typicons.right, color: textcolor2, size: 14),
-    ),
-  );
-}
+
 
 Widget ebutton1(BuildContext context, Widget widget, Function fun) {
   return Row(

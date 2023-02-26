@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -150,24 +151,10 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
             ),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                    color: primaryColor1,
-                    border: Border.all(color: containerColor, width: 0.8),
-                    borderRadius: BorderRadius.circular(5)),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Icon(
-                    FontAwesome5.arrow_left,
-                    color: containerColor,
-                    size: 14,
-                  ),
-                )),
-          )
+          IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(EvaIcons.arrowCircleLeftOutline,
+                  color: containerColor, size: 26))
         ],
       ),
     );

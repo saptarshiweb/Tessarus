@@ -1,4 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print, use_build_context_synchronously
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -182,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            ebutton3(
+            ebutton4(
                 fun: () {
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (!currentFocus.hasPrimaryFocus &&
@@ -194,9 +195,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 t: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ctext1('Login', textcolor2, 20),
-                    const SizedBox(width: 12),
-                    nextIc()
+                    ctext1('Login', primaryColor1, 16),
+                    const SizedBox(width: 4),
+                    Icon(EvaIcons.arrowForwardOutline,
+                        color: primaryColor1, size: 22)
                   ],
                 ))
           ],

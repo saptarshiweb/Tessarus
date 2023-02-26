@@ -2,8 +2,8 @@
 
 import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
@@ -215,8 +215,8 @@ class _AddEventImageState extends State<AddEventImage> {
                                     onPressed: () {
                                       getImage();
                                     },
-                                    icon: Icon(FontAwesome.upload,
-                                        color: containerColor, size: 22),
+                                    icon: Icon(EvaIcons.cloudUploadOutline,
+                                        color: containerColor, size: 32),
                                   )),
                                   const SizedBox(height: 15),
                                   ctext1(

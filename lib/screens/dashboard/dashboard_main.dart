@@ -2,16 +2,16 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fluttericon/typicons_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
-import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/screens/dashboard/chartdata_model.dart';
 import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
 import 'package:countup/countup.dart';
+
+import 'dashboard_custom_widgets.dart';
 
 class DashboardMain extends StatefulWidget {
   const DashboardMain({super.key});
@@ -69,14 +69,6 @@ class _DashboardMainState extends State<DashboardMain> {
   }
 
   Future changeCoinPeriod(int val) async {
-    // showLoaderDialog(context);
-    // Timer(const Duration(seconds: 1), () {
-    //   setState(() {
-    //     period = val;
-    //   });
-    //   Navigator.pop(context);
-    // });
-
     setState(() {
       period = val;
     });
@@ -101,6 +93,8 @@ class _DashboardMainState extends State<DashboardMain> {
               children: [
                 const SizedBox(height: 10),
                 graph(price, '23'),
+                const SizedBox(height: 14),
+                transactionStats(context)
               ],
             ),
           );
@@ -177,7 +171,7 @@ class _DashboardMainState extends State<DashboardMain> {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor1,
+          backgroundColor: primaryColor,
           foregroundColor: primaryColor1,
           surfaceTintColor: primaryColor1,
           shape:
@@ -194,7 +188,16 @@ class _DashboardMainState extends State<DashboardMain> {
                 children: [
                   ctext1('User Footfall', textcolor6, 18),
                   const Spacer(),
-                  Icon(Typicons.chart_outline, color: textcolor2, size: 24),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        border: Border.all(width: 1.2, color: containerColor)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 5, bottom: 5, left: 10, right: 10),
+                      child: ctext1('Espektro', textcolor6, 12),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -231,6 +234,10 @@ class _DashboardMainState extends State<DashboardMain> {
                   tooltipBehavior: TooltipBehavior(enable: true),
                   series: <ChartSeries<ChartData, String>>[
                     LineSeries(
+                        markerSettings: MarkerSettings(
+                            isVisible: true,
+                            color: containerColor,
+                            shape: DataMarkerType.circle),
                         animationDelay: 1,
                         animationDuration: 3,
                         dataSource: data,

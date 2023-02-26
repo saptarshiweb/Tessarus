@@ -306,7 +306,8 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       color: containerColor),
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: Icon(FontAwesome.star, color: primaryColor1, size: 20),
+                    child:
+                        Icon(FontAwesome.star, color: primaryColor1, size: 20),
                   ),
                 ),
               ],
@@ -446,7 +447,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
       child: (imgList.isEmpty)
           ? Container()
           : SizedBox(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.22,
               child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -455,7 +456,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                     return Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: SizedBox(
-                        height: 200,
+                        // height: MediaQuery.of(context).size.height * 0.13,
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),

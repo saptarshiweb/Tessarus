@@ -2,11 +2,11 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:images_picker/images_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
@@ -163,8 +163,8 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                       onPressed: () {
                                         getImage();
                                       },
-                                      icon: Icon(FontAwesome.upload,
-                                          color: containerColor, size: 22),
+                                      icon: Icon(EvaIcons.cloudUploadOutline,
+                                          color: containerColor, size: 32),
                                     )),
                                     const SizedBox(height: 15),
                                     ctext1('Select the Club Image',
