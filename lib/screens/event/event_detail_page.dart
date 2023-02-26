@@ -129,7 +129,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               const SizedBox(height: 15),
               primaryInfo(),
               const SizedBox(height: 15),
-              ebutton1(context, ctext1('Add CheckIn Access', primaryColor1, 18),
+              ebutton1(context, ctext1('Add CheckIn Access', primaryColor1, 14),
                   () {
                 showModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -284,7 +284,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   children: [
                     Row(
                       children: [
-                        ctext1(widget.event1.title!, containerColor, 20),
+                        ctext1(widget.event1.title!, containerColor, 18),
                         // const Spacer(),
                         // ctext1(widget.event1.tagLine!, containerColor, 20),
                       ],
@@ -306,7 +306,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       color: containerColor),
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: Icon(FontAwesome.star, color: textcolor2, size: 20),
+                    child: Icon(FontAwesome.star, color: primaryColor1, size: 20),
                   ),
                 ),
               ],

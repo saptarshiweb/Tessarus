@@ -108,6 +108,16 @@ class _AddEventImageState extends State<AddEventImage> {
     });
   }
 
+  void reorderData(int oldindex, int newindex) {
+    setState(() {
+      if (newindex > oldindex) {
+        newindex -= 1;
+      }
+      final items = urlList.removeAt(oldindex);
+      urlList.insert(newindex, items);
+    });
+  }
+
   @override
   void initState() {
     getPreviousEventImageInfo();
@@ -129,29 +139,57 @@ class _AddEventImageState extends State<AddEventImage> {
                       padding: const EdgeInsets.only(bottom: 20, top: 20),
                       child: SizedBox(
                         height: 150,
-                        child: ListView.builder(
-
-                            // physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: urlList.length,
+                        child: ReorderableListView(
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.3,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(18),
-                                    child: Image.network(
-                                      fit: BoxFit.contain,
-                                      urlList[index],
-                                    ),
+                            onReorder: reorderData,
+                            children: [
+                              for (final items in urlList)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
+                                  key: ValueKey(items),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Card(
+                                        elevation: 2,
+                                        child: SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.3,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.4,
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(18),
+                                                child: Image.network(
+                                                  fit: BoxFit.contain,
+                                                  items,
+                                                ))),
+                                      ),
+                                      Positioned(
+                                          right: -2,
+                                          top: -9,
+                                          child: IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  urlList.remove(items);
+                                                  urlInd--;
+                                                  if (urlList.isEmpty) {
+                                                    showImageList = false;
+                                                  }
+                                                });
+                                              },
+                                              icon: Icon(
+                                                  Icons.delete_forever_rounded,
+                                                  color: containerColor,
+                                                  size: 28)))
+                                    ],
                                   ),
-                                ),
-                              );
-                            }),
+                                )
+                            ]),
                       ),
                     )
                   : const SizedBox(height: 0, width: 0),
@@ -182,7 +220,12 @@ class _AddEventImageState extends State<AddEventImage> {
                                   )),
                                   const SizedBox(height: 15),
                                   ctext1(
-                                      'Select the Image', containerColor, 18),
+                                      'Select the Image.', containerColor, 18),
+                                  const SizedBox(height: 4),
+                                  ctext1(
+                                      'Click on the trash button to delete it.',
+                                      textcolor6,
+                                      12)
                                 ],
                               ),
                             ),

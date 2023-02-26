@@ -40,20 +40,20 @@ Widget cooinfoDisplay(BuildContext context, Events event1) {
                     Row(
                       children: [
                         Icon(FontAwesome5.user_circle,
-                            color: containerColor, size: 22),
+                            color: containerColor, size: 20),
                         const SizedBox(width: 15),
                         ctext1(event1.eventCoordinators![index].name!,
-                            textcolor2, 18),
+                            textcolor2, 16),
                       ],
                     ),
                     const SizedBox(height: 20),
                     Row(
                       children: [
                         Icon(FontAwesome5.phone_alt,
-                            color: containerColor, size: 22),
+                            color: containerColor, size: 20),
                         const SizedBox(width: 15),
                         ctext1(event1.eventCoordinators![index].phone!,
-                            textcolor2, 17),
+                            textcolor2, 15),
                       ],
                     ),
                   ],
