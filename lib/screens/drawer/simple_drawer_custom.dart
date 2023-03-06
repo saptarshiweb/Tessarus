@@ -66,8 +66,8 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
             child: Container(
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
+                      topRight: Radius.circular(5),
+                      bottomRight: Radius.circular(5)),
                   color: primaryColor1),
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10, top: 30),

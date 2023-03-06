@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 
@@ -83,8 +82,6 @@ ElevatedButton ebutton2({required fun, required String text}) {
         ),
       ));
 }
-
-
 
 Widget ebutton1(BuildContext context, Widget widget, Function fun) {
   return Row(

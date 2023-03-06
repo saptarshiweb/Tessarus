@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 

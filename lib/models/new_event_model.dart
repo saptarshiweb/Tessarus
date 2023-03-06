@@ -14,7 +14,7 @@ class Events {
   List<EventImages>? eventImages;
   EventOrganiserClub? eventOrganiserClub;
   List<EventCoordinators>? eventCoordinators;
-
+  List<Sponsors>? sponsors;
   Events(
       {this.title,
       this.description,
@@ -30,7 +30,8 @@ class Events {
       this.eventPrice,
       this.eventImages,
       this.eventOrganiserClub,
-      this.eventCoordinators});
+      this.eventCoordinators,
+      this.sponsors});
 
   Events.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -60,6 +61,13 @@ class Events {
         eventCoordinators!.add(EventCoordinators.fromJson(v));
       });
     }
+
+    if (json['sponsors'] != null) {
+      sponsors = <Sponsors>[];
+      json['sponsors'].forEach((v) {
+        sponsors!.add(Sponsors.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -85,6 +93,9 @@ class Events {
     if (eventCoordinators != null) {
       data['eventCoordinators'] =
           eventCoordinators!.map((v) => v.toJson()).toList();
+    }
+    if (sponsors != null) {
+      data['sponsors'] = sponsors!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -140,6 +151,28 @@ class EventCoordinators {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['phone'] = phone;
+    return data;
+  }
+}
+
+class Sponsors {
+  String? name;
+  String? image;
+  String? type;
+
+  Sponsors({this.name, this.image, this.type});
+
+  Sponsors.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    image = json['image'];
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['image'] = image;
+    data['type'] = type;
     return data;
   }
 }

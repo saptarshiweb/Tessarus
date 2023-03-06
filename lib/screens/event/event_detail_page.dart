@@ -11,9 +11,11 @@ import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
+import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:tessarus_volunteer/screens/event/edit_event_pages/edit_event_page.dart';
 import 'package:tessarus_volunteer/screens/event/event_custom_containers.dart';
 
 import '../../custom_widget/custom_modal_routes.dart';
@@ -142,7 +144,19 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       );
                     });
               }),
-              const SizedBox(height: 25),
+              TextButton(
+                onPressed: () {
+                  normalNavigation(const EditEventPage(), context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ctext1('Edit Event Details     ', textcolor2, 18),
+                    Icon(FontAwesome.right_big, color: textcolor2, size: 20),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 18),
               selectDetailType(context),
               const SizedBox(height: 20),
               (geninfo == true)

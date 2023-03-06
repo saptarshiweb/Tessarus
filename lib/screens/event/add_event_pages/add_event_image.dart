@@ -123,7 +123,6 @@ class _AddEventImageState extends State<AddEventImage> {
     getPreviousEventImageInfo();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -269,7 +268,6 @@ class _AddEventImageState extends State<AddEventImage> {
                           Map<String, dynamic> jsonDetails = {};
                           jsonDetails = jsonDecode(str);
                           var newEvent1 = Events.fromJson(jsonDetails);
-
                           List<EventImages> img = [];
                           for (var i = 0; i < urlList.length; i++) {
                             EventImages eventImages =

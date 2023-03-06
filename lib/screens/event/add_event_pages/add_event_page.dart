@@ -15,6 +15,7 @@ import 'package:tessarus_volunteer/models/new_event_model.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_pages/add_coordinator.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_pages/add_event_image.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_pages/general_info_add.dart';
+import 'package:tessarus_volunteer/screens/event/add_event_pages/sponsor_info_add.dart';
 import 'package:tessarus_volunteer/screens/event/add_event_pages/text_editor_info_add.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import 'package:http/http.dart' as http;
@@ -87,7 +88,8 @@ class _AddEventPageState extends State<AddEventPage> {
           'name': newEvent1.eventOrganiserClub!.name,
           'image': newEvent1.eventOrganiserClub!.image
         },
-        'eventCoordinators': newEvent1.eventCoordinators
+        'eventCoordinators': newEvent1.eventCoordinators,
+        'sponsors':newEvent1.sponsors
       };
       final response = await http.post(Uri.parse(add_event),
           headers: <String, String>{
@@ -152,6 +154,8 @@ class _AddEventPageState extends State<AddEventPage> {
               eventImageinfo(context),
               const SizedBox(height: 14),
               coordinatorInfo(context),
+              const SizedBox(height: 14),
+              sponsorInfo(context),
               const SizedBox(height: 14),
               Row(
                 children: [
@@ -219,6 +223,37 @@ class _AddEventPageState extends State<AddEventPage> {
                   ),
                 ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget sponsorInfo(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        normalNavigation(const SponsorInfoAdd(), context);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ctext1('Event Sponsors', textcolor2, 22),
+                  const SizedBox(height: 10),
+                  ctext1('Add sponsor name, sponsor Type and banners',
+                      textcolor5, 12)
+                ],
+              ),
+              const Spacer(),
+              Icon(FontAwesome.right_open, color: textcolor2, size: 22),
             ],
           ),
         ),
