@@ -1,11 +1,65 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
-import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
+
+Widget sponsorinfoDisplay(BuildContext context, Events event1) {
+  return SizedBox(
+    height: MediaQuery.of(context).size.height * 0.20,
+    child: ListView.builder(
+        itemCount: event1.sponsors!.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.65,
+              decoration: BoxDecoration(
+                color: primaryColor1,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 10, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        ctext1('Sponsor No. ${index + 1}', textcolor6, 18),
+                        const Spacer(),
+                        Icon(Icons.verified_user_rounded,
+                            color: containerColor, size: 22),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(EvaIcons.personDoneOutline,
+                            color: containerColor, size: 20),
+                        const SizedBox(width: 15),
+                        ctext1(event1.sponsors![index].name!, textcolor2, 16),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        ctext1(event1.sponsors![index].type!, textcolor2, 12),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+  );
+}
 
 Widget cooinfoDisplay(BuildContext context, Events event1) {
   return SizedBox(

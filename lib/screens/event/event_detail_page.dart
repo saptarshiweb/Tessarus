@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
@@ -108,6 +109,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
   bool geninfo = true;
   bool desinfo = false;
   bool cooinfo = false;
+  bool sponsorinfo = false;
 
   @override
   void initState() {
@@ -151,13 +153,17 @@ class _EventDetailPageState extends State<EventDetailPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ctext1('Edit Event Details     ', textcolor2, 18),
-                    Icon(FontAwesome.right_big, color: textcolor2, size: 20),
+                    ctext1('Edit Event Details     ', textcolor6, 14),
+                    Icon(EvaIcons.arrowForwardOutline,
+                        color: textcolor6, size: 20),
                   ],
                 ),
               ),
               const SizedBox(height: 18),
-              selectDetailType(context),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 0.045,
+                  child: selectDetailType(context)),
               const SizedBox(height: 20),
               (geninfo == true)
                   ? geninfoDisplay(context, widget.event1)
@@ -167,6 +173,9 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   : const SizedBox(),
               (cooinfo == true)
                   ? cooinfoDisplay(context, widget.event1)
+                  : const SizedBox(),
+              (sponsorinfo == true)
+                  ? sponsorinfoDisplay(context, widget.event1)
                   : const SizedBox(),
               const SizedBox(height: 15)
             ],
@@ -182,8 +191,8 @@ class _EventDetailPageState extends State<EventDetailPage> {
   }
 
   Widget selectDetailType(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return ListView(
+      scrollDirection: Axis.horizontal,
       children: [
         GestureDetector(
           onTap: () async {
@@ -191,6 +200,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               geninfo = true;
               desinfo = false;
               cooinfo = false;
+              sponsorinfo = false;
             });
           },
           child: Container(
@@ -202,6 +212,26 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   (geninfo == true) ? primaryColor1 : Colors.grey, 14),
             ),
           ),
+        ),
+        GestureDetector(
+          onTap: () async {
+            setState(() {
+              geninfo = false;
+              desinfo = false;
+              cooinfo = false;
+              sponsorinfo = true;
+            });
+          },
+          child: Container(
+            decoration:
+                (sponsorinfo == true) ? selected1() : const BoxDecoration(),
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+              child: ctext1('Sponsors',
+                  (sponsorinfo == true) ? primaryColor1 : Colors.grey, 14),
+            ),
+          ),
         ), //1 week
         GestureDetector(
           onTap: () async {
@@ -209,6 +239,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               geninfo = false;
               desinfo = true;
               cooinfo = false;
+              sponsorinfo = false;
             });
           },
           child: Container(
@@ -227,6 +258,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               geninfo = false;
               desinfo = false;
               cooinfo = true;
+              sponsorinfo = false;
             });
           },
           child: Container(
