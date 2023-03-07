@@ -18,6 +18,7 @@ import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:tessarus_volunteer/screens/event/edit_event_pages/edit_event_page.dart';
 import 'package:tessarus_volunteer/screens/event/event_custom_containers.dart';
+import 'package:tessarus_volunteer/screens/event/event_exchange_functions.dart';
 
 import '../../custom_widget/custom_modal_routes.dart';
 import '../../models/volunteer_display_model.dart';
@@ -148,7 +149,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               }),
               TextButton(
                 onPressed: () {
-                  normalNavigation(const EditEventPage(), context);
+                  declareTemporary(context, widget.event1);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

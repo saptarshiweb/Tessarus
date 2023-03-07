@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, unused_local_variable, non_constant_identifier_names
-
+import 'package:tessarus_volunteer/models/new_event_model.dart'
+    as addEventModel;
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -7,13 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:tessarus_volunteer/screens/event/event_exchange_functions.dart';
 import '../../../color_constants.dart';
 import '../../../custom_widget/custom_modal_routes.dart';
 import '../../../custom_widget/custom_text.dart';
 import '../../../custom_widget/loader_widget.dart';
 import '../../../helper/helper_function.dart';
 import '../../../models/api_url.dart';
-import '../../../models/new_event_model.dart';
 import '../add_event_pages/add_coordinator.dart';
 import '../add_event_pages/add_event_image.dart';
 import '../add_event_pages/general_info_add.dart';
@@ -22,7 +24,8 @@ import '../add_event_pages/text_editor_info_add.dart';
 import '../event_page.dart';
 
 class EditEventPage extends StatefulWidget {
-  const EditEventPage({super.key});
+  EditEventPage(this.id, {super.key});
+  String id;
 
   @override
   State<EditEventPage> createState() => _EditEventPageState();
@@ -30,7 +33,8 @@ class EditEventPage extends StatefulWidget {
 
 class _EditEventPageState extends State<EditEventPage> {
   String auth_val = '';
-  Future eventAdd() async {
+  String eventID = 'flag';
+  Future eventEdit() async {
     //organiser club
     String clubName = '';
     String clubImage = '';
@@ -45,6 +49,9 @@ class _EditEventPageState extends State<EditEventPage> {
     Map<String, dynamic> jsonDetails = {};
     jsonDetails = jsonDecode(str);
     var newEvent1 = Events.fromJson(jsonDetails);
+
+    eventID = widget.id;
+
     if (newEvent1.eventOrganiserClub == null) {
       Navigator.pop(context);
       showErrorMessage('Club Details Must be added.', context);
@@ -68,6 +75,25 @@ class _EditEventPageState extends State<EditEventPage> {
       clubName = newEvent1.eventOrganiserClub!.name!;
       clubImage = newEvent1.eventOrganiserClub!.image!;
       print(newEvent1.title);
+      addEventModel.Events evFinal =
+          addEventModel.Events(eventCoordinators: [], sponsors: []);
+
+      addEventModel.EventCoordinators c2 = addEventModel.EventCoordinators();
+      for (int i = 0; i < newEvent1.eventCoordinators!.length; i++) {
+        c2.name = newEvent1.eventCoordinators![i].name;
+        c2.phone = newEvent1.eventCoordinators![i].phone;
+        evFinal.eventCoordinators!.add(c2);
+        c2 = addEventModel.EventCoordinators();
+      }
+      addEventModel.Sponsors s2 = addEventModel.Sponsors();
+
+      for (int i = 0; i < newEvent1.sponsors!.length; i++) {
+        s2.name = newEvent1.sponsors![i].name.toString();
+        s2.image = newEvent1.sponsors![i].image.toString();
+        s2.type = newEvent1.sponsors![i].type.toString();
+        evFinal.sponsors!.add(s2);
+      }
+      print(evFinal.eventCoordinators);
       var body = {
         'title': newEvent1.title,
         'description': newEvent1.description,
@@ -86,13 +112,12 @@ class _EditEventPageState extends State<EditEventPage> {
           'name': newEvent1.eventOrganiserClub!.name,
           'image': newEvent1.eventOrganiserClub!.image
         },
-        'eventCoordinators': newEvent1.eventCoordinators,
-        'sponsors': newEvent1.sponsors
+        'eventCoordinators': evFinal.eventCoordinators,
+        'sponsors': evFinal.sponsors
       };
-      final response = await http.post(Uri.parse(add_event),
+      final response = await http.put(Uri.parse(update_event + eventID),
           headers: <String, String>{
             'Content-Type': 'application/json',
-            // 'Accept': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': 'true',
             'Access-Control-Allow-Headers': 'Content-Type',
@@ -105,7 +130,7 @@ class _EditEventPageState extends State<EditEventPage> {
 
       var responseval = json.decode(response.body);
 
-      if (responseval['message'] != 'Event added successfully') {
+      if (responseval['statusCode'] != 200) {
         showModalBottomSheet(
             backgroundColor: Colors.transparent,
             shape:
@@ -144,7 +169,7 @@ class _EditEventPageState extends State<EditEventPage> {
         backgroundColor: primaryColor,
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              resetToNormal(context);
             },
             icon: Icon(FontAwesome.left_open, color: textcolor2, size: 19)),
         title: Padding(
@@ -190,7 +215,7 @@ class _EditEventPageState extends State<EditEventPage> {
                               borderRadius: BorderRadius.circular(4),
                             )),
                         onPressed: () async {
-                          eventAdd();
+                          eventEdit();
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(top: 12, bottom: 12),

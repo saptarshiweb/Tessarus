@@ -23,6 +23,7 @@ import 'package:tessarus_volunteer/screens/login_screen.dart';
 import 'package:tessarus_volunteer/screens/splash_screens/splash1.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_control.dart';
 import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
+import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 
 class SimpleDrawerCustom extends StatefulWidget {
   const SimpleDrawerCustom({super.key});
@@ -167,9 +168,16 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(9))),
         onPressed: () async {
-          easyNavigation(const SplashScreen1(LoginScreen(), 5), context);
+          showLoaderDialog(context);
+          Future.delayed(const Duration(seconds: 3));
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setBool('signIn', false);
+          final success = await prefs.remove('newEvent');
+          final success2 = await prefs.remove('copyEvent');
+
+          Navigator.pop(context);
+
+          easyNavigation(const SplashScreen1(LoginScreen(), 5), context);
         },
         child: Padding(
           padding: const EdgeInsets.only(top: 10, bottom: 10),

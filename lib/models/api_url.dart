@@ -26,7 +26,7 @@ String edit_volunteer = '''${server}api/volunteers/'''; //PUT
 
 //Event-----------------------------------------------------------
 String add_event = '''${server}api/events/add'''; //POST
-String update_event = '''${server}api/events/[event_id]'''; //PUT
+String update_event = '''${server}api/events/'''; //PUT
 String add_event_image = '''${server}api/events/images/[event_id]'''; //POST
 String delete_event = '''${server}api/events/'''; //DELETE
 String all_event_url = '${server}api/events/all'; //GET
