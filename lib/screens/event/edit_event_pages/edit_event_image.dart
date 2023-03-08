@@ -15,16 +15,17 @@ import 'package:async/async.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/new_event_model.dart';
+import '../../../custom_widget/custom_buttons.dart';
 import '../../../models/api_url.dart';
 
-class AddEventImage extends StatefulWidget {
-  const AddEventImage({super.key});
+class EditEventImage extends StatefulWidget {
+  const EditEventImage({super.key});
 
   @override
-  State<AddEventImage> createState() => _AddEventImageState();
+  State<EditEventImage> createState() => _EditEventImageState();
 }
 
-class _AddEventImageState extends State<AddEventImage> {
+class _EditEventImageState extends State<EditEventImage> {
   File? imageFile;
   List<String> urlList = [];
   bool showImageList = false;
@@ -90,6 +91,7 @@ class _AddEventImageState extends State<AddEventImage> {
   }
 
   Future getPreviousEventImageInfo() async {
+    urlList = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String str = '';
     str = prefs.getString('newEvent') ?? '';
@@ -102,6 +104,7 @@ class _AddEventImageState extends State<AddEventImage> {
       int imgAll = newEvent1.eventImages!.length;
       if (imgAll > 0) {
         for (int i = 0; i < imgAll; i++) {
+          print(newEvent1.eventImages![i].url);
           urlList.add(newEvent1.eventImages![i].url!);
         }
         if (urlList.isNotEmpty) showImageList = true;
@@ -111,12 +114,11 @@ class _AddEventImageState extends State<AddEventImage> {
   }
 
   // void reorderData(int oldindex, int newindex) {
-  //    if (newindex > oldindex) {
-  //         newindex -= 1;
-  //       }
+  //   if (newindex > oldindex) {
+  //     newindex -= 1;
+  //   }
   //   Future.delayed(const Duration(milliseconds: 20), () {
   //     setState(() {
-
   //       final items = urlList.removeAt(oldindex);
   //       urlList.insert(newindex, items);
   //     });
@@ -129,7 +131,6 @@ class _AddEventImageState extends State<AddEventImage> {
     super.initState();
   }
 
-  static const key = GlobalObjectKey(100);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,7 +151,7 @@ class _AddEventImageState extends State<AddEventImage> {
                           itemCount: urlList.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return Padding(
+                            Padding(
                               padding: const EdgeInsets.only(left: 8, right: 8),
                               child: Stack(
                                 children: <Widget>[
@@ -191,6 +192,7 @@ class _AddEventImageState extends State<AddEventImage> {
                                 ],
                               ),
                             );
+                            return null;
                           },
                         ),
                       ),
@@ -296,6 +298,15 @@ class _AddEventImageState extends State<AddEventImage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
+              ebutton3(
+                  fun: () async {
+                    showLoaderDialog(context);
+                    await Future.delayed(const Duration(seconds: 3));
+                    getPreviousEventImageInfo();
+                    Navigator.pop(context);
+                  },
+                  t: ctext1('Load Images', containerColor, 14))
             ],
           ),
         ));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tessarus_volunteer/color_constants.dart';
+
+import '../color_constants.dart';
 
 Widget loadingwidget() {
   return CircularProgressIndicator(
@@ -7,6 +8,7 @@ Widget loadingwidget() {
     backgroundColor: Colors.purpleAccent.shade700,
     strokeWidth: 5,
   );
+  
 }
 
 showLoaderDialog(BuildContext context) {

@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names, unused_local_variable, use_build_context_synchronously, avoid_print
 
 import 'dart:convert';
-
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -12,11 +11,9 @@ import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
-import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:tessarus_volunteer/screens/event/edit_event_pages/edit_event_page.dart';
 import 'package:tessarus_volunteer/screens/event/event_custom_containers.dart';
 import 'package:tessarus_volunteer/screens/event/event_exchange_functions.dart';
 

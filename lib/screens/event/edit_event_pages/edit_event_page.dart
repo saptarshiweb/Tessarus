@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, unused_local_variable, non_constant_identifier_names
+// ignore_for_file: use_build_context_synchronously, unused_local_variable, non_constant_identifier_names, library_prefixes, avoid_print, must_be_immutable
 import 'package:tessarus_volunteer/models/new_event_model.dart'
     as addEventModel;
 import 'dart:async';
@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
+import 'package:tessarus_volunteer/screens/event/edit_event_pages/edit_event_image.dart';
 import 'package:tessarus_volunteer/screens/event/event_exchange_functions.dart';
 import '../../../color_constants.dart';
 import '../../../custom_widget/custom_modal_routes.dart';
@@ -34,12 +35,12 @@ class EditEventPage extends StatefulWidget {
 class _EditEventPageState extends State<EditEventPage> {
   String auth_val = '';
   String eventID = 'flag';
+  Events goBack = Events();
   Future eventEdit() async {
     //organiser club
     String clubName = '';
     String clubImage = '';
     showLoaderDialog(context);
-    await Future.delayed(const Duration(seconds: 5));
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
@@ -51,6 +52,8 @@ class _EditEventPageState extends State<EditEventPage> {
     var newEvent1 = Events.fromJson(jsonDetails);
 
     eventID = widget.id;
+    newEvent1.startTime = dateConvert(newEvent1.startTime!);
+    newEvent1.endTime = dateConvert(newEvent1.endTime!);
 
     if (newEvent1.eventOrganiserClub == null) {
       Navigator.pop(context);
@@ -75,8 +78,8 @@ class _EditEventPageState extends State<EditEventPage> {
       clubName = newEvent1.eventOrganiserClub!.name!;
       clubImage = newEvent1.eventOrganiserClub!.image!;
       print(newEvent1.title);
-      addEventModel.Events evFinal =
-          addEventModel.Events(eventCoordinators: [], sponsors: []);
+      addEventModel.Events evFinal = addEventModel.Events(
+          eventCoordinators: [], sponsors: [], eventImages: []);
 
       addEventModel.EventCoordinators c2 = addEventModel.EventCoordinators();
       for (int i = 0; i < newEvent1.eventCoordinators!.length; i++) {
@@ -87,11 +90,20 @@ class _EditEventPageState extends State<EditEventPage> {
       }
       addEventModel.Sponsors s2 = addEventModel.Sponsors();
 
+      print("${newEvent1.sponsors!.length}  sponsprs");
+
       for (int i = 0; i < newEvent1.sponsors!.length; i++) {
         s2.name = newEvent1.sponsors![i].name.toString();
         s2.image = newEvent1.sponsors![i].image.toString();
         s2.type = newEvent1.sponsors![i].type.toString();
         evFinal.sponsors!.add(s2);
+      }
+
+      addEventModel.EventImages e2 = addEventModel.EventImages();
+
+      for (int i = 0; i < newEvent1.eventImages!.length; i++) {
+        e2.url = newEvent1.eventImages![i].url.toString();
+        evFinal.eventImages!.add(e2);
       }
       print(evFinal.eventCoordinators);
       var body = {
@@ -103,7 +115,7 @@ class _EditEventPageState extends State<EditEventPage> {
         'eventVenue': newEvent1.eventVenue,
         'rules': newEvent1.rules,
         'prizes': newEvent1.prizes,
-        'eventImages': newEvent1.eventImages,
+        'eventImages': evFinal.eventImages,
         'eventType': newEvent1.eventType!.toLowerCase(),
         'eventMaxParticipants': newEvent1.eventMaxParticipants,
         'eventMinParticipants': newEvent1.eventMinParticipants,
@@ -149,6 +161,11 @@ class _EditEventPageState extends State<EditEventPage> {
               return successModal2(
                   responseval['message'], context, const EventPage());
             });
+
+        await Future.delayed(const Duration(seconds: 1));
+        resetToNormal(context);
+
+        // resetToNormal(context);
       }
       print(newEvent1.eventType);
 
@@ -169,7 +186,7 @@ class _EditEventPageState extends State<EditEventPage> {
         backgroundColor: primaryColor,
         leading: IconButton(
             onPressed: () {
-              resetToNormal(context);
+              resetToNormal2(context);
             },
             icon: Icon(FontAwesome.left_open, color: textcolor2, size: 19)),
         title: Padding(

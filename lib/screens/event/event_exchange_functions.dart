@@ -1,12 +1,12 @@
-// ignore_for_file: use_build_context_synchronously, library_prefixes
+// ignore_for_file: use_build_context_synchronously, library_prefixes, avoid_print
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:tessarus_volunteer/models/new_event_model.dart' as addEvent1;
+import 'package:tessarus_volunteer/screens/event/event_page.dart';
 
 import '../../helper/helper_function.dart';
 
@@ -23,12 +23,27 @@ resetToNormal(BuildContext context) async {
   var newEvent1 = Events.fromJson(jsonDetails);
   await prefs.setString('newEvent', jsonEncode(newEvent1));
   Navigator.pop(context);
+  print('going back');
+  normalNavigation(const EventPage(), context);
+}
+
+resetToNormal2(BuildContext context) async {
+  showLoaderDialog(context);
+  Future.delayed(const Duration(seconds: 2));
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String str = '';
+  str = prefs.getString('copyEvent') ?? '';
+  Map<String, dynamic> jsonDetails = {};
+  jsonDetails = jsonDecode(str);
+  var newEvent1 = Events.fromJson(jsonDetails);
+  await prefs.setString('newEvent', jsonEncode(newEvent1));
+  Navigator.pop(context);
   Navigator.pop(context);
 }
 
-declareTemporary(BuildContext context, Events event1) async {
+Future declareTemporary(BuildContext context, Events event1) async {
   showLoaderDialog(context);
-  Future.delayed(const Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 4));
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String str = '';
   str = prefs.getString('newEvent') ?? '';
@@ -81,12 +96,28 @@ declareTemporary(BuildContext context, Events event1) async {
   sendEvent.eventOrganiserClub!.image = event1.eventOrganiserClub!.image;
   sendEvent.eventOrganiserClub!.name = event1.eventOrganiserClub!.name;
   var evSpon = addEvent1.Sponsors();
+  print('spon${event1.sponsors!.length}');
   for (int i = 0; i < event1.sponsors!.length; i++) {
     evSpon.name = event1.sponsors![i].name;
     evSpon.image = event1.sponsors![i].image;
     sendEvent.sponsors!.add(evSpon);
   }
   await prefs.setString('newEvent', jsonEncode(sendEvent));
+  await Future.delayed(const Duration(seconds: 5));
+
+  // print('-----------------checking-----------------------------');
+
+  // str = prefs.getString('newEvent') ?? '';
+  // jsonDetails = {};
+  // jsonDetails = jsonDecode(str);
+  // var newEvent2 = Events.fromJson(jsonDetails);
+
+  // print(newEvent2.sponsors);
+  // print("${newEvent2.eventImages!.length} Image");
+  // print("${newEvent2.sponsors!.length} Sponsor");
+
+  // print('-----------------checking-----------------------------');
+  // await Future.delayed(const Duration(seconds: 20));
   Navigator.pop(context);
   normalNavigation(EditEventPage(event1.sId!), context);
 }

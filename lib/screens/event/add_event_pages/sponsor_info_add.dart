@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, prefer_typing_uninitialized_variables, deprecated_member_use, avoid_print, use_build_context_synchronously
 import 'dart:convert';
 import 'dart:io';
 import 'package:async/async.dart';
@@ -68,24 +68,20 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
       response.stream.transform(utf8.decoder).listen((value) {
         // print(value);
         responseval = json.decode(value);
-        urlVal = responseval['images'][0].toString();
-        print(urlVal);
-        setState(() {
-          url = urlVal.toString();
-        });
-
-        // urlList.insert(0, urlVal.toString());
-        // urlInd++;
-        // print(urlList.length);
-        // setState(() {
-        //   showImageList = true;
-        // });
+        print(responseval);
+        Future.delayed(const Duration(seconds: 5));
+        if (responseval['statusCode'] == 201) {
+          urlVal = responseval['images'][0].toString();
+          print(urlVal);
+          setState(() {
+            url = urlVal.toString();
+          });
+          Navigator.pop(context);
+        }
       });
     }).catchError((e) {
       print(e);
     });
-
-    Navigator.pop(context);
   }
 
   getImage() async {
@@ -99,7 +95,14 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
     });
   }
 
+  @override
+  void initState() {
+    getPreviousSponsorInfo();
+    super.initState();
+  }
+
   Future getPreviousSponsorInfo() async {
+    await Future.delayed(const Duration(seconds: 5));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String str = '';
     str = prefs.getString('newEvent') ?? '';
@@ -107,36 +110,25 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
     jsonDetails = jsonDecode(str);
     var newEvent1 = Events.fromJson(jsonDetails);
     // String d1 = '';
+    int splen = 0;
 
     setState(() {
-      int splen = newEvent1.sponsors!.length;
+      splen = newEvent1.sponsors!.length;
+      sname = [];
+      stype = [];
+      surl = [];
+      print("$splen   Splen");
       if (splen > 0) {
         for (int i = 0; i < splen; i++) {
           sname.add(newEvent1.sponsors![i].name!);
+
           stype.add(newEvent1.sponsors![i].type!);
           surl.add(newEvent1.sponsors![i].image!);
         }
-        ind = sname.length;
+        ind = sname.length + 1;
         if (sname.isNotEmpty) showSponsorList = true;
       }
     });
-
-    // setState(() {
-    //   int imgAll = newEvent1.eventImages!.length;
-    //   if (imgAll > 0) {
-    //     for (int i = 0; i < imgAll; i++) {
-    //       urlList.add(newEvent1.eventImages![i].url!);
-    //     }
-    //     if (urlList.isNotEmpty) showImageList = true;
-    //   }
-    //   urlInd = urlList.length + 1;
-    // });
-  }
-
-  @override
-  void initState() {
-    getPreviousSponsorInfo();
-    super.initState();
   }
 
   @override
@@ -151,13 +143,11 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              (showSponsorList == true)
+              (showSponsorList)
                   ? SizedBox(
                       height: MediaQuery.of(context).size.height * 0.30,
                       child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: sname.length,
+                          itemCount: ind,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Padding(
@@ -234,9 +224,11 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
               const SizedBox(height: 10),
               tfield1(controller: type, label: 'Sponsor Type'),
               const SizedBox(height: 20),
-              ebutton1(context, ctext1('Add Sponsor', primaryColor1, 12),
-                  () async {
+              ebutton1(context, ctext1('Add Sponsor', primaryColor1, 12), () {
+                showLoaderDialog(context);
+                Future.delayed(const Duration(seconds: 2));
                 if (name.text == '' || type.text == '') {
+                  Navigator.pop(context);
                   if (name.text == '') {
                     showErrorMessage('Sponsor Name cannot be empty', context);
                   } else {
@@ -248,19 +240,19 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                   // sname.insert(0, name.text);
                   // stype.insert(0, type.text);
                   // stype.insert(0, url);
-
                   sname.add(name.text);
                   stype.add(type.text);
                   surl.add(url);
                   setState(() {
                     ind++;
 
+                    imgSelected = false;
                     name.text = '';
                     type.text = '';
                     url = 'no image';
                     showSponsorList = true;
-                    imgSelected = false;
                   });
+                  Navigator.pop(context);
                 }
               }),
               const SizedBox(height: 12),
@@ -277,9 +269,10 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                     jsonDetails = jsonDecode(str);
                     var newEvent1 = Events.fromJson(jsonDetails);
                     List<Sponsors> sponsor1 = [];
-                    for (int i = 0; i < sname.length; i++) {
+                    for (int i = 0; i < ind; i++) {
                       Sponsors s1 = Sponsors(
                           name: sname[i], type: stype[i], image: surl[i]);
+                      print(s1);
                       sponsor1.add(s1);
                     }
                     newEvent1.sponsors = sponsor1;
@@ -351,10 +344,7 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                     stype.removeAt(index);
                     surl.removeAt(index);
                     ind--;
-                    if (sname.isEmpty) {
-                      showSponsorList = false;
-                      ind = 0;
-                    }
+                    if (ind == 0) showSponsorList = false;
                   });
                 },
                 t: ctext1('Delete Sponsor', textcolor2, 12))

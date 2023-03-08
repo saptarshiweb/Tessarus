@@ -70,20 +70,21 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
       response.stream.transform(utf8.decoder).listen((value) {
         // print(value);
         responseval = json.decode(value);
-        urlVal = responseval['images'][0].toString();
-        print(urlVal);
+        if (responseval['statusCode'] == 201) {
+          Future.delayed(const Duration(seconds: 4));
+          urlVal = responseval['images'][0].toString();
+          print(urlVal);
 
-        setState(() {
-          showClubimage = true;
-          clubImageUrl = urlVal.toString();
-        });
+          setState(() {
+            showClubimage = true;
+            clubImageUrl = urlVal.toString();
+          });
+          Navigator.pop(context);
+        }
       });
     }).catchError((e) {
       print(e);
     });
-    await Future.delayed(const Duration(seconds: 3));
-
-    Navigator.pop(context);
   }
 
   getImage() async {
