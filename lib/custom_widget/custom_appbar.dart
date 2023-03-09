@@ -28,7 +28,15 @@ AppBar appbar1(String text, BuildContext context) {
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
           const Spacer(),
-          Icon(FontAwesome.question_circle_o, color: textcolor2, size: 22),
+          SizedBox(
+            height: 20,
+            width: 20,
+            child: Image.asset(
+              'assets/espektroicon2.png',
+              fit: BoxFit.contain,
+            ),
+          )
+         
         ],
       ),
     ),

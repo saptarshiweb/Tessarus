@@ -138,7 +138,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Icon(
-            FontAwesome5.empire,
+            RpgAwesome.heavy_shield,
             color: containerColor,
             size: 34,
           ),
@@ -197,19 +197,21 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
       padding: const EdgeInsets.only(left: 16, top: 5, bottom: 4),
       child: Row(
         children: [
-          (profileImage == '')
-              ? Icon(
-                  Typicons.user,
-                  color: textcolor4,
-                  size: 38,
-                )
-              : SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.network(profileImage)),
-                ),
+          // (profileImage == '')
+          //     ?
+          //     : SizedBox(
+          //         height: 40,
+          //         width: 40,
+          //         child: ClipRRect(
+          //             borderRadius: BorderRadius.circular(30),
+          //             child: Image.network(profileImage)),
+          //       ),
+
+          Icon(
+            FontAwesome5.user_circle,
+            color: textcolor2,
+            size: 38,
+          ),
           const SizedBox(width: 18),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

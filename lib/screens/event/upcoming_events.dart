@@ -16,6 +16,7 @@ import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:tessarus_volunteer/screens/event/event_detail_page.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
+import 'package:tessarus_volunteer/screens/event/participant_list.dart';
 
 class UpcomingEvents extends StatefulWidget {
   const UpcomingEvents(this.val, {super.key});
@@ -27,7 +28,6 @@ class UpcomingEvents extends StatefulWidget {
 
 class _UpcomingEventsState extends State<UpcomingEvents> {
   int selectedEventIndex = 1;
-
   String auth_val = '';
   String volId = '';
   Future<List<Events>> eventListUpcoming() async {
@@ -166,6 +166,29 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     );
   }
 
+  Widget checkParticipants(BuildContext context, Events even1) {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor1,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      side: BorderSide(color: containerColor, width: 1.4))),
+              onPressed: () {
+                normalNavigation(
+                    ParticipantList(even1.sId.toString()), context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ctext1('Check Participants', textcolor2, 15),
+              )),
+        ),
+      ],
+    );
+  }
+
   Widget dropDownWidgetEventType(BuildContext context) {
     return SingleChildScrollView(
       child: DropdownSearch<String>(
@@ -259,7 +282,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     ];
     return Container(
       decoration: BoxDecoration(
-          color: primaryColor1, borderRadius: BorderRadius.circular(20)),
+          color: primaryColor1, borderRadius: BorderRadius.circular(10)),
       child: Padding(
         padding:
             const EdgeInsets.only(left: 20, right: 14, top: 22, bottom: 22),
@@ -333,6 +356,8 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                     ))
               ],
             ),
+            const SizedBox(height: 14),
+            checkParticipants(context, event)
           ],
         ),
       ),

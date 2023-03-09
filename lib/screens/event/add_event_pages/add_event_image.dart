@@ -133,7 +133,7 @@ class _AddEventImageState extends State<AddEventImage> {
     super.initState();
   }
 
-  static const key = GlobalObjectKey(100);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

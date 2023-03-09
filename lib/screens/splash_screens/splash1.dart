@@ -68,15 +68,13 @@ class _SplashScreen1State extends State<SplashScreen1> {
               fit: BoxFit.contain,
             ),
           ),
-          const SizedBox(height: 20),
           Lottie.asset('assets/gdsc-logo.json', repeat: false),
-          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ctext1('Powered By', textcolor2, 20),
+              ctext1('Powered By', textcolor6, 16),
               const SizedBox(width: 10),
-              ctext1('GDSC KGEC', textcolor2, 20),
+              ctext1('GDSC KGEC', containerColor, 20),
             ],
           ),
         ],

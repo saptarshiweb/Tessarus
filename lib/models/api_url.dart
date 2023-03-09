@@ -31,6 +31,7 @@ String add_event_image = '''${server}api/events/images/[event_id]'''; //POST
 String delete_event = '''${server}api/events/'''; //DELETE
 String all_event_url = '${server}api/events/all'; //GET
 String specific_event = '${server}api/events/'; //GET
+String get_participants='${server}api/events/getparticipants/';//GET
 
 //QR Scan
 String user_qr_scan = '''${server}api/volunteers/userqrscan'''; //POST
