@@ -91,11 +91,14 @@ class _AddEventImageState extends State<AddEventImage> {
 
   Future getPreviousEventImageInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
     String str = '';
     str = prefs.getString('newEvent') ?? '';
     Map<String, dynamic> jsonDetails = {};
     jsonDetails = jsonDecode(str);
     var newEvent1 = Events.fromJson(jsonDetails);
+
+    urlList = [];
     // String d1 = '';
 
     setState(() {
@@ -103,10 +106,11 @@ class _AddEventImageState extends State<AddEventImage> {
       if (imgAll > 0) {
         for (int i = 0; i < imgAll; i++) {
           urlList.add(newEvent1.eventImages![i].url!);
+          print(newEvent1.eventImages![i].url);
         }
         if (urlList.isNotEmpty) showImageList = true;
+        urlInd = urlList.length + 1;
       }
-      urlInd = urlList.length + 1;
     });
   }
 

@@ -145,7 +145,8 @@ class _EventDetailPageState extends State<EventDetailPage> {
                     });
               }),
               TextButton(
-                onPressed: () {
+                onPressed: () async{
+                  
                   declareTemporary(context, widget.event1);
                 },
                 child: Row(

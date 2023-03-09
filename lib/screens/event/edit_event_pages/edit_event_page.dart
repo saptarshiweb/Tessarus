@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
-import 'package:tessarus_volunteer/screens/event/edit_event_pages/edit_event_image.dart';
 import 'package:tessarus_volunteer/screens/event/event_exchange_functions.dart';
 import '../../../color_constants.dart';
 import '../../../custom_widget/custom_modal_routes.dart';
@@ -43,6 +42,7 @@ class _EditEventPageState extends State<EditEventPage> {
     showLoaderDialog(context);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
     String str = '';
@@ -74,7 +74,7 @@ class _EditEventPageState extends State<EditEventPage> {
           'Please visit Comprehensive Info and add the necessary details.',
           context);
     } else {
-      Navigator.pop(context);
+      
       clubName = newEvent1.eventOrganiserClub!.name!;
       clubImage = newEvent1.eventOrganiserClub!.image!;
       print(newEvent1.title);
@@ -88,21 +88,25 @@ class _EditEventPageState extends State<EditEventPage> {
         evFinal.eventCoordinators!.add(c2);
         c2 = addEventModel.EventCoordinators();
       }
-      addEventModel.Sponsors s2 = addEventModel.Sponsors();
-
-      print("${newEvent1.sponsors!.length}  sponsprs");
+      var s2 = addEventModel.Sponsors();
+      await Future.delayed(const Duration(seconds: 2));
 
       for (int i = 0; i < newEvent1.sponsors!.length; i++) {
+        s2 = addEventModel.Sponsors(name: '', type: '', image: '');
         s2.name = newEvent1.sponsors![i].name.toString();
         s2.image = newEvent1.sponsors![i].image.toString();
         s2.type = newEvent1.sponsors![i].type.toString();
         evFinal.sponsors!.add(s2);
       }
+      
 
-      addEventModel.EventImages e2 = addEventModel.EventImages();
+      var e2 = addEventModel.EventImages();
 
       for (int i = 0; i < newEvent1.eventImages!.length; i++) {
+        e2 = addEventModel.EventImages(url: '');
+
         e2.url = newEvent1.eventImages![i].url.toString();
+        print(e2.url);
         evFinal.eventImages!.add(e2);
       }
       print(evFinal.eventCoordinators);
@@ -143,6 +147,7 @@ class _EditEventPageState extends State<EditEventPage> {
       var responseval = json.decode(response.body);
 
       if (responseval['statusCode'] != 200) {
+        Navigator.pop(context);
         showModalBottomSheet(
             backgroundColor: Colors.transparent,
             shape:
@@ -152,6 +157,7 @@ class _EditEventPageState extends State<EditEventPage> {
               return errorModal2(responseval['message'], context);
             });
       } else {
+        Navigator.pop(context);
         showModalBottomSheet(
             backgroundColor: Colors.transparent,
             shape:

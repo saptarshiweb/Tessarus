@@ -43,13 +43,15 @@ resetToNormal2(BuildContext context) async {
 
 Future declareTemporary(BuildContext context, Events event1) async {
   showLoaderDialog(context);
-  await Future.delayed(const Duration(seconds: 4));
+  await Future.delayed(const Duration(seconds: 1));
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.reload();
+  await Future.delayed(const Duration(seconds: 1));
   String str = '';
   str = prefs.getString('newEvent') ?? '';
   Map<String, dynamic> jsonDetails = {};
   jsonDetails = jsonDecode(str);
-  var newEvent1 = Events.fromJson(jsonDetails);
+  Events newEvent1 = Events.fromJson(jsonDetails);
   await prefs.setString('copyEvent', jsonEncode(newEvent1));
   addEvent1.Events sendEvent = addEvent1.Events(
       title: '',
@@ -77,11 +79,7 @@ Future declareTemporary(BuildContext context, Events event1) async {
   sendEvent.eventVenue = event1.eventVenue;
   sendEvent.rules = event1.rules;
   sendEvent.prizes = event1.prizes;
-  var evImage = addEvent1.EventImages();
-  for (int i = 0; i < event1.eventImages!.length; i++) {
-    evImage.url = event1.eventImages![i].url;
-    sendEvent.eventImages!.add(evImage);
-  }
+
   sendEvent.eventType = event1.eventType;
   sendEvent.eventPrice = event1.eventPrice;
   var evCoord = addEvent1.EventCoordinators();
@@ -96,14 +94,23 @@ Future declareTemporary(BuildContext context, Events event1) async {
   sendEvent.eventOrganiserClub!.image = event1.eventOrganiserClub!.image;
   sendEvent.eventOrganiserClub!.name = event1.eventOrganiserClub!.name;
   var evSpon = addEvent1.Sponsors();
-  print('spon${event1.sponsors!.length}');
   for (int i = 0; i < event1.sponsors!.length; i++) {
+    evSpon = addEvent1.Sponsors(name: '', type: '', image: '');
     evSpon.name = event1.sponsors![i].name;
     evSpon.image = event1.sponsors![i].image;
     sendEvent.sponsors!.add(evSpon);
   }
+  print("${event1.eventImages!.length} Image");
+
+  addEvent1.EventImages evImage = addEvent1.EventImages(url: '');
+  Future.delayed(const Duration(seconds: 3));
+  for (int i = 0; i < event1.eventImages!.length; i++) {
+    evImage = addEvent1.EventImages(url: '');
+    evImage.url = event1.eventImages![i].url;
+
+    sendEvent.eventImages!.add(evImage);
+  }
   await prefs.setString('newEvent', jsonEncode(sendEvent));
-  await Future.delayed(const Duration(seconds: 5));
 
   // print('-----------------checking-----------------------------');
 
@@ -118,6 +125,7 @@ Future declareTemporary(BuildContext context, Events event1) async {
 
   // print('-----------------checking-----------------------------');
   // await Future.delayed(const Duration(seconds: 20));
+
   Navigator.pop(context);
   normalNavigation(EditEventPage(event1.sId!), context);
 }

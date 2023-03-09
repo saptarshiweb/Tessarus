@@ -102,7 +102,6 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
   }
 
   Future getPreviousSponsorInfo() async {
-    await Future.delayed(const Duration(seconds: 5));
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String str = '';
     str = prefs.getString('newEvent') ?? '';
@@ -111,7 +110,6 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
     var newEvent1 = Events.fromJson(jsonDetails);
     // String d1 = '';
     int splen = 0;
-
     setState(() {
       splen = newEvent1.sponsors!.length;
       sname = [];
@@ -121,11 +119,10 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
       if (splen > 0) {
         for (int i = 0; i < splen; i++) {
           sname.add(newEvent1.sponsors![i].name!);
-
           stype.add(newEvent1.sponsors![i].type!);
           surl.add(newEvent1.sponsors![i].image!);
         }
-        ind = sname.length + 1;
+        ind = sname.length;
         if (sname.isNotEmpty) showSponsorList = true;
       }
     });
@@ -147,7 +144,7 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                   ? SizedBox(
                       height: MediaQuery.of(context).size.height * 0.30,
                       child: ListView.builder(
-                          itemCount: ind,
+                          itemCount: sname.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Padding(
@@ -240,10 +237,11 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                   // sname.insert(0, name.text);
                   // stype.insert(0, type.text);
                   // stype.insert(0, url);
-                  sname.add(name.text);
-                  stype.add(type.text);
-                  surl.add(url);
+
                   setState(() {
+                    sname.add(name.text);
+                    stype.add(type.text);
+                    surl.add(url);
                     ind++;
 
                     imgSelected = false;
@@ -344,7 +342,8 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                     stype.removeAt(index);
                     surl.removeAt(index);
                     ind--;
-                    if (ind == 0) showSponsorList = false;
+                    if (sname.isEmpty) ind = 0;
+                    if (ind == 0 || sname.isEmpty) showSponsorList = false;
                   });
                 },
                 t: ctext1('Delete Sponsor', textcolor2, 12))
