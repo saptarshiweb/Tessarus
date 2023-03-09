@@ -55,7 +55,6 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
         // 'Authorization': 'Bearer $auth_val'
       },
     );
-    // print(response.body);
     var responseval = json.decode(response.body);
     var responseData = responseval['events']["documents"];
     List<Events> event1 = [];
@@ -66,16 +65,13 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       DateTime dt2 = DateTime.now();
 
       if (dt1.compareTo(dt2) > 0 && widget.val == 'upcoming') {
-        print('upcoming');
         event1.add(eventfile);
       } else if (widget.val == 'ongoing' &&
           dt1.compareTo(dt2) < 0 &&
           dt3.compareTo(dt2) > 0) {
-        print('ongoing');
         event1.add(eventfile);
       } else if (widget.val == 'past' && dt3.compareTo(dt2) < 0) {
         event1.add(eventfile);
-        print('past');
       }
     }
     return event1;
@@ -97,7 +93,6 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     final String? auth = prefs.getString("Auth");
     authVal = auth!;
 
-    print(delete_event + id);
     final response = await http.delete(
       Uri.parse("$delete_event$id"),
       headers: <String, String>{
@@ -246,7 +241,6 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
 
     String startTime = event.startTime!;
     int m = int.parse(startTime.substring(5, 7));
-    print('$m  ${event.title!}');
     String day = startTime.substring(8, 10);
 
     List<String> month = [

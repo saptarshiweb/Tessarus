@@ -33,6 +33,7 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
   String url = 'no image';
   bool imgSelected = false;
 
+
   TextEditingController name = TextEditingController();
   TextEditingController type = TextEditingController();
   List<String> sname = [];
@@ -115,7 +116,6 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
       sname = [];
       stype = [];
       surl = [];
-      print("$splen   Splen");
       if (splen > 0) {
         for (int i = 0; i < splen; i++) {
           sname.add(newEvent1.sponsors![i].name!);
@@ -232,12 +232,6 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                     showErrorMessage('Sponsor Type cannot be empty', context);
                   }
                 } else {
-                  // cName.add(name.text);
-                  // cPhone.add(phone.text);
-                  // sname.insert(0, name.text);
-                  // stype.insert(0, type.text);
-                  // stype.insert(0, url);
-
                   setState(() {
                     sname.add(name.text);
                     stype.add(type.text);

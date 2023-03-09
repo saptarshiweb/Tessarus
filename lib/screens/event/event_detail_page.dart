@@ -145,8 +145,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                     });
               }),
               TextButton(
-                onPressed: () async{
-                  
+                onPressed: () async {
                   declareTemporary(context, widget.event1);
                 },
                 child: Row(
@@ -343,16 +342,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   ],
                 ),
                 const Spacer(),
-                Container(
-                  // width: MediaQuery.of(context).size.width * 0.2,
-                  decoration: BoxDecoration(
-                      // border: Border.all(color: containerColor, width: 1.4),
-                      borderRadius: BorderRadius.circular(12),
-                      color: containerColor),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child:
-                        Icon(FontAwesome.star, color: primaryColor1, size: 20),
+                Expanded(
+                  child: SizedBox(
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                            widget.event1.eventOrganiserClub!.image!)),
                   ),
                 ),
               ],

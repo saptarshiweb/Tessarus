@@ -50,17 +50,27 @@ class _SplashScreen1State extends State<SplashScreen1> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.10),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ctext1('Tessarus', textcolor2, 26),
+              ctext1('Tessarus Volunteer', textcolor2, 26),
             ],
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+          const SizedBox(height: 40),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: Image.asset(
+              'assets/espektroLogo.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+          const SizedBox(height: 20),
           Lottie.asset('assets/gdsc-logo.json', repeat: false),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.10),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -68,7 +78,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
               const SizedBox(width: 10),
               ctext1('GDSC KGEC', textcolor2, 20),
             ],
-          )
+          ),
         ],
       ),
     );

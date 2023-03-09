@@ -97,10 +97,10 @@ Future declareTemporary(BuildContext context, Events event1) async {
   for (int i = 0; i < event1.sponsors!.length; i++) {
     evSpon = addEvent1.Sponsors(name: '', type: '', image: '');
     evSpon.name = event1.sponsors![i].name;
+    evSpon.type = event1.sponsors![i].type;
     evSpon.image = event1.sponsors![i].image;
     sendEvent.sponsors!.add(evSpon);
   }
-  print("${event1.eventImages!.length} Image");
 
   addEvent1.EventImages evImage = addEvent1.EventImages(url: '');
   Future.delayed(const Duration(seconds: 3));
@@ -111,21 +111,6 @@ Future declareTemporary(BuildContext context, Events event1) async {
     sendEvent.eventImages!.add(evImage);
   }
   await prefs.setString('newEvent', jsonEncode(sendEvent));
-
-  // print('-----------------checking-----------------------------');
-
-  // str = prefs.getString('newEvent') ?? '';
-  // jsonDetails = {};
-  // jsonDetails = jsonDecode(str);
-  // var newEvent2 = Events.fromJson(jsonDetails);
-
-  // print(newEvent2.sponsors);
-  // print("${newEvent2.eventImages!.length} Image");
-  // print("${newEvent2.sponsors!.length} Sponsor");
-
-  // print('-----------------checking-----------------------------');
-  // await Future.delayed(const Duration(seconds: 20));
-
   Navigator.pop(context);
   normalNavigation(EditEventPage(event1.sId!), context);
 }

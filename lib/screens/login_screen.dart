@@ -136,13 +136,19 @@ class _LoginScreenState extends State<LoginScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  FontAwesome5.empire,
-                  color: containerColor,
-                  size: 42,
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.asset(
+                      'assets/techtixLogo.jpg',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
-                const SizedBox(width: 5),
-                ctext1('Tessarus', containerColor, 40),
+                const SizedBox(width: 14),
+                ctext1('Tessarus Volunteer', containerColor, 22),
               ],
             ),
             const SizedBox(height: 50),
@@ -185,12 +191,13 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 30),
             ebutton4(
-                fun: () {
+                fun: () async {
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (!currentFocus.hasPrimaryFocus &&
                       currentFocus.focusedChild != null) {
                     currentFocus.focusedChild!.unfocus();
                   }
+                  await Future.delayed(const Duration(milliseconds: 20));
                   LoginRequest(email_controller.text, password_controller.text);
                 },
                 t: Row(
