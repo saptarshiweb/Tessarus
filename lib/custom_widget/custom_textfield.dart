@@ -11,13 +11,11 @@ Widget tfield1(
         backgroundColor: textfieldColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     child: TextFormField(
-      
       controller: controller,
       obscureText: obscuretext,
       style: TextStyle(
           color: textcolor2, fontSize: 18, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
-       
         hintText: 'Enter $label',
         labelText: 'Enter $label',
         labelStyle: TextStyle(

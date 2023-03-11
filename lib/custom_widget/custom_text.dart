@@ -53,9 +53,39 @@ Text ctext(String text, Color col) {
     style: TextStyle(color: col, fontSize: 18, fontWeight: FontWeight.bold),
   );
 }
-Text ctext1(String text, Color col,double s) {
+
+Text ctext1(String text, Color col, double s) {
   return Text(
     text,
+    maxLines: 2,
     style: TextStyle(color: col, fontSize: s, fontWeight: FontWeight.bold),
+  );
+}
+
+Text handleOverflowText(String s, Color c, double size) {
+  int count = 0;
+  String str = "";
+
+  var splitted = s.split(' ');
+  if (splitted.length > 4) {
+    // for (int i = 0; i < 4; i++) {
+    //   str += "${splitted[i]} ";
+    // }
+    // str += "...";
+
+    for (int i = 0; i < splitted.length; i++) {
+      if (i < splitted.length) str += "${splitted[i++]} ";
+      if (i < splitted.length) str += "${splitted[i++]} ";
+      if (i < splitted.length) str += "${splitted[i++]} ";
+      if (i < splitted.length) str += "${splitted[i]} ";
+      str += "\n";
+    }
+  } else {
+    str = s;
+  }
+
+  return Text(
+    str,
+    style: TextStyle(color: c, fontSize: size, fontWeight: FontWeight.bold),
   );
 }

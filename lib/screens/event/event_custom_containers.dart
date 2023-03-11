@@ -204,7 +204,7 @@ Widget geninfoDisplay(BuildContext context, Events event1) {
             children: [
               ctext1('TagLine', textcolor6, 14),
               const Spacer(),
-              ctext1(event1.tagLine!, containerColor, 15)
+              handleOverflowText(event1.tagLine!, containerColor, 12),
             ],
           ),
           const SizedBox(height: 14),
@@ -234,7 +234,7 @@ Widget geninfoDisplay(BuildContext context, Events event1) {
           const SizedBox(height: 14),
           Row(
             children: [
-              ctext1(event1.eventVenue!, containerColor, 16),
+              handleOverflowText(event1.eventVenue!, containerColor, 12),
               const Spacer(),
               ctext1(
                   event1.eventType!.substring(0, 1).toUpperCase() +

@@ -80,6 +80,27 @@ class _AddEventImageState extends State<AddEventImage> {
   }
 
   getImage() async {
+    // final androidInfo = await DeviceInfoPlugin().androidInfo;
+    // late final Map<Permission, PermissionStatus> statusess;
+
+    // if (androidInfo.version.sdkInt <= 32) {
+    //   statusess = await [
+    //     Permission.storage,
+    //   ].request();
+    // } else {
+    //   statusess = await [Permission.photos].request();
+    // }
+
+    // var allAccepted = true;
+    // statusess.forEach((permission, status) {
+    //   if (status != PermissionStatus.granted) {
+    //     allAccepted = false;
+    //   }
+    // });
+
+    // if (allAccepted) {
+
+    // }
     List<Media>? res = await ImagesPicker.pick(
       count: 1,
       pickType: PickType.image,
@@ -133,7 +154,6 @@ class _AddEventImageState extends State<AddEventImage> {
     super.initState();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

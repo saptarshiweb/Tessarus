@@ -11,8 +11,6 @@ import 'package:tessarus_volunteer/screens/drawer/drawer_custom_appbar.dart';
 import 'package:tessarus_volunteer/screens/drawer/simple_drawer_custom.dart';
 import 'package:countup/countup.dart';
 
-import 'dashboard_custom_widgets.dart';
-
 class DashboardMain extends StatefulWidget {
   const DashboardMain({super.key});
 
@@ -94,7 +92,7 @@ class _DashboardMainState extends State<DashboardMain> {
                 const SizedBox(height: 10),
                 graph(price, '23'),
                 const SizedBox(height: 14),
-                transactionStats(context)
+                // transactionStats(context)
               ],
             ),
           );

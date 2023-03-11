@@ -317,6 +317,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
             ),
             const SizedBox(height: 10),
             Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   children: [
@@ -337,7 +338,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                   children: [
                     ctext1('Tech Fest Espektro', textcolor2, 12),
                     const SizedBox(height: 6),
-                    ctext1(event.tagLine!, containerColor, 12),
+                    handleOverflowText(event.tagLine!, containerColor, 11),
                   ],
                 ),
                 const Spacer(),

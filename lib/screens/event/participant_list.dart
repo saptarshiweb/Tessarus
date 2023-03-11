@@ -11,8 +11,10 @@ import 'package:tessarus_volunteer/color_constants.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_appbar.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
+import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/models/api_url.dart';
 import 'package:tessarus_volunteer/models/participants_model.dart' as pEvent;
+import 'package:tessarus_volunteer/screens/event/add_prize_page.dart';
 
 class ParticipantList extends StatefulWidget {
   ParticipantList(this.id, {super.key});
@@ -122,13 +124,21 @@ class _ParticipantListState extends State<ParticipantList> {
                 Icon(EvaIcons.peopleOutline, color: containerColor, size: 28),
                 ctext1('   Team Leader', textcolor6, 16),
                 const Spacer(),
-                ctext1(e1.userName!, textcolor2, 18),
+                ctext1(e1.userName!, textcolor2, 17),
               ],
             ),
             const SizedBox(height: 20),
             Row(
               children: [
-                ctext1("ID ${e1.userEspektroId!}", textcolor2, 16),
+                ctext1("Espektro ID", textcolor6, 16),
+                const Spacer(),
+                ctext1(e1.userEspektroId!, textcolor2, 17),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                ctext1('Email ID', textcolor6, 12),
                 const Spacer(),
                 ctext1(e1.userEmail!, textcolor2, 12),
               ],
@@ -137,18 +147,18 @@ class _ParticipantListState extends State<ParticipantList> {
             Row(
               children: [
                 Icon(Maki.college, color: containerColor, size: 24),
-                ctext1("    ${e1.userCollege!}", textcolor2, 16),
+                ctext1("    ${e1.userCollege!}", textcolor2, 12),
               ],
             ),
             const SizedBox(height: 20),
-            addWinner(context, e1.userId!),
+            addWinner(context, e1.eventId!, e1.userId!),
           ],
         ),
       ),
     );
   }
 
-  Widget addWinner(BuildContext context, String userid) {
+  Widget addWinner(BuildContext context, String eventid, String userid) {
     return Row(
       children: [
         Expanded(
@@ -157,7 +167,9 @@ class _ParticipantListState extends State<ParticipantList> {
                   backgroundColor: containerColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6))),
-              onPressed: () {},
+              onPressed: () {
+                normalNavigation(AddPrizePage(eventid, userid), context);
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ctext1('Add as Winner', primaryColor1, 14),

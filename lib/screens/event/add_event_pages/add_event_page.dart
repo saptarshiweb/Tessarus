@@ -89,7 +89,7 @@ class _AddEventPageState extends State<AddEventPage> {
           'image': newEvent1.eventOrganiserClub!.image
         },
         'eventCoordinators': newEvent1.eventCoordinators,
-        'sponsors':newEvent1.sponsors
+        'sponsors': newEvent1.sponsors
       };
       final response = await http.post(Uri.parse(add_event),
           headers: <String, String>{
@@ -195,21 +195,21 @@ class _AddEventPageState extends State<AddEventPage> {
                               await SharedPreferences.getInstance();
 
                           Events event1 = Events(
-                            title: '',
-                            description: '',
-                            tagLine: '',
-                            startTime: '',
-                            endTime: '',
-                            eventVenue: '',
-                            rules: '',
-                            prizes: '',
-                            eventImages: [],
-                            eventType: '',
-                            eventPrice: 0,
-                            eventCoordinators: [],
-                            eventMaxParticipants: 1,
-                            eventMinParticipants: 1,
-                          );
+                              title: '',
+                              description: '',
+                              tagLine: '',
+                              startTime: '',
+                              endTime: '',
+                              eventVenue: '',
+                              rules: '',
+                              prizes: '',
+                              eventImages: [],
+                              eventType: '',
+                              eventPrice: 0,
+                              eventCoordinators: [],
+                              eventMaxParticipants: 1,
+                              eventMinParticipants: 1,
+                              sponsors: []);
                           String newEvent = jsonEncode(event1);
                           await prefs.setString('newEvent', newEvent);
                           Navigator.pop(context);

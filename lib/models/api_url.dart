@@ -32,6 +32,7 @@ String delete_event = '''${server}api/events/'''; //DELETE
 String all_event_url = '${server}api/events/all'; //GET
 String specific_event = '${server}api/events/'; //GET
 String get_participants='${server}api/events/getparticipants/';//GET
+String add_prize='${server}api/users/addprizetouser';//POST
 
 //QR Scan
 String user_qr_scan = '''${server}api/volunteers/userqrscan'''; //POST
