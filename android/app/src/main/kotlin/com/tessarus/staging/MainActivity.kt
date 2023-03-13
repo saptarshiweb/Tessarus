@@ -1,4 +1,4 @@
-package com.example.tessarus_volunteer
+package com.tessarus.staging
 
 import io.flutter.embedding.android.FlutterActivity
 
