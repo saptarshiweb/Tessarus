@@ -124,6 +124,7 @@ class _EditEventPageState extends State<EditEventPage> {
         'eventMaxParticipants': newEvent1.eventMaxParticipants,
         'eventMinParticipants': newEvent1.eventMinParticipants,
         'eventPrice': newEvent1.eventPrice,
+        'eventPriceForKGEC': newEvent1.eventPriceForKGEC,
         'eventOrganiserClub': {
           'name': newEvent1.eventOrganiserClub!.name,
           'image': newEvent1.eventOrganiserClub!.image
@@ -170,7 +171,6 @@ class _EditEventPageState extends State<EditEventPage> {
 
         await Future.delayed(const Duration(seconds: 1));
         resetToNormal(context);
-
         // resetToNormal(context);
       }
       print(newEvent1.eventType);
@@ -178,7 +178,6 @@ class _EditEventPageState extends State<EditEventPage> {
       print(response.body);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -277,6 +276,7 @@ class _EditEventPageState extends State<EditEventPage> {
                             eventImages: [],
                             eventType: '',
                             eventPrice: 0,
+                            eventPriceForKGEC: 0,
                             eventCoordinators: [],
                             eventMaxParticipants: 1,
                             eventMinParticipants: 1,
@@ -447,7 +447,7 @@ class _EditEventPageState extends State<EditEventPage> {
                 children: [
                   ctext1('General Info', textcolor2, 22),
                   const SizedBox(height: 10),
-                  ctext1('Event name, date, time etc.', textcolor5, 12)
+                  ctext1('Event name, date, time, Price etc.', textcolor5, 12)
                 ],
               ),
               const Spacer(),

@@ -92,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
           eventImages: [],
           eventType: '',
           eventPrice: 0,
+          eventPriceForKGEC: 0,
           eventCoordinators: [],
           eventMaxParticipants: 1,
           eventMinParticipants: 1,

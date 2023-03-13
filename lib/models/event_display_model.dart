@@ -47,6 +47,7 @@ class Events {
   int? eventMinParticipants;
   int? eventMaxParticipants;
   int? eventPrice;
+  int? eventPriceForKGEC;
   List<EventCoordinators>? eventCoordinators;
   String? createdBy;
   String? createdAt;
@@ -70,6 +71,7 @@ class Events {
       this.eventMinParticipants,
       this.eventMaxParticipants,
       this.eventPrice,
+      this.eventPriceForKGEC,
       this.eventCoordinators,
       this.createdBy,
       this.createdAt,
@@ -100,6 +102,7 @@ class Events {
     eventMinParticipants = json['eventMinParticipants'];
     eventMaxParticipants = json['eventMaxParticipants'];
     eventPrice = json['eventPrice'];
+    eventPriceForKGEC = json['eventPriceForKGEC'];
     if (json['eventCoordinators'] != null) {
       eventCoordinators = <EventCoordinators>[];
       json['eventCoordinators'].forEach((v) {
@@ -139,6 +142,7 @@ class Events {
     data['eventMinParticipants'] = eventMinParticipants;
     data['eventMaxParticipants'] = eventMaxParticipants;
     data['eventPrice'] = eventPrice;
+    data['eventPriceForKGEC'] = eventPriceForKGEC;
     if (eventCoordinators != null) {
       data['eventCoordinators'] =
           eventCoordinators!.map((v) => v.toJson()).toList();

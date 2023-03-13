@@ -11,6 +11,7 @@ class Events {
   int? eventMinParticipants;
   int? eventMaxParticipants;
   int? eventPrice;
+  int? eventPriceForKGEC;
   List<EventImages>? eventImages;
   EventOrganiserClub? eventOrganiserClub;
   List<EventCoordinators>? eventCoordinators;
@@ -28,6 +29,7 @@ class Events {
       this.eventMinParticipants,
       this.eventMaxParticipants,
       this.eventPrice,
+      this.eventPriceForKGEC,
       this.eventImages,
       this.eventOrganiserClub,
       this.eventCoordinators,
@@ -46,6 +48,7 @@ class Events {
     eventMinParticipants = json['eventMinParticipants'];
     eventMaxParticipants = json['eventMaxParticipants'];
     eventPrice = json['eventPrice'];
+    eventPriceForKGEC = json['eventPriceForKGEC'];
     if (json['eventImages'] != null) {
       eventImages = <EventImages>[];
       json['eventImages'].forEach((v) {
@@ -84,6 +87,7 @@ class Events {
     data['eventMinParticipants'] = eventMinParticipants;
     data['eventMaxParticipants'] = eventMaxParticipants;
     data['eventPrice'] = eventPrice;
+    data['eventPriceForKGEC'] = eventPriceForKGEC;
     if (eventImages != null) {
       data['eventImages'] = eventImages!.map((v) => v.toJson()).toList();
     }

@@ -137,6 +137,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
   TextEditingController eventMax = TextEditingController();
   TextEditingController eventMin = TextEditingController();
   TextEditingController eventPrice = TextEditingController();
+  TextEditingController eventPriceForKGEC = TextEditingController();
   TextEditingController organiserClub = TextEditingController();
   String eventtype = 'Group';
   var items = ['Group', 'Solo'];
@@ -188,6 +189,8 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
       eventMax.text = d1;
       d1 = newEvent1.eventPrice.toString();
       eventPrice.text = d1;
+      d1 = newEvent1.eventPriceForKGEC.toString();
+      eventPriceForKGEC.text = d1;
       d1 = '';
       d1 = newEvent1.startTime!;
       if (d1 != '') {
@@ -248,6 +251,9 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                   : const SizedBox(),
               (solo == false) ? const SizedBox(height: 12) : const SizedBox(),
               numfield1(controller: eventPrice, label: 'Event Price'),
+              const SizedBox(height: 12),
+              numfield1(
+                  controller: eventPriceForKGEC, label: 'Event Price For KGEC'),
               const SizedBox(height: 12),
               // tfield1(controller: organiserClub, label: 'Organiser Club'),
               // const SizedBox(height: 12),
@@ -345,6 +351,9 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                               errorPrompt('Max Participants', eventMax);
                             } else if (eventPrice.text == '') {
                               errorPrompt('Event Price', eventPrice);
+                            } else if (eventPriceForKGEC.text == '') {
+                              errorPrompt(
+                                  'Event Price For KGEC', eventPriceForKGEC);
                             } else if (int.parse(eventMin.text) >
                                 int.parse(eventMax.text)) {
                               showErrorMessage(
@@ -379,6 +388,10 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                                   eventPrice.text == ''
                                       ? '0'
                                       : eventPrice.text);
+                              newEvent1.eventPriceForKGEC = int.parse(
+                                  eventPriceForKGEC.text == ''
+                                      ? '0'
+                                      : eventPriceForKGEC.text);
 
                               await prefs.setString(
                                   'newEvent', jsonEncode(newEvent1));

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, non_constant_identifier_names, library_prefixes
+// ignore_for_file: must_be_immutable, non_constant_identifier_names, library_prefixes, avoid_print
 
 import 'dart:convert';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -48,7 +48,6 @@ class _ParticipantListState extends State<ParticipantList> {
     var responseval = json.decode(response.body);
 
     var responseData = responseval['events'];
-    print(responseData.length);
 
     for (int i = 0; i < responseData.length; i++) {
       pEvent.Events e1 = pEvent.Events.fromJson(responseData[i]);

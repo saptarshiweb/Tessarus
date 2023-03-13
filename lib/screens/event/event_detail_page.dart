@@ -182,6 +182,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
       ),
     );
   }
+  
 
   BoxDecoration selected1() {
     return BoxDecoration(

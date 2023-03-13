@@ -84,6 +84,7 @@ class _AddEventPageState extends State<AddEventPage> {
         'eventMaxParticipants': newEvent1.eventMaxParticipants,
         'eventMinParticipants': newEvent1.eventMinParticipants,
         'eventPrice': newEvent1.eventPrice,
+        'eventPriceForKGEC': newEvent1.eventPriceForKGEC,
         'eventOrganiserClub': {
           'name': newEvent1.eventOrganiserClub!.name,
           'image': newEvent1.eventOrganiserClub!.image
@@ -177,6 +178,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 ],
               ),
               const SizedBox(height: 10),
+
               Row(
                 children: [
                   Expanded(
@@ -206,6 +208,7 @@ class _AddEventPageState extends State<AddEventPage> {
                               eventImages: [],
                               eventType: '',
                               eventPrice: 0,
+                              eventPriceForKGEC: 0,
                               eventCoordinators: [],
                               eventMaxParticipants: 1,
                               eventMinParticipants: 1,

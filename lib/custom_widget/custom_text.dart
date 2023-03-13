@@ -63,7 +63,6 @@ Text ctext1(String text, Color col, double s) {
 }
 
 Text handleOverflowText(String s, Color c, double size) {
-  int count = 0;
   String str = "";
 
   var splitted = s.split(' ');

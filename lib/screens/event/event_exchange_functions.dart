@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously, library_prefixes, avoid_print
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,9 +6,7 @@ import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
 import 'package:tessarus_volunteer/models/event_display_model.dart';
 import 'package:tessarus_volunteer/models/new_event_model.dart' as addEvent1;
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
-
 import '../../helper/helper_function.dart';
-
 import 'edit_event_pages/edit_event_page.dart';
 
 resetToNormal(BuildContext context) async {
@@ -65,6 +62,7 @@ Future declareTemporary(BuildContext context, Events event1) async {
       eventImages: [],
       eventType: '',
       eventPrice: 0,
+      eventPriceForKGEC: 0,
       eventCoordinators: [],
       eventMaxParticipants: 1,
       eventMinParticipants: 1,
@@ -82,6 +80,7 @@ Future declareTemporary(BuildContext context, Events event1) async {
 
   sendEvent.eventType = event1.eventType;
   sendEvent.eventPrice = event1.eventPrice;
+  sendEvent.eventPriceForKGEC = event1.eventPriceForKGEC;
   var evCoord = addEvent1.EventCoordinators();
 
   for (int i = 0; i < event1.eventCoordinators!.length; i++) {
