@@ -154,29 +154,31 @@ Widget htmlViewTextDisplay(
         color: primaryColor1, borderRadius: BorderRadius.circular(12)),
     child: Padding(
       padding: const EdgeInsets.only(top: 18, bottom: 18, left: 25, right: 25),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              ctext1(header, textcolor2, 18),
-              const Spacer(),
-              Icon(icon, color: containerColor, size: 24)
-            ],
-          ),
-          const SizedBox(height: 14),
-          Html(
-            data: data,
-            // style: event1.description,
-            //style the html text
-            style: {
-              "body": Style(
-                color: textcolor2,
-                fontSize: FontSize(14),
-                fontWeight: FontWeight.w400,
-              ),
-            },
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ctext1(header, textcolor2, 18),
+                const Spacer(),
+                Icon(icon, color: containerColor, size: 24)
+              ],
+            ),
+            const SizedBox(height: 14),
+            Html(
+              data: data,
+              // style: event1.description,
+              //style the html text
+              style: {
+                "body": Style(
+                  color: textcolor2,
+                  fontSize: FontSize(14),
+                  fontWeight: FontWeight.w400,
+                ),
+              },
+            ),
+          ],
+        ),
       ),
     ),
   );

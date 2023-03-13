@@ -68,9 +68,60 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
               const EdgeInsets.only(top: 10, bottom: 60, right: 20, left: 20),
           child: Column(
             children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: primaryColor1,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Center(
+                            child: ctext1('Event Description', textcolor2, 12)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
               editorCustom(context, descController, 'Description', descInitial),
               const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: primaryColor1,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Center(
+                            child: ctext1('Event Rules', textcolor2, 12)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
               editorCustom(context, ruleController, 'Rules', ruleInitial),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: primaryColor1,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Center(
+                            child: ctext1('Event Prizes', textcolor2, 12)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 10),
               editorCustom(context, prizesController, 'Prizes', prizeInitial),
               const SizedBox(height: 10),

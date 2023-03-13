@@ -44,13 +44,24 @@ class _ParticipantListState extends State<ParticipantList> {
         'Authorization': 'Bearer $auth_val'
       },
     );
+    print(get_participants + widget.id.toString());
     var responseval = json.decode(response.body);
 
     var responseData = responseval['events'];
+    print(responseData.length);
 
     for (int i = 0; i < responseData.length; i++) {
       pEvent.Events e1 = pEvent.Events.fromJson(responseData[i]);
-      list.add(e1);
+      if (e1.userName == null ||
+          e1.userEmail == null ||
+          e1.userCollege == null ||
+          e1.userEspektroId == null ||
+          e1.eventId == null ||
+          e1.userId == null ||
+          e1.team == null) {
+      } else {
+        list.add(e1);
+      }
     }
     return list;
   }
@@ -103,8 +114,9 @@ class _ParticipantListState extends State<ParticipantList> {
   Widget participantDisplay(BuildContext context, pEvent.Events e1) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 1.4, color: containerColor),
-          borderRadius: BorderRadius.circular(5)),
+          color: primaryColor1,
+          // border: Border.all(width: 1.4, color: containerColor),
+          borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding:
             const EdgeInsets.only(top: 14, bottom: 14, left: 12, right: 12),
@@ -113,26 +125,26 @@ class _ParticipantListState extends State<ParticipantList> {
             Row(
               children: [
                 Icon(Elusive.group_circled, color: containerColor, size: 28),
-                ctext1('   Team Name', textcolor6, 16),
+                ctext1('   Team Name', textcolor6, 14),
                 const Spacer(),
-                ctext1(e1.team!.name!, textcolor2, 18),
+                ctext1(e1.team!.name!, textcolor2, 16),
               ],
             ),
             const SizedBox(height: 20),
             Row(
               children: [
                 Icon(EvaIcons.peopleOutline, color: containerColor, size: 28),
-                ctext1('   Team Leader', textcolor6, 16),
+                ctext1('   Team Leader', textcolor6, 14),
                 const Spacer(),
-                ctext1(e1.userName!, textcolor2, 17),
+                ctext1(e1.userName!, textcolor2, 16),
               ],
             ),
             const SizedBox(height: 20),
             Row(
               children: [
-                ctext1("Espektro ID", textcolor6, 16),
+                ctext1("Espektro ID", textcolor6, 14),
                 const Spacer(),
-                ctext1(e1.userEspektroId!, textcolor2, 17),
+                ctext1(e1.userEspektroId!, textcolor2, 15),
               ],
             ),
             const SizedBox(height: 20),
