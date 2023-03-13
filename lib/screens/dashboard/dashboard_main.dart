@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -188,11 +187,11 @@ class _DashboardMainState extends State<DashboardMain> {
                   const Spacer(),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        border: Border.all(width: 1.2, color: containerColor)),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(width: 1.5, color: containerColor)),
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          top: 5, bottom: 5, left: 10, right: 10),
+                          top: 8, bottom: 8, left: 10, right: 10),
                       child: ctext1('Espektro', textcolor6, 12),
                     ),
                   ),

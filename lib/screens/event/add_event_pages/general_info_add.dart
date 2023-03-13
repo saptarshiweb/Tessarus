@@ -250,13 +250,12 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                   ? numfield1(controller: eventMax, label: 'Max Participants')
                   : const SizedBox(),
               (solo == false) ? const SizedBox(height: 12) : const SizedBox(),
-              numfield1(controller: eventPrice, label: 'Event Price'),
+              numfield1(controller: eventPrice, label: 'Event Price (in Rs.)'),
               const SizedBox(height: 12),
               numfield1(
-                  controller: eventPriceForKGEC, label: 'Event Price For KGEC'),
+                  controller: eventPriceForKGEC,
+                  label: 'Event Price For KGEC (in Rs.)'),
               const SizedBox(height: 12),
-              // tfield1(controller: organiserClub, label: 'Organiser Club'),
-              // const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
                 child: Row(
@@ -264,7 +263,6 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                     Expanded(
                       child: ElevatedButton(
                           onPressed: () async {
-                            // WidgetsFlutterBinding.ensureInitialized();
                             showLoaderDialog(context);
                             String h1 = '', m1 = '';
                             String s2 = _timeController.text;

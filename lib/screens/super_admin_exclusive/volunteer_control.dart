@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +23,7 @@ class VolunteerControl extends StatefulWidget {
 
 class _VolunteerControlState extends State<VolunteerControl> {
   String auth_val = '';
-  
+
   TextEditingController search_volunteer = TextEditingController();
   Future deleteVolunteer(String id) async {
     String authVal = '';
@@ -124,17 +123,20 @@ class _VolunteerControlState extends State<VolunteerControl> {
                             child: Center(child: loadingwidget()),
                           );
                         } else {
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.length,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 10, top: 10),
-                                    child: volunteerDisplay(
-                                        context, snapshot.data[index]));
-                              });
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 15),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 10, top: 10),
+                                      child: volunteerDisplay(
+                                          context, snapshot.data[index]));
+                                }),
+                          );
                         }
                       },
                     ),
@@ -162,7 +164,7 @@ class _VolunteerControlState extends State<VolunteerControl> {
 
     return Container(
       decoration: BoxDecoration(
-          color: primaryColor1, borderRadius: BorderRadius.circular(14)),
+          color: primaryColor1, borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding:
             const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
@@ -199,12 +201,12 @@ class _VolunteerControlState extends State<VolunteerControl> {
             const SizedBox(height: 12),
             Row(
               children: [
-                ctext1(vol(v.accessLevel.toString()), containerColor, 22),
-                const Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(FontAwesome.pencil_squared,
-                        color: containerColor, size: 22)),
+                ctext1(vol(v.accessLevel.toString()), containerColor, 19),
+
+                // IconButton(
+                //     onPressed: () {},
+                //     icon: Icon(FontAwesome.pencil_squared,
+                //         color: containerColor, size: 22)),
                 const SizedBox(width: 10),
                 IconButton(
                     onPressed: () {

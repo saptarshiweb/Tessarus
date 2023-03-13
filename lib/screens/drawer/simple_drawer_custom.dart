@@ -92,7 +92,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                               const TicketScanMain())
                           : const SizedBox(),
                       (userlevel >= 2)
-                          ? DrawerListItem(context, 'Add Coins',
+                          ? DrawerListItem(context, 'Add Amount',
                               FontAwesome5.rupee_sign, const AddCoins())
                           : const SizedBox(),
                       (userlevel == 4)
@@ -197,16 +197,6 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
       padding: const EdgeInsets.only(left: 16, top: 5, bottom: 4),
       child: Row(
         children: [
-          // (profileImage == '')
-          //     ?
-          //     : SizedBox(
-          //         height: 40,
-          //         width: 40,
-          //         child: ClipRRect(
-          //             borderRadius: BorderRadius.circular(30),
-          //             child: Image.network(profileImage)),
-          //       ),
-
           Icon(
             FontAwesome5.user_circle,
             color: textcolor2,

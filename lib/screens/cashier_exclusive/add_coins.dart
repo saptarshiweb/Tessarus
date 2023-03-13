@@ -96,7 +96,7 @@ class _AddCoinsState extends State<AddCoins> {
     return Scaffold(
       backgroundColor: primaryColor,
       drawer: const SimpleDrawerCustom(),
-      appBar: customAppBar('Add Coins', containerColor),
+      appBar: customAppBar('Add Amount', containerColor),
       body: (qrvalue != 'Sample')
           ? SingleChildScrollView(
               child: userSelectedWidget(context, selectedUser))

@@ -21,7 +21,7 @@ AppBar customAppBar(String text, Color col) {
     title: Text(
       text,
       style: TextStyle(
-          color: textcolor2, fontWeight: FontWeight.bold, fontSize: 24),
+          color: textcolor2, fontWeight: FontWeight.bold, fontSize: 20),
     ),
     // leading: const DrawerMenuWidget(),
     // leading: const SimpleDrawerCustom(),
@@ -56,7 +56,7 @@ AppBar eventsPageAppBar(String text, Color col) {
                   style: TextStyle(
                       color: textcolor2,
                       fontWeight: FontWeight.bold,
-                      fontSize: 24),
+                      fontSize: 20),
                 ),
                 const Spacer(),
                 IconButton(
@@ -107,7 +107,7 @@ AppBar VolunteerControlAppBar(String text) {
                   style: TextStyle(
                       color: textcolor2,
                       fontWeight: FontWeight.bold,
-                      fontSize: 24),
+                      fontSize: 20),
                 ),
                 const Spacer(),
                 IconButton(
@@ -115,7 +115,7 @@ AppBar VolunteerControlAppBar(String text) {
                       normalNavigation(const AddVolunteer(), context);
                     },
                     icon: Icon(Typicons.user_add_outline,
-                        color: textcolor2, size: 22)),
+                        color: textcolor2, size: 17)),
               ],
             );
           } else {
@@ -124,7 +124,7 @@ AppBar VolunteerControlAppBar(String text) {
               style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
-                  fontSize: 24),
+                  fontSize: 20),
             );
           }
         })),

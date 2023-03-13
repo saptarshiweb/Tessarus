@@ -57,7 +57,7 @@ class _StartScreenState extends State<StartScreen> {
                 case 'Ticket Scan':
                   return const TicketScanMain();
 
-                case 'Add Coins':
+                case 'Add Amount':
                   return const AddCoins();
 
                 case 'Volunteer Control':
