@@ -56,10 +56,17 @@ class _SplashScreen1State extends State<SplashScreen1> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ctext1('Tessarus Volunteer', textcolor2, 26),
+              ctext1('Tessarus Volunteer', textcolor2, 22),
             ],
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ctext1('Staging App', textcolor6, 14),
+            ],
+          ),
+          const SizedBox(height: 25),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.3,
             width: MediaQuery.of(context).size.width * 0.6,

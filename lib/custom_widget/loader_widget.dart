@@ -6,7 +6,7 @@ Widget loadingwidget() {
   return CircularProgressIndicator(
     color: containerColor,
     backgroundColor: Colors.purpleAccent.shade700,
-    strokeWidth: 4,
+    strokeWidth: 5,
   );
 
   
