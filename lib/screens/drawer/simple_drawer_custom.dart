@@ -84,7 +84,7 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                           Elusive.group_circled, const DashboardMain()),
                       DrawerListItem(context, 'Event', Octicons.calendar,
                           const EventPage()),
-                      (userlevel >= 2)
+                      (userlevel >= 1)
                           ? DrawerListItem(
                               context,
                               'Ticket Scan',
@@ -107,14 +107,14 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                           ? DrawerListItem(context, 'Payment Logs',
                               FontAwesome.rupee, const PaymentLogsMain())
                           : const SizedBox(),
-                      (userlevel <= 2)
-                          ? DrawerListItem(
-                              context, 'Help', Icons.help, const HelpPage())
-                          : const SizedBox(),
-                      (userlevel <= 2)
-                          ? DrawerListItem(context, 'Contact',
-                              Icons.contact_page, const ContactUs())
-                          : const SizedBox(),
+                      // (userlevel <= 2)
+                      //     ? DrawerListItem(
+                      //         context, 'Help', Icons.help, const HelpPage())
+                      //     : const SizedBox(),
+                      // (userlevel <= 2)
+                      //     ? DrawerListItem(context, 'Contact',
+                      //         Icons.contact_page, const ContactUs())
+                      //     : const SizedBox(),
                       const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20),
