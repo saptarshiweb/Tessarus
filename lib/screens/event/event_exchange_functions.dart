@@ -68,7 +68,7 @@ Future declareTemporary(BuildContext context, Events event1) async {
       eventMinParticipants: 1,
       eventOrganiserClub: addEvent1.EventOrganiserClub(name: '', image: ''),
       sponsors: [],
-      otherPlatformUrl: 'No Event URL Added!');
+      otherPlatformUrl: '');
   //copy to sendEvent from event1
   sendEvent.title = event1.title;
   sendEvent.description = event1.description;
@@ -80,15 +80,26 @@ Future declareTemporary(BuildContext context, Events event1) async {
   sendEvent.prizes = event1.prizes;
 
   sendEvent.eventType = event1.eventType;
-  sendEvent.eventPrice = event1.eventPrice;
-  sendEvent.eventPriceForKGEC = event1.eventPriceForKGEC;
+
+  if (event1.eventPrice! > 10) {
+    sendEvent.eventPrice = event1.eventPrice! ~/ 10;
+  } else {
+    sendEvent.eventPrice = event1.eventPrice;
+  }
+  if (event1.eventPriceForKGEC! > 10) {
+    sendEvent.eventPriceForKGEC = event1.eventPriceForKGEC! ~/ 10;
+  } else {
+    sendEvent.eventPriceForKGEC = event1.eventPriceForKGEC;
+  }
 
   var evCoord = addEvent1.EventCoordinators();
 
   for (int i = 0; i < event1.eventCoordinators!.length; i++) {
     evCoord.name = event1.eventCoordinators![i].name;
+    print(evCoord.name);
     evCoord.phone = event1.eventCoordinators![i].phone;
     sendEvent.eventCoordinators!.add(evCoord);
+    evCoord = addEvent1.EventCoordinators();
   }
   sendEvent.eventMaxParticipants = event1.eventMaxParticipants;
   sendEvent.eventMinParticipants = event1.eventMinParticipants;
@@ -114,7 +125,12 @@ Future declareTemporary(BuildContext context, Events event1) async {
   if (event1.otherPlatformUrl != '') {
     sendEvent.otherPlatformUrl = event1.otherPlatformUrl;
   } else {
-    sendEvent.otherPlatformUrl = 'No Event URL Added!';
+    sendEvent.otherPlatformUrl = '';
+  }
+
+  print('coordinator--');
+  for (int i = 0; i < sendEvent.eventCoordinators!.length; i++) {
+    print(sendEvent.eventCoordinators![i].name);
   }
   await prefs.setString('newEvent', jsonEncode(sendEvent));
   Navigator.pop(context);

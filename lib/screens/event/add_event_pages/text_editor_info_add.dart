@@ -65,7 +65,7 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
       body: SingleChildScrollView(
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 10, bottom: 60, right: 20, left: 20),
+              const EdgeInsets.only(top: 30, bottom: 100, right: 20, left: 20),
           child: Column(
             children: [
               Row(
@@ -84,9 +84,9 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               editorCustom(context, descController, 'Description', descInitial),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               Row(
                 children: [
                   Expanded(
@@ -103,9 +103,9 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               editorCustom(context, ruleController, 'Rules', ruleInitial),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               Row(
                 children: [
                   Expanded(
@@ -122,9 +122,9 @@ class _TextEditorInfoState extends State<TextEditorInfo> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
               editorCustom(context, prizesController, 'Prizes', prizeInitial),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
               Row(
                 children: [
                   Expanded(

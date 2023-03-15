@@ -363,7 +363,7 @@ class _AddCoinsState extends State<AddCoins> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       height: 80,
                       width: 80,
                       image: NetworkImage(user1.profileImageUrl ?? '')),

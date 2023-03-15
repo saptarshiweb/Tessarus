@@ -139,7 +139,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 10, bottom: 10, right: 20, left: 20),
+                const EdgeInsets.only(top: 10, bottom: 30, right: 20, left: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -185,7 +185,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                             borderRadius: BorderRadius.circular(12),
                             child: Image.network(
                               clubImageUrl,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),
@@ -336,15 +336,15 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                     context);
                               }
                             } else {
-                              // cName.add(name.text);
-                              // cPhone.add(phone.text);
-                              cName.insert(0, name.text);
-                              cPhone.insert(0, phone.text);
+                              // cName.insert(0, name.text);
+                              // cPhone.insert(0, phone.text);
                               setState(() {
+                                cName.add(name.text);
+                                cPhone.add(phone.text);
                                 ind++;
                                 name.text = '';
                                 phone.text = '';
-                                showcList = true;
+                                if (!showcList) showcList = true;
                               });
                             }
                           },
@@ -401,8 +401,17 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                               for (int i = 0; i < cName.length; i++) {
                                 EventCoordinators c = EventCoordinators(
                                     name: cName[i], phone: cPhone[i]);
+
                                 newEvent1.eventCoordinators!.add(c);
                               }
+                              print("Coordinators---");
+
+                              for (int i = 0;
+                                  i < newEvent1.eventCoordinators!.length;
+                                  i++) {
+                                print(newEvent1.eventCoordinators![i].name);
+                              }
+
                               // print(newEvent1.eventCoordinators![0].name);
                               // print(newEvent1.eventCoordinators![0].phone);
                               await prefs.setString(

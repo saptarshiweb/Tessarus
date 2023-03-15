@@ -91,7 +91,7 @@ class _AddEventPageState extends State<AddEventPage> {
         },
         'eventCoordinators': newEvent1.eventCoordinators,
         'sponsors': newEvent1.sponsors,
-        'otherPlatformUrl':(newEvent1.otherPlatformUrl)=='No Event URL Added!'?"":newEvent1.otherPlatformUrl
+        'otherPlatformUrl':newEvent1.otherPlatformUrl
       };
       final response = await http.post(Uri.parse(add_event),
           headers: <String, String>{
@@ -213,7 +213,7 @@ class _AddEventPageState extends State<AddEventPage> {
                               eventMaxParticipants: 1,
                               eventMinParticipants: 1,
                               sponsors: [],
-                              otherPlatformUrl: 'No Event URL Added!'
+                              otherPlatformUrl: ''
                               );
                           String newEvent = jsonEncode(event1);
                           await prefs.setString('newEvent', newEvent);

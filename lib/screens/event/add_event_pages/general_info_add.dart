@@ -215,10 +215,10 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
         _dateController2.text = date1;
         _timeController2.text = time1;
       }
+      d1 = newEvent1.otherPlatformUrl!;
+      otherPlatformUrl.text = d1;
+      if (otherPlatformUrl.text != "") otherurl = true;
     });
-
-    d1 = newEvent1.otherPlatformUrl!;
-    otherPlatformUrl.text = d1;
   }
 
   @override
@@ -452,10 +452,14 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                               newEvent1.endTime = endTime;
                               newEvent1.eventType = eventtype.toLowerCase();
                               if (otherPlatformUrl.text == '') {
-                                otherPlatformUrl.text = 'No Event URL Added!';
+                                otherPlatformUrl.text = '';
                               }
-                              newEvent1.otherPlatformUrl =
-                                  otherPlatformUrl.text;
+                              if (otherPlatformUrl.text == '') {
+                                newEvent1.otherPlatformUrl = "";
+                              } else {
+                                newEvent1.otherPlatformUrl =
+                                    otherPlatformUrl.text;
+                              }
                               print('Event type $eventtype');
 
                               newEvent1.eventMaxParticipants = int.parse(

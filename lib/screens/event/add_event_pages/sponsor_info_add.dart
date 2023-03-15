@@ -33,7 +33,6 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
   String url = 'no image';
   bool imgSelected = false;
 
-
   TextEditingController name = TextEditingController();
   TextEditingController type = TextEditingController();
   List<String> sname = [];
@@ -309,7 +308,7 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
                     width: MediaQuery.of(context).size.width * 0.55,
                     child: Image.network(
                       image,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
             const SizedBox(height: 10),
@@ -317,7 +316,7 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
               children: [
                 ctext1('Sponsor Name', textcolor6, 12),
                 const Spacer(),
-                ctext1(name, containerColor, 18),
+                ctext1(name, containerColor, 15),
               ],
             ),
             const SizedBox(height: 7),
@@ -325,7 +324,7 @@ class _SponsorInfoAddState extends State<SponsorInfoAdd> {
               children: [
                 ctext1('Sponsor Type', textcolor6, 12),
                 const Spacer(),
-                ctext1(type, containerColor, 18),
+                ctext1(type, containerColor, 15),
               ],
             ),
             const SizedBox(height: 7),

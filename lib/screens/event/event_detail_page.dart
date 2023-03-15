@@ -503,7 +503,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                           borderRadius: BorderRadius.circular(12),
                           child: Image.network(
                             imgList[index],
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                         ),
                       ),

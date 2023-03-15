@@ -74,7 +74,6 @@ class _EditEventPageState extends State<EditEventPage> {
           'Please visit Comprehensive Info and add the necessary details.',
           context);
     } else {
-      
       clubName = newEvent1.eventOrganiserClub!.name!;
       clubImage = newEvent1.eventOrganiserClub!.image!;
       print(newEvent1.title);
@@ -86,7 +85,7 @@ class _EditEventPageState extends State<EditEventPage> {
         c2.name = newEvent1.eventCoordinators![i].name;
         c2.phone = newEvent1.eventCoordinators![i].phone;
         evFinal.eventCoordinators!.add(c2);
-        c2 = addEventModel.EventCoordinators();
+        c2 = addEventModel.EventCoordinators(name: '', phone: '');
       }
       var s2 = addEventModel.Sponsors();
       await Future.delayed(const Duration(seconds: 2));
@@ -98,7 +97,6 @@ class _EditEventPageState extends State<EditEventPage> {
         s2.type = newEvent1.sponsors![i].type.toString();
         evFinal.sponsors!.add(s2);
       }
-      
 
       var e2 = addEventModel.EventImages();
 
@@ -109,7 +107,11 @@ class _EditEventPageState extends State<EditEventPage> {
         print(e2.url);
         evFinal.eventImages!.add(e2);
       }
-      print(evFinal.eventCoordinators);
+      print('Coordinators --- ');
+      for (int i = 0; i < evFinal.eventCoordinators!.length; i++) {
+        print(evFinal.eventCoordinators![i].name);
+      }
+
       var body = {
         'title': newEvent1.title,
         'description': newEvent1.description,
@@ -131,7 +133,7 @@ class _EditEventPageState extends State<EditEventPage> {
         },
         'eventCoordinators': evFinal.eventCoordinators,
         'sponsors': evFinal.sponsors,
-        'otherPlatformUrl':newEvent1.otherPlatformUrl=='No Event URL Added!'?"":newEvent1.otherPlatformUrl
+        'otherPlatformUrl': newEvent1.otherPlatformUrl
       };
       final response = await http.put(Uri.parse(update_event + eventID),
           headers: <String, String>{
@@ -179,6 +181,7 @@ class _EditEventPageState extends State<EditEventPage> {
       print(response.body);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -265,24 +268,23 @@ class _EditEventPageState extends State<EditEventPage> {
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           Events event1 = Events(
-                            title: '',
-                            description: '',
-                            tagLine: '',
-                            startTime: '',
-                            endTime: '',
-                            eventVenue: '',
-                            rules: '',
-                            prizes: '',
-                            eventImages: [],
-                            eventType: '',
-                            eventPrice: 0,
-                            eventPriceForKGEC: 0,
-                            eventCoordinators: [],
-                            eventMaxParticipants: 1,
-                            eventMinParticipants: 1,
-                            sponsors: [],
-                            otherPlatformUrl: 'No Event URL Added!'
-                          );
+                              title: '',
+                              description: '',
+                              tagLine: '',
+                              startTime: '',
+                              endTime: '',
+                              eventVenue: '',
+                              rules: '',
+                              prizes: '',
+                              eventImages: [],
+                              eventType: '',
+                              eventPrice: 0,
+                              eventPriceForKGEC: 0,
+                              eventCoordinators: [],
+                              eventMaxParticipants: 1,
+                              eventMinParticipants: 1,
+                              sponsors: [],
+                              otherPlatformUrl: '');
                           String newEvent = jsonEncode(event1);
                           await prefs.setString('newEvent', newEvent);
                           Navigator.pop(context);
