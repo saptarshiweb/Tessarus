@@ -90,7 +90,8 @@ class _AddEventPageState extends State<AddEventPage> {
           'image': newEvent1.eventOrganiserClub!.image
         },
         'eventCoordinators': newEvent1.eventCoordinators,
-        'sponsors': newEvent1.sponsors
+        'sponsors': newEvent1.sponsors,
+        'otherPlatformUrl':(newEvent1.otherPlatformUrl)=='No Event URL Added!'?"":newEvent1.otherPlatformUrl
       };
       final response = await http.post(Uri.parse(add_event),
           headers: <String, String>{
@@ -195,7 +196,6 @@ class _AddEventPageState extends State<AddEventPage> {
 
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-
                           Events event1 = Events(
                               title: '',
                               description: '',
@@ -212,7 +212,9 @@ class _AddEventPageState extends State<AddEventPage> {
                               eventCoordinators: [],
                               eventMaxParticipants: 1,
                               eventMinParticipants: 1,
-                              sponsors: []);
+                              sponsors: [],
+                              otherPlatformUrl: 'No Event URL Added!'
+                              );
                           String newEvent = jsonEncode(event1);
                           await prefs.setString('newEvent', newEvent);
                           Navigator.pop(context);

@@ -130,7 +130,8 @@ class _EditEventPageState extends State<EditEventPage> {
           'image': newEvent1.eventOrganiserClub!.image
         },
         'eventCoordinators': evFinal.eventCoordinators,
-        'sponsors': evFinal.sponsors
+        'sponsors': evFinal.sponsors,
+        'otherPlatformUrl':newEvent1.otherPlatformUrl=='No Event URL Added!'?"":newEvent1.otherPlatformUrl
       };
       final response = await http.put(Uri.parse(update_event + eventID),
           headers: <String, String>{
@@ -263,7 +264,6 @@ class _EditEventPageState extends State<EditEventPage> {
 
                           SharedPreferences prefs =
                               await SharedPreferences.getInstance();
-
                           Events event1 = Events(
                             title: '',
                             description: '',
@@ -280,6 +280,8 @@ class _EditEventPageState extends State<EditEventPage> {
                             eventCoordinators: [],
                             eventMaxParticipants: 1,
                             eventMinParticipants: 1,
+                            sponsors: [],
+                            otherPlatformUrl: 'No Event URL Added!'
                           );
                           String newEvent = jsonEncode(event1);
                           await prefs.setString('newEvent', newEvent);

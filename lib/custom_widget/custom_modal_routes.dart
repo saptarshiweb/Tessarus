@@ -6,6 +6,74 @@ import 'package:tessarus_volunteer/custom_widget/custom_buttons.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/helper/helper_function.dart';
 
+showOtherUrlMessage(BuildContext context) {
+  showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(FontAwesome.cancel_circled),
+                  iconSize: 22,
+                  color: textcolor2),
+              const SizedBox(height: 6),
+              Padding(
+                padding: const EdgeInsets.only(left: 2, right: 2),
+                child: Container(
+                    height: 210,
+                    decoration: BoxDecoration(
+                        color: modalbackColor2,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: 4, left: 10, right: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'If you add this Option\nTickets will not be avaible for this event,\nand user will be redirected towards\nother platform Url.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: textcolor5,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 14),
+                          ebutton3(
+                            fun: () {
+                              Navigator.pop(context);
+                            },
+                            t: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  FontAwesome.left,
+                                  color: textcolor2,
+                                  size: 22,
+                                ),
+                                const SizedBox(width: 14),
+                                ctext1('Got it, thanks', textcolor2, 20)
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+              ),
+            ],
+          ),
+        );
+      });
+}
+
 showSuccessMessage(String message, BuildContext context, Widget route) {
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -76,7 +144,7 @@ Widget errorModal2(String message, BuildContext context) {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: textcolor5,
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 14),
@@ -146,7 +214,7 @@ Widget successModal3(String message, BuildContext context) {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: textcolor5,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 15),

@@ -97,7 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
           eventMaxParticipants: 1,
           eventMinParticipants: 1,
           eventOrganiserClub: EventOrganiserClub(name: '', image: ''),
-          sponsors: []);
+          sponsors: [],
+          otherPlatformUrl: ''
+          );
       String newEvent = jsonEncode(event1);
       await prefs.setString('newEvent', newEvent);
 

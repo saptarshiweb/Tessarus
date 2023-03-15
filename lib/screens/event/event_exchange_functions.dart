@@ -67,7 +67,8 @@ Future declareTemporary(BuildContext context, Events event1) async {
       eventMaxParticipants: 1,
       eventMinParticipants: 1,
       eventOrganiserClub: addEvent1.EventOrganiserClub(name: '', image: ''),
-      sponsors: []);
+      sponsors: [],
+      otherPlatformUrl: 'No Event URL Added!');
   //copy to sendEvent from event1
   sendEvent.title = event1.title;
   sendEvent.description = event1.description;
@@ -81,6 +82,7 @@ Future declareTemporary(BuildContext context, Events event1) async {
   sendEvent.eventType = event1.eventType;
   sendEvent.eventPrice = event1.eventPrice;
   sendEvent.eventPriceForKGEC = event1.eventPriceForKGEC;
+
   var evCoord = addEvent1.EventCoordinators();
 
   for (int i = 0; i < event1.eventCoordinators!.length; i++) {
@@ -108,6 +110,11 @@ Future declareTemporary(BuildContext context, Events event1) async {
     evImage.url = event1.eventImages![i].url;
 
     sendEvent.eventImages!.add(evImage);
+  }
+  if (event1.otherPlatformUrl != '') {
+    sendEvent.otherPlatformUrl = event1.otherPlatformUrl;
+  } else {
+    sendEvent.otherPlatformUrl = 'No Event URL Added!';
   }
   await prefs.setString('newEvent', jsonEncode(sendEvent));
   Navigator.pop(context);

@@ -54,6 +54,7 @@ class Events {
   String? updatedAt;
   int? iV;
   List<Sponsors>? sponsors;
+  String? otherPlatformUrl;
 
   Events(
       {this.eventOrganiserClub,
@@ -77,7 +78,8 @@ class Events {
       this.createdAt,
       this.updatedAt,
       this.iV,
-      this.sponsors});
+      this.sponsors,
+      this.otherPlatformUrl});
 
   Events.fromJson(Map<String, dynamic> json) {
     eventOrganiserClub = json['eventOrganiserClub'] != null
@@ -119,6 +121,7 @@ class Events {
         sponsors!.add(Sponsors.fromJson(v));
       });
     }
+    otherPlatformUrl = json['otherPlatformUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -154,6 +157,7 @@ class Events {
     if (sponsors != null) {
       data['sponsors'] = sponsors!.map((v) => v.toJson()).toList();
     }
+    data['otherPlatformUrl'] = otherPlatformUrl;
     return data;
   }
 }

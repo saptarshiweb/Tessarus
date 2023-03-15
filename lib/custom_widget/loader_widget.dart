@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 
 import '../color_constants.dart';
 
@@ -8,8 +9,6 @@ Widget loadingwidget() {
     backgroundColor: Colors.purpleAccent.shade700,
     strokeWidth: 5,
   );
-
-  
 }
 
 showLoaderDialog(BuildContext context) {
@@ -26,3 +25,7 @@ showLoaderDialog(BuildContext context) {
     },
   );
 }
+
+
+
+

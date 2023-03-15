@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, unused_field, avoid_print
 
 import 'dart:convert';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
@@ -139,8 +140,10 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
   TextEditingController eventPrice = TextEditingController();
   TextEditingController eventPriceForKGEC = TextEditingController();
   TextEditingController organiserClub = TextEditingController();
+  TextEditingController otherPlatformUrl = TextEditingController();
   String eventtype = 'Group';
   var items = ['Group', 'Solo'];
+  bool otherurl = false;
 
   String startDate = '';
   String startTime = '';
@@ -173,20 +176,24 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
       tagLine.text = d1;
       d1 = newEvent1.eventVenue!;
       eventVenue.text = d1;
+
       d1 = newEvent1.eventType!;
       eventtype = d1;
       print(eventtype);
       if (eventtype == 'Solo' || eventtype == 'solo') {
         solo = true;
         eventtype = 'Solo';
+        eventMin.text = '1';
+        eventMax.text = '1';
       } else {
         solo = false;
         eventtype = 'Group';
+        d1 = newEvent1.eventMinParticipants.toString();
+        eventMin.text = d1;
+        d1 = newEvent1.eventMaxParticipants.toString();
+        eventMax.text = d1;
       }
-      d1 = newEvent1.eventMinParticipants.toString();
-      eventMin.text = d1;
-      d1 = newEvent1.eventMaxParticipants.toString();
-      eventMax.text = d1;
+
       d1 = newEvent1.eventPrice.toString();
       eventPrice.text = d1;
       d1 = newEvent1.eventPriceForKGEC.toString();
@@ -209,6 +216,9 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
         _timeController2.text = time1;
       }
     });
+
+    d1 = newEvent1.otherPlatformUrl!;
+    otherPlatformUrl.text = d1;
   }
 
   @override
@@ -256,6 +266,52 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                   controller: eventPriceForKGEC,
                   label: 'Event Price For KGEC (in Rs.)'),
               const SizedBox(height: 12),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: textfieldColor),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          ctext1('Other Platform Url', textcolor2, 12),
+                          const Spacer(),
+                          (otherurl == false)
+                              ? IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      otherurl = true;
+                                    });
+                                    showOtherUrlMessage(context);
+                                  },
+                                  icon: Icon(Icons.add,
+                                      color: textcolor2, size: 24))
+                              : IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      otherurl = false;
+                                    });
+                                  },
+                                  icon: Icon(EvaIcons.closeCircle,
+                                      color: textcolor2, size: 24)),
+                        ],
+                      ),
+                      (otherurl == true)
+                          ? const SizedBox(height: 12)
+                          : const SizedBox(),
+                      (otherurl == true)
+                          ? tfield1(
+                              controller: otherPlatformUrl,
+                              label: 'Other Platform Url')
+                          : const SizedBox()
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 25),
+
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
                 child: Row(
@@ -264,8 +320,11 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                       child: ElevatedButton(
                           onPressed: () async {
                             showLoaderDialog(context);
+                            print("Time Controller ${_timeController.text}");
+                            print("Time Controller 2 ${_timeController2.text}");
                             String h1 = '', m1 = '';
                             String s2 = _timeController.text;
+                            print("s2 $s2");
                             int ind = 0;
                             for (int i = 0; i < s2.length; i++) {
                               if (s2[i] == ':') {
@@ -274,14 +333,17 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                               }
                             }
 
-                            h1 = s2.substring(0, ind - 1);
+                            h1 = s2.substring(0, ind);
+                            print("h1 $h1");
                             m1 = s2.substring(ind + 1);
                             if (h1.length == 1) h1 = '0$h1';
                             if (m1.length == 1) m1 = '0$m1';
                             startTime = "$h1:$m1:00";
 
                             ind = 0;
+                            s2 = '';
                             s2 = _timeController2.text;
+                            print("s2 $s2");
                             h1 = '';
                             m1 = '';
                             for (int i = 0; i < s2.length; i++) {
@@ -291,11 +353,26 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                               }
                             }
 
-                            h1 = s2.substring(0, ind - 1);
+                            h1 = s2.substring(0, ind);
+                            print("h1 $h1");
                             m1 = s2.substring(ind + 1);
                             if (h1.length == 1) h1 = '0$h1';
                             if (m1.length == 1) m1 = '0$m1';
                             endTime = "$h1:$m1:00";
+                            String startTimeTemp = "";
+                            String endTimeTemp = "";
+                            for (int i = 0; i < startTime.length; i++) {
+                              if (startTime[i] != ' ') {
+                                startTimeTemp += startTime[i];
+                              }
+                            }
+                            for (int i = 0; i < endTime.length; i++) {
+                              if (endTime[i] != ' ') endTimeTemp += endTime[i];
+                            }
+                            startTime = startTimeTemp;
+                            endTime = endTimeTemp;
+                            print("startTime $startTime");
+                            print("endTime $endTime");
 
                             String startTime2 = '', endTime2 = '';
                             for (int i = 0; i < startTime.length; i++) {
@@ -322,6 +399,7 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
 
                             startTime = '''$year1-$month1-$day1 $startTime''';
                             endTime = '''$year2-$month2-$day2 $endTime''';
+
                             await Future.delayed(const Duration(seconds: 2));
                             // print(startTime);
                             // print(endTime);
@@ -329,6 +407,8 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                             DateTime dt1 = DateTime.parse(startTime);
                             DateTime dt2 = DateTime.parse(endTime);
                             if (dt1.compareTo(dt2) >= 0) {
+                              print("dt1 $dt1");
+                              print("dt2$dt2");
                               showModalBottomSheet(
                                   backgroundColor: Colors.transparent,
                                   context: context,
@@ -371,6 +451,11 @@ class _AddGeneralInfoEventState extends State<AddGeneralInfoEvent> {
                               newEvent1.startTime = startTime;
                               newEvent1.endTime = endTime;
                               newEvent1.eventType = eventtype.toLowerCase();
+                              if (otherPlatformUrl.text == '') {
+                                otherPlatformUrl.text = 'No Event URL Added!';
+                              }
+                              newEvent1.otherPlatformUrl =
+                                  otherPlatformUrl.text;
                               print('Event type $eventtype');
 
                               newEvent1.eventMaxParticipants = int.parse(
