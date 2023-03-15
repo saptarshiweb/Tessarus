@@ -107,10 +107,6 @@ class _EditEventPageState extends State<EditEventPage> {
         print(e2.url);
         evFinal.eventImages!.add(e2);
       }
-      print('Coordinators --- ');
-      for (int i = 0; i < evFinal.eventCoordinators!.length; i++) {
-        print(evFinal.eventCoordinators![i].name);
-      }
 
       var body = {
         'title': newEvent1.title,

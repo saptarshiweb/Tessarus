@@ -66,14 +66,13 @@ Text handleOverflowText(String s, Color c, double size) {
   String str = "";
 
   var splitted = s.split(' ');
-  if (splitted.length > 4) {
+  if (splitted.length > 3) {
     // for (int i = 0; i < 4; i++) {
     //   str += "${splitted[i]} ";
     // }
     // str += "...";
 
     for (int i = 0; i < splitted.length; i++) {
-      if (i < splitted.length) str += "${splitted[i++]} ";
       if (i < splitted.length) str += "${splitted[i++]} ";
       if (i < splitted.length) str += "${splitted[i++]} ";
       if (i < splitted.length) str += "${splitted[i]} ";

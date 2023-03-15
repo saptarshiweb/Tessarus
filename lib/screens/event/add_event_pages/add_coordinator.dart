@@ -287,7 +287,7 @@ class _AddCoordinatorEventState extends State<AddCoordinatorEvent> {
                                                   size: 20),
                                               const SizedBox(width: 15),
                                               ctext1(
-                                                  cName[index], textcolor2, 17),
+                                                  cName[index], textcolor2, 12),
                                             ],
                                           ),
                                           const SizedBox(height: 20),

@@ -95,11 +95,11 @@ Future declareTemporary(BuildContext context, Events event1) async {
   var evCoord = addEvent1.EventCoordinators();
 
   for (int i = 0; i < event1.eventCoordinators!.length; i++) {
+    evCoord = addEvent1.EventCoordinators(name: '', phone: '');
     evCoord.name = event1.eventCoordinators![i].name;
     print(evCoord.name);
     evCoord.phone = event1.eventCoordinators![i].phone;
     sendEvent.eventCoordinators!.add(evCoord);
-    evCoord = addEvent1.EventCoordinators();
   }
   sendEvent.eventMaxParticipants = event1.eventMaxParticipants;
   sendEvent.eventMinParticipants = event1.eventMinParticipants;
