@@ -3,6 +3,7 @@ import 'package:tessarus_volunteer/screens/admin_exclusive/payment_logs_main.dar
 import 'package:tessarus_volunteer/screens/admin_exclusive/system_log_page.dart';
 import 'package:tessarus_volunteer/screens/cashier_exclusive/add_coins.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
+import 'package:tessarus_volunteer/screens/developer_contact/developer_contact_main.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,7 @@ import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-    title: 'Tessarus',
+    title: 'Tessarus Staging',
     theme: ThemeData(fontFamily: 'lato'),
     debugShowCheckedModeBanner: false,
     home: const SplashScreen1(StartScreen(), 5),
@@ -68,6 +69,9 @@ class _StartScreenState extends State<StartScreen> {
 
                 case 'Payment Logs':
                   return const PaymentLogsMain();
+
+                case 'Developer Contact':
+                  return const DeveloperContactMain();
                 default:
                   return const EventPage();
               }

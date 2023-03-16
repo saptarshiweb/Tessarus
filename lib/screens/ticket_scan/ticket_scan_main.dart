@@ -2,9 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:fluttericon/typicons_icons.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_barcode_scanner/enum.dart';
@@ -30,6 +28,16 @@ class TicketScanMain extends StatefulWidget {
 class _TicketScanMainState extends State<TicketScanMain> {
   bool addcoinwidgetshow = false;
   bool successCheckIn = false;
+
+  String ticketnumber = '';
+
+  String teamName = "";
+
+  String eventName = "";
+  String eventVenue = "";
+  String clubName = "";
+  String eventType = "";
+
   Tickets selectedTicket = Tickets();
   Events event1 = Events();
   String auth_val = '';
@@ -87,6 +95,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
     event1 = Events();
+
+    print("YRRRR  $fetch_ticket_url$ticket_id");
     final response = await http.get(
       Uri.parse(fetch_ticket_url + ticket_id),
       headers: <String, String>{
@@ -100,18 +110,52 @@ class _TicketScanMainState extends State<TicketScanMain> {
     );
 
     var responseval = json.decode(response.body);
+    print(responseval);
 
     if (responseval['message'] == 'Ticket fetched successfully') {
       setState(() {
+        teamName = '';
+        ticketnumber = '';
+
+        //event
+
+        eventName = "";
+        eventType = "";
+        eventVenue = "";
+        clubName = "";
+
         ticket_qr_value = ticket_id;
         var responseData = responseval['ticket'];
 
         var responseData2 = responseval['event'];
+        if (responseData2['eventOrganiserClub']['name'] != null) {
+          clubName = responseData2['eventOrganiserClub']['name'].toString();
+        }
+        if (responseData2['title'] != null) {
+          eventName = responseData2['title'].toString();
+        }
+        if (responseData2['eventVenue'] != null) {
+          eventVenue = responseData2['eventVenue'].toString();
+        }
+        if (responseData2['eventType'] != null) {
+          eventType = responseData2['eventType'].toString();
+        }
+
+        Events tempEvent = Events();
+        tempEvent = Events.fromJson(responseData2);
 
         selectedTicket = Tickets.fromJson(responseData);
-        if (selectedTicket.team!.members![0].name == null) {
-          solo = true;
+
+        if (responseData['team']['name'] != null) {
+          teamName = responseData['team']['name'].toString();
         }
+        if (responseData['ticketNumber'] != null) {
+          ticketnumber = responseData['ticketNumber'];
+        }
+
+        // if (tempEvent.eventType == 'solo') {
+        //   solo = true;
+        // }
         event1 = Events.fromJson(responseData2);
       });
     }
@@ -132,8 +176,6 @@ class _TicketScanMainState extends State<TicketScanMain> {
   }
 
   Widget ticketSelectedWidget(BuildContext context) {
-    String name = "";
-    name = selectedTicket.team!.name!;
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 20),
       child: Column(
@@ -256,7 +298,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     child: ctext('ESPEKTRO', containerColor),
                   )),
               const Spacer(),
-              ctext1(selectedTicket.ticketNumber ?? '', textcolor2, 14),
+              ctext1(ticketnumber, textcolor2, 15)
             ],
           ),
           const SizedBox(height: 10),
@@ -282,7 +324,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                 children: [
                   Row(
                     children: [
-                      ctext(event1.title ?? '', containerColor),
+                      ctext(eventName, containerColor),
                       const Spacer(),
                       Icon(Icons.event, color: containerColor, size: 22)
                     ],
@@ -292,10 +334,9 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     children: [
                       Icon(FontAwesome.star, color: containerColor, size: 20),
                       const SizedBox(width: 7),
-                      ctext1(event1.eventOrganiserClub!.name ?? '', textcolor5,
-                          14),
+                      ctext1(clubName, textcolor5, 14),
                       const Spacer(),
-                      ctext1('Organiser', textcolor5, 12)
+                      ctext1('Organiser', textcolor6, 12)
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -304,9 +345,17 @@ class _TicketScanMainState extends State<TicketScanMain> {
                       Icon(Icons.place_rounded,
                           color: containerColor, size: 20),
                       const SizedBox(width: 7),
-                      ctext1(event1.eventVenue ?? '', textcolor5, 12)
+                      ctext1(eventVenue, textcolor5, 12)
                     ],
                   ),
+                  const SizedBox(height: 14),
+                  Row(
+                    children: [
+                      ctext1('Event Type', textcolor2, 14),
+                      const Spacer(),
+                      ctext1(eventType.toUpperCase(), textcolor2, 15),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -330,32 +379,9 @@ class _TicketScanMainState extends State<TicketScanMain> {
                 children: [
                   Row(
                     children: [
-                      ctext(selectedTicket.team!.name!, containerColor),
+                      ctext1(teamName, containerColor, 18),
                       const Spacer(),
                       Icon(Elusive.group, color: containerColor, size: 22)
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  (solo == false)
-                      ? Row(
-                          children: [
-                            Icon(Typicons.user,
-                                color: containerColor, size: 20),
-                            const SizedBox(width: 7),
-                            ctext1(selectedTicket.team!.members![0].name!,
-                                textcolor5, 14),
-                            const Spacer(),
-                            ctext1('Team Leader', textcolor5, 12)
-                          ],
-                        )
-                      : const SizedBox(),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Icon(FontAwesome5.orcid, color: containerColor, size: 20),
-                      const SizedBox(width: 7),
-                      ctext1(selectedTicket.team!.members![0].espektroId!,
-                          textcolor2, 12),
                     ],
                   ),
                 ],
@@ -415,7 +441,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
                     setState(() {
                       if (res is String) {
                         // qrvalue = res;
-                        ticket_id = res;
+                        ticket_id = res; //getting ticket ID from QR CODE
+                        print("Ticket ID :$ticket_id");
                         fetchTicketDetails();
                       }
                     });

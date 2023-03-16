@@ -15,15 +15,15 @@ import 'package:tessarus_volunteer/helper/helper_function.dart';
 import 'package:tessarus_volunteer/screens/admin_exclusive/payment_logs_main.dart';
 import 'package:tessarus_volunteer/screens/admin_exclusive/system_log_page.dart';
 import 'package:tessarus_volunteer/screens/cashier_exclusive/add_coins.dart';
-import 'package:tessarus_volunteer/screens/contact_us.dart';
 import 'package:tessarus_volunteer/screens/dashboard/dashboard_main.dart';
 import 'package:tessarus_volunteer/screens/event/event_page.dart';
-import 'package:tessarus_volunteer/screens/help_page.dart';
 import 'package:tessarus_volunteer/screens/login_screen.dart';
 import 'package:tessarus_volunteer/screens/splash_screens/splash1.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_control.dart';
 import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
+
+import '../developer_contact/developer_contact_main.dart';
 
 class SimpleDrawerCustom extends StatefulWidget {
   const SimpleDrawerCustom({super.key});
@@ -107,6 +107,9 @@ class _SimpleDrawerCustomState extends State<SimpleDrawerCustom> {
                           ? DrawerListItem(context, 'Payment Logs',
                               FontAwesome.rupee, const PaymentLogsMain())
                           : const SizedBox(),
+                      DrawerListItem(context, 'Developer Contact',
+                          EvaIcons.code, const DeveloperContactMain()),
+
                       // (userlevel <= 2)
                       //     ? DrawerListItem(
                       //         context, 'Help', Icons.help, const HelpPage())

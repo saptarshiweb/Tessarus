@@ -40,7 +40,6 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
     "EVENT_DELETED",
     "EVENT_REGISTERED",
     "CHECKED_IN",
-    "PAYMENT",
     "COINS_UPDATED",
     "EMAIL_SENT",
     "VOLUNTEER_CREATED",
@@ -202,7 +201,11 @@ class _SystemLogsPageState extends State<SystemLogsPage> {
                 ],
               ),
               const SizedBox(height: 8),
-              ctext1(l.description ?? '', textcolor5, 14),
+              Row(
+                children: [
+                  Expanded(child: ctext1(l.description ?? '', textcolor5, 14)),
+                ],
+              ),
             ],
           ),
         ),
