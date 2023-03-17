@@ -266,7 +266,7 @@ class _AddCoinsState extends State<AddCoins> {
                 ? Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: numfield1(
-                        controller: addCoincontroller, label: 'Coins'),
+                        controller: addCoincontroller, label: 'Rupees to Add'),
                   )
                 : const SizedBox(height: 0, width: 0),
             (addcoinwidgetshow == false)
