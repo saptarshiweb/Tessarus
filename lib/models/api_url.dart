@@ -4,7 +4,7 @@
 //server Urls
 String prodserver = '''https://tessarus.gdsckgec.in/''';
 String testserver = '''https://tessarus-staging.gdsckgec.in/''';
-String server =testserver;
+String server =prodserver;
 
 String volunteer_login = '''${server}api/volunteers/login'''; //POST
 String all_volunteer = '''${server}api/volunteers/all'''; //GET

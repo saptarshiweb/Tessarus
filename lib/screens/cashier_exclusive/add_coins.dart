@@ -8,6 +8,7 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_barcode_scanner/enum.dart';
 import 'package:tessarus_volunteer/color_constants.dart';
+import 'package:tessarus_volunteer/custom_widget/custom_modal_routes.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_text.dart';
 import 'package:tessarus_volunteer/custom_widget/custom_textfield.dart';
 import 'package:tessarus_volunteer/custom_widget/loader_widget.dart';
@@ -55,16 +56,17 @@ class _AddCoinsState extends State<AddCoins> {
       addcoinwidgetshow = false;
     });
 
-    fetchUserDetails();
+    fetchUserDetails2();
     await Future.delayed(const Duration(seconds: 3));
     Navigator.pop(context);
     print(response.body);
   }
 
-  Future fetchUserDetails() async {
+  Future fetchUserDetails2() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
+    print("User ID$user_id");
     var body = {'qrText': user_id};
     final response = await http.post(Uri.parse(user_qr_scan),
         headers: <String, String>{
@@ -81,13 +83,69 @@ class _AddCoinsState extends State<AddCoins> {
 
     // print(response.body);
     var responseval = json.decode(response.body);
+    print(responseval);
     // print(responseval);
-    if (responseval['message'] == 'User fetched successfully') {
+    await Future.delayed(const Duration(seconds: 2));
+
+    if (responseval['statusCode'] == 200) {
       setState(() {
         qrvalue = user_id;
         var responseData = responseval['user'];
         selectedUser = User.fromJson(responseData);
       });
+    } else {
+      print('error');
+      showErrorMessage(responseval['message'], context);
+    }
+  }
+
+  Future fetchUserDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? auth = prefs.getString("Auth");
+    auth_val = auth!;
+    print("User ID$user_id");
+    var body = {'qrText': user_id};
+    final response = await http.post(Uri.parse(user_qr_scan),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+          'Authorization': 'Bearer $auth_val'
+        },
+        // body: jsonEncode(<String, String>),
+
+        body: json.encode(body));
+
+    // print(response.body);
+    var responseval = json.decode(response.body);
+    print(responseval);
+    // print(responseval);
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      selectedUser = User(
+          espektroId: '',
+          name: '',
+          email: '',
+          degree: '',
+          stream: '',
+          year: '',
+          college: '',
+          profileImageUrl: '');
+    });
+    Navigator.pop(context);
+
+    if (responseval['statusCode'] == 200) {
+      setState(() {
+        qrvalue = user_id;
+        var responseData = responseval['user'];
+        selectedUser = User.fromJson(responseData);
+      });
+    } else {
+      print('error');
+      showErrorMessage(responseval['message'], context);
     }
   }
 
@@ -124,46 +182,7 @@ class _AddCoinsState extends State<AddCoins> {
               Expanded(child: userProfileWidget1(context, user1)),
             ],
           ),
-          // (addcoinwidgetshow == true)
-          //     ? addCoinModalWidget(context)
-          //     : const SizedBox(height: 0, width: 0),
           const SizedBox(height: 30),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: containerColor, width: 1.4),
-                          borderRadius: BorderRadius.circular(4))),
-                  onPressed: () async {
-                    var res = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SimpleBarcodeScannerPage(
-                            scanType: ScanType.qr,
-                            centerTitle: true,
-                            appBarTitle: 'Scan User Profile',
-                            lineColor: '#FFA500',
-                          ),
-                        ));
-                    setState(() {
-                      if (res is String) {
-                        // qrvalue = res;
-                        user_id = res;
-                        fetchUserDetails();
-                      }
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: ctext1('Scan New User', textcolor5, 15),
-                  ),
-                ),
-              ),
-            ],
-          ),
           Row(
             children: [
               Expanded(
@@ -174,7 +193,15 @@ class _AddCoinsState extends State<AddCoins> {
                       setState(() {
                         qrvalue = 'Sample';
                         user_id = '';
-                        selectedUser = User();
+                        selectedUser = User(
+                            espektroId: '',
+                            name: '',
+                            email: '',
+                            degree: '',
+                            stream: '',
+                            year: '',
+                            college: '',
+                            profileImageUrl: '');
                         // fetchUserDetails();
                       });
                     },
@@ -261,7 +288,7 @@ class _AddCoinsState extends State<AddCoins> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ctext1('Add Coin ', primaryColor1, 14),
+                                ctext1('Add Rupees ', primaryColor1, 14),
                                 Icon(Iconic.plus_circle,
                                     color: primaryColor1, size: 18)
                               ],
@@ -279,8 +306,8 @@ class _AddCoinsState extends State<AddCoins> {
                                 backgroundColor: primaryColor,
                                 shape: RoundedRectangleBorder(
                                     side: BorderSide(
-                                        color: Colors.lightGreenAccent.shade100,
-                                        width: 1.4),
+                                        color: Colors.lightGreen.shade400,
+                                        width: 1.5),
                                     borderRadius: BorderRadius.circular(4))),
                             onPressed: () async {
                               addCoinFunction();
@@ -441,10 +468,9 @@ class _AddCoinsState extends State<AddCoins> {
                       if (res is String) {
                         // qrvalue = res;
                         user_id = res;
+                        print("$res Res");
                         showLoaderDialog(context);
                         fetchUserDetails();
-                        await Future.delayed(const Duration(seconds: 2));
-                        Navigator.pop(context);
                       }
                     });
                   },

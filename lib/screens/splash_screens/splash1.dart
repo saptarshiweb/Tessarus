@@ -61,7 +61,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ctext1('Staging App', textcolor6, 14),
+              ctext1('Production App', textcolor6, 14),
             ],
           ),
           const SizedBox(height: 25),

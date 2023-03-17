@@ -1,4 +1,4 @@
-package com.tessarus.staging
+package com.tessarus.production
 
 import io.flutter.embedding.android.FlutterActivity
 

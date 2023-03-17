@@ -95,8 +95,6 @@ class _TicketScanMainState extends State<TicketScanMain> {
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
     event1 = Events();
-
-    print("YRRRR  $fetch_ticket_url$ticket_id");
     final response = await http.get(
       Uri.parse(fetch_ticket_url + ticket_id),
       headers: <String, String>{
@@ -111,8 +109,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
 
     var responseval = json.decode(response.body);
     print(responseval);
-
-    if (responseval['message'] == 'Ticket fetched successfully') {
+    if (responseval['statusCode'] == 200) {
       setState(() {
         teamName = '';
         ticketnumber = '';
@@ -158,6 +155,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
         // }
         event1 = Events.fromJson(responseData2);
       });
+    } else {
+      showErrorMessage(responseval['message'], context);
     }
 
     // print(responseData);

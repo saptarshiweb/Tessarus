@@ -135,7 +135,7 @@ Widget errorModal2(String message, BuildContext context) {
                         Icon(WebSymbols.attention,
                             color: containerColor, size: 24),
                         const SizedBox(width: 14),
-                        ctext1('Something Went Wrong!', containerColor, 24),
+                        ctext1('Something Went Wrong!', containerColor, 22),
                       ],
                     ),
                     const SizedBox(height: 15),
@@ -144,7 +144,7 @@ Widget errorModal2(String message, BuildContext context) {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: textcolor5,
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 14),
