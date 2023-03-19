@@ -30,6 +30,22 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
   int selectedEventIndex = 1;
   String auth_val = '';
   String volId = '';
+  var eventTypeList = [
+    'All Events',
+    'My Events',
+    'GDSC KGEC',
+    'KGEC Robotics Society',
+    'KeyGEnCoders',
+    'CHITRANK',
+    'INFINITIO',
+    'RIYAZ',
+    'ELYSIUM',
+    'LITMUS',
+    'SHUTTERBUG',
+    'SAC-KGEC',
+    'Les Quizerables',
+    'noScope'
+  ];
   Future<List<Events>> eventListUpcoming() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? auth = prefs.getString("Auth");
@@ -37,6 +53,9 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     auth_val = auth!;
     volId = vId!;
     String event_url_custom = '$all_event_url?';
+    // setState(() {
+    //   eventTypeList = ['All Events', 'My Events'];
+    // });
 
     if (eventType != 'All Events' && eventType != 'My Events') {
       event_url_custom =
@@ -58,10 +77,13 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     var responseval = json.decode(response.body);
     var responseData = responseval['events']["documents"];
     List<Events> event1 = [];
+
+    var clublist = <String>{};
     for (int i = 0; i < responseData.length; i++) {
       Events eventfile = Events.fromJson(responseData[i]);
       DateTime dt1 = DateTime.parse(eventfile.startTime!);
       DateTime dt3 = DateTime.parse(eventfile.endTime!);
+
       DateTime dt2 = DateTime.now();
 
       if (dt1.compareTo(dt2) > 0 && widget.val == 'upcoming') {
@@ -118,13 +140,6 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     eventListUpcoming();
   }
 
-  var eventTypeList = [
-    'All Events',
-    'My Events',
-    'GDSC KGEC',
-    'KGEC RS',
-    'SAC KGEC'
-  ];
   String eventType = 'All Events';
   @override
   Widget build(BuildContext context) {
@@ -156,7 +171,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                               padding: const EdgeInsets.only(
                                   bottom: 10, top: 10, left: 8, right: 8),
                               child: EventCardDisplay(
-                                  context, snapshot.data[index]));
+                                  context, snapshot.data[index], index));
                         });
                   }
                 }),
@@ -253,7 +268,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     );
   }
 
-  Widget EventCardDisplay(BuildContext context, Events event) {
+  Widget EventCardDisplay(BuildContext context, Events event, int index) {
     void eventDetailgo() async {
       String eventID = '';
       eventID = event.sId!;

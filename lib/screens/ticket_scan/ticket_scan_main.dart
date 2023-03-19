@@ -80,9 +80,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
       showSuccessMessage(
           'User Checked In Successfully.', context, const TicketScanMain());
     } else {
-      showErrorMessage(
-          'Could not Check In the User.Probably you have already checked In. Try Again',
-          context);
+      showErrorMessage(responseval['message'], context);
     }
     print(response.body);
 
@@ -123,7 +121,6 @@ class _TicketScanMainState extends State<TicketScanMain> {
 
         ticket_qr_value = ticket_id;
         var responseData = responseval['ticket'];
-
         var responseData2 = responseval['event'];
         if (responseData2['eventOrganiserClub']['name'] != null) {
           clubName = responseData2['eventOrganiserClub']['name'].toString();

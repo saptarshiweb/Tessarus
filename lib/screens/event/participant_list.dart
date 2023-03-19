@@ -46,8 +46,10 @@ class _ParticipantListState extends State<ParticipantList> {
     );
     print(get_participants + widget.id.toString());
     var responseval = json.decode(response.body);
+    print(responseval);
 
     var responseData = responseval['events'];
+    print(responseData.length);
 
     for (int i = 0; i < responseData.length; i++) {
       pEvent.Events e1 = pEvent.Events.fromJson(responseData[i]);

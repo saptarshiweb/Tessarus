@@ -4,7 +4,7 @@
 //server Urls
 String prodserver = '''https://tessarus.gdsckgec.in/''';
 String testserver = '''https://tessarus-staging.gdsckgec.in/''';
-String server =prodserver;
+String server = prodserver;
 
 String volunteer_login = '''${server}api/volunteers/login'''; //POST
 String all_volunteer = '''${server}api/volunteers/all'''; //GET
@@ -31,8 +31,8 @@ String add_event_image = '''${server}api/events/images/[event_id]'''; //POST
 String delete_event = '''${server}api/events/'''; //DELETE
 String all_event_url = '${server}api/events/all'; //GET
 String specific_event = '${server}api/events/'; //GET
-String get_participants='${server}api/events/getparticipants/';//GET
-String add_prize='${server}api/users/addprizetouser';//POST
+String get_participants = '${server}api/events/getparticipants/'; //GET
+String add_prize = '${server}api/users/addprizetouser'; //POST
 
 //QR Scan
 String user_qr_scan = '''${server}api/volunteers/userqrscan'''; //POST
@@ -45,4 +45,12 @@ String checkIn_ticket_url = '''${server}api/tickets/checkin/''';
 
 String image_upload_url = '''${server}api/utils/uploadimages''';
 
-String image_api_key = '''AyuN7xQM6GHhnvWsfZb2OUepNTGxEqrLTnlo8bbdsdwe2297JbT9''';
+String image_api_key =
+    '''AyuN7xQM6GHhnvWsfZb2OUepNTGxEqrLTnlo8bbdsdwe2297JbT9''';
+
+//Anlytics
+
+String user_analytics_url = '''${server}api/analytics/user'''; //GET
+String event_analytics_url = '''${server}api/analytics/event'''; //GET
+String log_analytics_url = '''${server}api/analytics/log''';//GET
+
