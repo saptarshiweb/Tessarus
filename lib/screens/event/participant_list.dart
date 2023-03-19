@@ -158,9 +158,10 @@ class _ParticipantListState extends State<ParticipantList> {
             ),
             const SizedBox(height: 20),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(Maki.college, color: containerColor, size: 24),
-                ctext1("    ${e1.userCollege!}", textcolor2, 12),
+                handleOverflowText2(e1.userCollege!, textcolor2, 12),
               ],
             ),
             const SizedBox(height: 20),

@@ -80,7 +80,9 @@ class _TicketScanMainState extends State<TicketScanMain> {
       showSuccessMessage(
           'User Checked In Successfully.', context, const TicketScanMain());
     } else {
-      showErrorMessage(responseval['message'], context);
+      showErrorMessage(
+          responseval['message'] + '. Contact the Admins for the access.',
+          context);
     }
     print(response.body);
 
@@ -153,7 +155,10 @@ class _TicketScanMainState extends State<TicketScanMain> {
         event1 = Events.fromJson(responseData2);
       });
     } else {
-      showErrorMessage(responseval['message'], context);
+      showErrorMessage(
+          responseval['message'] +
+              ". Check your QR Properly. Refresh the Website.",
+          context);
     }
 
     // print(responseData);
@@ -196,10 +201,8 @@ class _TicketScanMainState extends State<TicketScanMain> {
                         child: Padding(
                           padding: const EdgeInsets.all(14.0),
                           child: Center(
-                            child: ctext1(
-                                'Your Ticket is not valid for Checking In!',
-                                primaryColor1,
-                                14),
+                            child: ctext1('Your Ticket is already Checked In!',
+                                primaryColor1, 14),
                           ),
                         ),
                       ),

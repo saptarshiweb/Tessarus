@@ -62,7 +62,7 @@ class _DeveloperContactMainState extends State<DeveloperContactMain> {
                     'CSE',
                     'https://www.linkedin.com/in/codehackerone/',
                     'https://github.com/codehackerone',
-                    'Tessarus Backend Developer',
+                    'Tessarus Backend Developer, Project Lead',
                     '',
                     'https://instagram.com/__mess1er__?igshid=ZDdkNTZiNTM=',
                     'assets/Soumyajit_Datta.jpeg',

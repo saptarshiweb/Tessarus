@@ -12,7 +12,7 @@ String changeVal(String t) {
       str += " ";
     } else if (i == 0) {
       str += t[i].toUpperCase();
-    } else if (t[i - 1] == "_") {
+    } else if (i > 0 && t[i - 1] == "_") {
       str += t[i].toUpperCase();
     } else {
       str += t[i];

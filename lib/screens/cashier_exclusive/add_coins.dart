@@ -145,7 +145,10 @@ class _AddCoinsState extends State<AddCoins> {
       });
     } else {
       print('error');
-      showErrorMessage(responseval['message'], context);
+      showErrorMessage(
+          responseval['message'] +
+              ". Check your QR Again or Refresh the Website.",
+          context);
     }
   }
 

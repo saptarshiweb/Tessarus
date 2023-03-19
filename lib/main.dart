@@ -10,11 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tessarus_volunteer/screens/splash_screens/splash1.dart';
 import 'package:tessarus_volunteer/screens/super_admin_exclusive/volunteer_control.dart';
 import 'package:tessarus_volunteer/screens/ticket_scan/ticket_scan_main.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-    title: 'Tessarus Staging',
+    title: 'Tessarus',
     theme: ThemeData(fontFamily: 'lato'),
     debugShowCheckedModeBanner: false,
     home: const SplashScreen1(StartScreen(), 5),

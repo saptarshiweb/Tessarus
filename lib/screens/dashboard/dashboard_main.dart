@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, unused_local_variable
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -395,90 +397,126 @@ class _DashboardMainState extends State<DashboardMain> {
   }
 
   Widget userStats(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: containerColor, width: 1.2),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Padding(
-        padding:
-            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
-        child: Column(
-          children: [
-            Row(
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: containerColor, width: 1.5),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
               children: [
-                ctext1('No. of Colleges Registered', textcolor6, 14),
-                const Spacer(),
-                countWidget(context, numCollege),
+                Row(
+                  children: [
+                    ctext1('No. of Colleges Registered', textcolor6, 14),
+                    const Spacer(),
+                    countWidget(context, numCollege),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    ctext1('Total Registrations', textcolor6, 12),
+                    const SizedBox(width: 10),
+                    countWidget(context, total_users),
+                    const Spacer(),
+                    ctext1('KGEC Registrations', textcolor6, 12),
+                    const SizedBox(width: 10),
+                    countWidget(context, kgec_students),
+                  ],
+                ),
               ],
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                ctext1('Total Registrations', textcolor6, 12),
-                const SizedBox(width: 10),
-                countWidget(context, total_users),
-                const Spacer(),
-                ctext1('KGEC Registrations', textcolor6, 12),
-                const SizedBox(width: 10),
-                countWidget(context, kgec_students),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ctext1('CSE', textcolor6, 14),
-                countWidget(context, cse),
-                ctext1('IT', textcolor6, 14),
-                countWidget(context, it),
-                ctext1('ECE', textcolor6, 14),
-                countWidget(context, ece),
-                ctext1('EE', textcolor6, 14),
-                countWidget(context, ee),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                ctext1('ME', textcolor6, 14),
-                const SizedBox(width: 7),
-                countWidget(context, me),
-                const SizedBox(width: 15),
-                ctext1('Other', textcolor6, 14),
-                const SizedBox(width: 7),
-                countWidget(context, other),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                ctext1('Year Wise Split', textcolor6, 16),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ctext1('First Year', textcolor6, 14),
-                countWidget(context, first_year),
-                ctext1('Second Year', textcolor6, 14),
-                countWidget(context, second_year),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ctext1('Third Year', textcolor6, 14),
-                countWidget(context, third_year),
-                ctext1('Fourth Year', textcolor6, 14),
-                countWidget(context, fourth_year),
-              ],
-            ),
-          ],
+          ),
         ),
-      ),
+        const SizedBox(height: 12),
+        Container(
+          decoration: BoxDecoration(
+            color: primaryColor1,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    ctext1('Department Wise Split', textcolor6, 14),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ctext1('CSE', textcolor6, 14),
+                    countWidget(context, cse),
+                    ctext1('IT', textcolor6, 14),
+                    countWidget(context, it),
+                    ctext1('ECE', textcolor6, 14),
+                    countWidget(context, ece),
+                    ctext1('EE', textcolor6, 14),
+                    countWidget(context, ee),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    ctext1('ME', textcolor6, 14),
+                    const SizedBox(width: 7),
+                    countWidget(context, me),
+                    const SizedBox(width: 15),
+                    ctext1('Other', textcolor6, 14),
+                    const SizedBox(width: 7),
+                    countWidget(context, other),
+                  ],
+                ),
+                const SizedBox(height: 12),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            color: primaryColor1,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    ctext1('Year Wise Split', textcolor6, 14),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ctext1('First Year', textcolor6, 14),
+                    countWidget(context, first_year),
+                    ctext1('Second Year', textcolor6, 14),
+                    countWidget(context, second_year),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ctext1('Third Year', textcolor6, 14),
+                    countWidget(context, third_year),
+                    ctext1('Fourth Year', textcolor6, 14),
+                    countWidget(context, fourth_year),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 

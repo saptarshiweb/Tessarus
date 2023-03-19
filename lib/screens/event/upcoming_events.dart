@@ -35,16 +35,16 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     'My Events',
     'GDSC KGEC',
     'KGEC Robotics Society',
+    'SAC-KGEC',
+    'noScope',
+    'Les Quizerables',
+    'Litmus',
+    'SHUTTERBUG',
     'KeyGEnCoders',
     'CHITRANK',
     'INFINITIO',
     'RIYAZ',
-    'ELYSIUM',
-    'LITMUS',
-    'SHUTTERBUG',
-    'SAC-KGEC',
-    'Les Quizerables',
-    'noScope'
+    'ELYSIUM'
   ];
   Future<List<Events>> eventListUpcoming() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

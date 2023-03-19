@@ -87,3 +87,57 @@ Text handleOverflowText(String s, Color c, double size) {
     style: TextStyle(color: c, fontSize: size, fontWeight: FontWeight.bold),
   );
 }
+
+Text handleOverflowText2(String s, Color c, double size) {
+  String str = "";
+  var splitted = s.split(' ');
+  if (splitted.length > 4) {
+    // for (int i = 0; i < 4; i++) {
+    //   str += "${splitted[i]} ";
+    // }
+    // str += "...";
+
+    for (int i = 0; i < splitted.length; i++) {
+      if (i < splitted.length) str += "${splitted[i++]} ";
+      if (i < splitted.length) str += "${splitted[i++]} ";
+      if (i < splitted.length) str += "${splitted[i++]} ";
+
+      if (i < splitted.length) str += "${splitted[i]} ";
+      str += "\n";
+    }
+  } else {
+    str = s;
+  }
+
+  return Text(
+    str,
+    style: TextStyle(color: c, fontSize: size, fontWeight: FontWeight.bold),
+  );
+}
+
+Text handleOverflowText3(String s, Color c, double size, int num) {
+  String str = "";
+  var splitted = s.split(' ');
+  if (splitted.length > num) {
+    // for (int i = 0; i < 4; i++) {
+    //   str += "${splitted[i]} ";
+    // }
+    // str += "...";
+
+    for (int i = 0; i < splitted.length; i++) {
+      for (int j = 1; j <= num - 1; j++) {
+        if (i < splitted.length) str += "${splitted[i++]} ";
+      }
+
+      if (i < splitted.length) str += "${splitted[i]} ";
+      str += "\n";
+    }
+  } else {
+    str = s;
+  }
+
+  return Text(
+    str,
+    style: TextStyle(color: c, fontSize: size, fontWeight: FontWeight.bold),
+  );
+}

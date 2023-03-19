@@ -182,7 +182,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
       ),
     );
   }
-  
 
   BoxDecoration selected1() {
     return BoxDecoration(
@@ -338,7 +337,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                     ctext1(
                         'Organized By ${widget.event1.eventOrganiserClub!.name!}',
                         textcolor5,
-                        14),
+                        11),
                     const SizedBox(height: 10),
                   ],
                 ),
