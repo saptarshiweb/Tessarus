@@ -323,7 +323,7 @@ class _TicketScanMainState extends State<TicketScanMain> {
                 children: [
                   Row(
                     children: [
-                      ctext(eventName, containerColor),
+                      handleOverflowText3(eventName, containerColor, 12, 5),
                       const Spacer(),
                       Icon(Icons.event, color: containerColor, size: 22)
                     ],

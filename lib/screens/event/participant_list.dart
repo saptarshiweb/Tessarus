@@ -128,7 +128,7 @@ class _ParticipantListState extends State<ParticipantList> {
                 Icon(Elusive.group_circled, color: containerColor, size: 28),
                 ctext1('   Team Name', textcolor6, 14),
                 const Spacer(),
-                ctext1(e1.team!.name!, textcolor2, 16),
+                ctext1(e1.team!.name!, textcolor2, 12),
               ],
             ),
             const SizedBox(height: 20),

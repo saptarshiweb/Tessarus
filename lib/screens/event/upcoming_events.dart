@@ -39,10 +39,10 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     'noScope',
     'Les Quizerables',
     'Litmus',
-    'SHUTTERBUG',
+    'Shutterbug',
     'KeyGEnCoders',
     'CHITRANK',
-    'INFINITIO',
+    'Infinitio',
     'RIYAZ',
     'ELYSIUM'
   ];
@@ -306,7 +306,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
           children: [
             Row(
               children: [
-                smbold(event.title ?? ''),
+                handleOverflowText3(event.title ?? '', textcolor2, 18, 3),
                 const Spacer(),
                 IconButton(
                     onPressed: () {
