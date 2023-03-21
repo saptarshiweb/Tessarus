@@ -42,16 +42,20 @@ class _EventDetailPageState extends State<EventDetailPage> {
     });
   }
 
-  Future volunteer_edit(BuildContext context, String name, String volID) async {
+  Future volunteer_edit(BuildContext context, String name, String volID,
+      List<String> eventList) async {
     showLoaderDialog(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? auth = prefs.getString("Auth");
     auth_val = auth!;
 
+    eventList.add(widget.event1.sId.toString());
+    Set eventSet = eventList.toSet();
+
     var val1 = {
       'name': name,
-      'events': [widget.event1.sId.toString()]
+      'events': eventSet.toList()
     };
     print(edit_volunteer + widget.event1.sId!);
     final response = await http.put(Uri.parse(edit_volunteer + volID),
@@ -465,7 +469,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () {
-                      volunteer_edit(context, v.name!, v.sId!);
+                      volunteer_edit(context, v.name!, v.sId!, v.events!);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: containerColor,
