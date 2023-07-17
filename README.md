@@ -4,7 +4,14 @@ Tessarus is a comprehensive online ticketing and event management system built u
 
 ## Application Screens
 
+https://github.com/saptarshiweb/Tessarus/assets/79189686/1434ee84-18bb-4b50-b1eb-20d68329621a
 
+
+<img src="https://github.com/saptarshiweb/Tessarus/assets/79189686/81bc473e-ed6a-45a3-8ab4-9eae0021506c" width="200" height="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/saptarshiweb/Tessarus/assets/79189686/957a97ff-ea35-4315-b832-e1627f55ccff" width="200" height="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/saptarshiweb/Tessarus/assets/79189686/f7c86b70-12b8-48a3-91fc-9756a3c4adb3" width="200" height="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/saptarshiweb/Tessarus/assets/79189686/9460e536-9bfa-4092-a4fa-4d184d859fd3" width="200" height="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/saptarshiweb/Tessarus/assets/79189686/5fff7bce-79f9-4cf1-b13d-914fae73a580" width="200" height="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 ## Features
 
